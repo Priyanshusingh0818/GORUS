@@ -18,7 +18,7 @@ const Footer = () => {
             <h3 style={styles.heading}>Contact Us</h3>
             <div style={styles.contactItem}>
               <Phone size={18} style={styles.icon} />
-              <a href="tel:+919876543210" style={styles.link}>+91 98765 43210</a>
+              <a href="tel:+919876543210" style={styles.link}>+91 78383 80192</a>
             </div>
             <div style={styles.contactItem}>
               <Mail size={18} style={styles.icon} />
@@ -28,7 +28,7 @@ const Footer = () => {
             </div>
             <div style={styles.contactItem}>
               <MapPin size={18} style={styles.icon} />
-              <span style={styles.text}>Lucknow, Uttar Pradesh</span>
+              <span style={styles.text}>Buxar, Bihar</span>
             </div>
           </div>
 
@@ -42,7 +42,6 @@ const Footer = () => {
           <div style={styles.section}>
             <h3 style={styles.heading}>Business Hours</h3>
             <p style={styles.text}>Monday - Saturday</p>
-            <p style={styles.text}>9:00 AM - 7:00 PM</p>
             <p style={styles.text}>Sunday: Closed</p>
           </div>
         </div>
@@ -149,5 +148,6 @@ const styles = {
     color: '#6b7280'
   }
 };
+
 
 export default Footer;
