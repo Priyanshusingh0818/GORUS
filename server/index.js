@@ -38,6 +38,9 @@ app.use(cors({
   origin: process.env.CLIENT_URL || '*',
 }));
 
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, 'public')));
+
 /* Rate limiting */
 app.use(
   rateLimit({
@@ -120,6 +123,11 @@ app.use('/api/admin/analytics', authMiddleware, adminOnly, analyticsRoutesFactor
 /* Health check */
 app.get('/api/health', (req, res) => {
   res.json({ ok: true });
+});
+
+// Root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /* Error handling middleware */
