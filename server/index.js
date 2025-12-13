@@ -38,9 +38,6 @@ app.use(cors({
   origin: process.env.CLIENT_URL || '*',
 }));
 
-// Serve static frontend files (correct path)
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
 /* Rate limiting */
 app.use(
   rateLimit({
@@ -125,9 +122,12 @@ app.get('/api/health', (req, res) => {
   res.json({ ok: true });
 });
 
-// Root route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+// Serve React build
+app.use(express.static(path.join(__dirname, '..', 'build')));
+
+// SPA fallback
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 
 /* Error handling middleware */
