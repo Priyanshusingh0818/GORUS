@@ -1,5 +1,6 @@
-// Use proxy in development, or full URL in production
-const API_BASE_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'http://localhost:5000/api' : '/api');
+// Use environment variable or default to production URL
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "https://gorus.onrender.com";
 
 // Helper function to get auth token
 const getToken = () => {
@@ -13,17 +14,14 @@ const apiCall = async (endpoint, options = {}) => {
     'Content-Type': 'application/json',
     ...options.headers,
   };
-
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers,
     });
-
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'An error occurred' }));
       
@@ -39,13 +37,12 @@ const apiCall = async (endpoint, options = {}) => {
       
       throw new Error(error.message || 'Request failed');
     }
-
     return response.json();
   } catch (error) {
     // If it's a network error, provide a more helpful message
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
       console.error('Network error - is the backend server running?', error);
-      throw new Error('Cannot connect to server. Please make sure the backend is running on port 5000.');
+      throw new Error('Cannot connect to server. Please make sure the backend is running.');
     }
     throw error;
   }
@@ -124,4 +121,3 @@ export const paymentsAPI = {
     body: JSON.stringify({ orderId, paymentReference }),
   }),
 };
-
