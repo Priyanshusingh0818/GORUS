@@ -27,7 +27,7 @@ const apiCall = async (endpoint, options = {}) => {
       
       // Handle authentication errors - but NOT for login/signup endpoints
       // Login/signup 401 means invalid credentials, not expired session
-      if (response.status === 401 && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/signup')) {
+      if (response.status === 401 && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/register')) {
         // Clear invalid token only for authenticated endpoints
         localStorage.removeItem('gorasToken');
         localStorage.removeItem('gorasUser');
@@ -50,74 +50,91 @@ const apiCall = async (endpoint, options = {}) => {
 
 // Auth API
 export const authAPI = {
-  login: (email, password) => apiCall('/auth/login', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-  }),
-  signup: (name, email, password) => apiCall('/auth/signup', {
-    method: 'POST',
-    body: JSON.stringify({ name, email, password }),
-  }),
-  updateProfile: (name, email) => apiCall('/auth/profile', {
-    method: 'PUT',
-    body: JSON.stringify({ name, email }),
-  }),
-  changePassword: (currentPassword, newPassword) => apiCall('/auth/change-password', {
-    method: 'PUT',
-    body: JSON.stringify({ currentPassword, newPassword }),
-  }),
+  login: (email, password) =>
+    apiCall('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
+
+  signup: (name, email, phone, password) =>
+    apiCall('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, phone, password }),
+    }),
+
+  updateProfile: (name, email) =>
+    apiCall('/api/auth/profile', {
+      method: 'PUT',
+      body: JSON.stringify({ name, email }),
+    }),
+
+  changePassword: (currentPassword, newPassword) =>
+    apiCall('/api/auth/change-password', {
+      method: 'PUT',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    }),
 };
 
 // Products API
 export const productsAPI = {
-  getAll: () => apiCall('/products'),
-  getById: (id) => apiCall(`/products/${id}`),
+  getAll: () => apiCall('/api/products'),
+  getById: (id) => apiCall(`/api/products/${id}`),
 };
 
 // Orders API
 export const ordersAPI = {
-  create: (orderData) => apiCall('/orders', {
-    method: 'POST',
-    body: JSON.stringify(orderData),
-  }),
-  getMyOrders: () => apiCall('/orders/my-orders'),
-  getById: (id) => apiCall(`/orders/${id}`),
-  cancel: (id) => apiCall(`/orders/${id}/cancel`, {
-    method: 'PUT',
-  }),
+  create: (orderData) =>
+    apiCall('/api/orders', {
+      method: 'POST',
+      body: JSON.stringify(orderData),
+    }),
+
+  getMyOrders: () => apiCall('/api/orders/my-orders'),
+  getById: (id) => apiCall(`/api/orders/${id}`),
+  cancel: (id) =>
+    apiCall(`/api/orders/${id}/cancel`, {
+      method: 'PUT',
+    }),
 };
 
 // Admin API
 export const adminAPI = {
-  getAllOrders: () => apiCall('/admin/orders'),
-  updateOrderStatus: (orderId, status) => apiCall(`/admin/orders/${orderId}/status`, {
-    method: 'PUT',
-    body: JSON.stringify({ status }),
-  }),
-  getAllProducts: () => apiCall('/admin/products'),
-  createProduct: (productData) => apiCall('/admin/products', {
-    method: 'POST',
-    body: JSON.stringify(productData),
-  }),
-  updateProduct: (id, productData) => apiCall(`/admin/products/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(productData),
-  }),
-  deleteProduct: (id) => apiCall(`/admin/products/${id}`, {
-    method: 'DELETE',
-  }),
-  getAllUsers: () => apiCall('/admin/users'),
-  getDashboardStats: () => apiCall('/admin/analytics/dashboard'),
+  getAllOrders: () => apiCall('/api/admin/orders'),
+  updateOrderStatus: (orderId, status) =>
+    apiCall(`/api/admin/orders/${orderId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    }),
+  getAllProducts: () => apiCall('/api/admin/products'),
+  createProduct: (productData) =>
+    apiCall('/api/admin/products', {
+      method: 'POST',
+      body: JSON.stringify(productData),
+    }),
+  updateProduct: (id, productData) =>
+    apiCall(`/api/admin/products/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(productData),
+    }),
+  deleteProduct: (id) =>
+    apiCall(`/api/admin/products/${id}`, {
+      method: 'DELETE',
+    }),
+  getAllUsers: () => apiCall('/api/admin/users'),
+  getDashboardStats: () => apiCall('/api/admin/analytics/dashboard'),
 };
 
 // Payments API
 export const paymentsAPI = {
-  createOrder: (amount, orderId, orderNumber, customer, currency = 'INR') => apiCall('/payments/create-order', {
-    method: 'POST',
-    body: JSON.stringify({ amount, orderId, orderNumber, customer, currency }),
-  }),
-  verifyPayment: (orderId, paymentReference) => apiCall('/payments/verify-payment', {
-    method: 'POST',
-    body: JSON.stringify({ orderId, paymentReference }),
-  }),
+  createOrder: (amount, orderId, orderNumber, customer, currency = 'INR') =>
+    apiCall('/api/payments/create-order', {
+      method: 'POST',
+      body: JSON.stringify({ amount, orderId, orderNumber, customer, currency }),
+    }),
+
+  verifyPayment: (orderId, paymentReference) =>
+    apiCall('/api/payments/verify-payment', {
+      method: 'POST',
+      body: JSON.stringify({ orderId, paymentReference }),
+    }),
 };
