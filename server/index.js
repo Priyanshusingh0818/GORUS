@@ -38,8 +38,8 @@ app.use(cors({
   origin: process.env.CLIENT_URL || '*',
 }));
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static frontend files (correct path)
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 /* Rate limiting */
 app.use(
@@ -127,7 +127,7 @@ app.get('/api/health', (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 /* Error handling middleware */
