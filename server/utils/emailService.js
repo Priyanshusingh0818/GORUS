@@ -5,7 +5,7 @@ const fs = require('fs');
 function createTransporter() {
   // If SMTP credentials are provided, use them
   if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-    return nodemailer.createTransport({
+    return nodemailer.createTransporter({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
@@ -19,7 +19,7 @@ function createTransporter() {
   // Default: Use Gmail with app password
   // For Gmail: Enable 2FA and create an App Password
   if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-    return nodemailer.createTransport({
+    return nodemailer.createTransporter({
       service: 'gmail',
       auth: {
         user: process.env.GMAIL_USER,
@@ -28,8 +28,7 @@ function createTransporter() {
     });
   }
 
-  // Fallback: Use Ethereal Email for testing (no credentials needed)
-  // This is only for development/testing
+  // Fallback: No email service configured
   console.warn('⚠️  No email credentials configured. Email sending will be disabled.');
   return null;
 }
@@ -41,8 +40,8 @@ async function sendOrderNotificationEmail(orderData) {
   
   if (!transporter) {
     console.warn('⚠️  Email transporter not configured. Skipping email notification.');
-    console.warn('⚠️  Check your .env file for GMAIL_USER and GMAIL_APP_PASSWORD');
-    return { success: false, error: 'Email not configured' };
+    console.warn('⚠️  Orders will still be created successfully.');
+    return { success: false, error: 'Email not configured', skipped: true };
   }
   
   console.log('✅ Email transporter created successfully');
@@ -177,6 +176,7 @@ This is an automated notification from GORAS Dairy E-commerce System
       subject: `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`,
       text: emailText,
       html: emailHtml,
+      timeout: 10000, // 10 second timeout to prevent hanging
     });
 
     console.log('✅ Order notification email sent successfully!');
@@ -190,7 +190,10 @@ This is an automated notification from GORAS Dairy E-commerce System
     if (error.response) {
       console.error('   SMTP Response:', error.response);
     }
-    return { success: false, error: error.message };
+    // Don't throw error - just log it and continue
+    // Orders should still be created even if email fails
+    console.warn('⚠️  Order was created successfully despite email error');
+    return { success: false, error: error.message, skipped: true };
   }
 }
 
@@ -201,7 +204,7 @@ async function sendUPIPaymentEmail(orderData) {
   
   if (!transporter) {
     console.warn('⚠️  Email transporter not configured. Skipping email notification.');
-    return { success: false, error: 'Email not configured' };
+    return { success: false, error: 'Email not configured', skipped: true };
   }
 
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'gorusorganics@gmail.com';
@@ -360,7 +363,8 @@ This is an automated notification from GORAS Dairy E-commerce System
       subject: `💰 UPI Payment - ${order.order_number} - ₹${totalAmount.toFixed(2)} [VERIFY]`,
       text: emailText,
       html: emailHtml,
-      attachments: attachments
+      attachments: attachments,
+      timeout: 10000, // 10 second timeout
     });
 
     console.log('✅ UPI payment email sent successfully!');
@@ -374,7 +378,9 @@ This is an automated notification from GORAS Dairy E-commerce System
     if (error.response) {
       console.error('   SMTP Response:', error.response);
     }
-    return { success: false, error: error.message };
+    // Don't throw error - just log it and continue
+    console.warn('⚠️  Order was processed successfully despite email error');
+    return { success: false, error: error.message, skipped: true };
   }
 }
 
