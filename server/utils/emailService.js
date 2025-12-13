@@ -1,84 +1,30 @@
-const nodemailer = require('nodemailer');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 const fs = require('fs');
 
-// Universal SMTP transporter creator
-function createTransporter() {
-  console.log('🔧 Creating email transporter...');
+// Initialize Brevo API
+function initializeBrevo() {
+  console.log('🔧 Initializing Brevo API...');
   
-  // Check if SMTP is configured
-  const hasSmtp = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
-  const hasGmail = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+  const apiKey = process.env.BREVO_API_KEY;
   
-  if (!hasSmtp && !hasGmail) {
-    console.warn('⚠️  No email service configured!');
-    console.warn('⚠️  Please set one of the following in your environment variables:');
-    console.warn('   Option 1 - Generic SMTP: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS');
-    console.warn('   Option 2 - Gmail: GMAIL_USER, GMAIL_APP_PASSWORD');
+  if (!apiKey) {
+    console.warn('⚠️  No Brevo API key configured!');
+    console.warn('⚠️  Please set BREVO_API_KEY in your environment variables.');
     console.warn('⚠️  Orders will still work, but email notifications will be skipped.');
     return null;
   }
 
   try {
-    let transporter;
-
-    // Priority 1: Use SMTP settings (works with ANY provider)
-    if (hasSmtp) {
-      const smtpConfig = {
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for 587
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-        tls: {
-          rejectUnauthorized: false // Allow self-signed certificates
-        },
-        connectionTimeout: 10000, // 10 seconds
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      };
-
-      console.log(`✅ Using SMTP: ${process.env.SMTP_HOST}:${smtpConfig.port}`);
-      console.log(`   User: ${process.env.SMTP_USER}`);
-      console.log(`   Secure: ${smtpConfig.secure}`);
-      
-      transporter = nodemailer.createTransport(smtpConfig);
-    }
-    // Priority 2: Use Gmail (fallback)
-    else if (hasGmail) {
-      console.log('✅ Using Gmail SMTP');
-      console.log('   User:', process.env.GMAIL_USER);
-      console.warn('⚠️  Note: Gmail may be unreliable on cloud servers. Consider using a dedicated SMTP service.');
-      
-      transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_APP_PASSWORD,
-        },
-        tls: {
-          rejectUnauthorized: false
-        },
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      });
-    }
-
-    // Verify the transporter configuration
-    transporter.verify((error, success) => {
-      if (error) {
-        console.error('❌ Email transporter verification failed:', error.message);
-        console.error('   Please check your SMTP credentials and configuration.');
-      } else {
-        console.log('✅ Email transporter is ready to send emails');
-      }
-    });
-
-    return transporter;
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    const apiKeyAuth = defaultClient.authentications['api-key'];
+    apiKeyAuth.apiKey = apiKey;
+    
+    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+    
+    console.log('✅ Brevo API initialized successfully');
+    return apiInstance;
   } catch (error) {
-    console.error('❌ Failed to create email transporter:', error.message);
+    console.error('❌ Failed to initialize Brevo API:', error.message);
     return null;
   }
 }
@@ -89,21 +35,22 @@ async function sendOrderNotificationEmail(orderData) {
   console.log('📧 Order Notification Email Triggered');
   console.log('📧 ==========================================');
   
-  const transporter = createTransporter();
+  const apiInstance = initializeBrevo();
   
-  if (!transporter) {
-    console.warn('⚠️  Email transporter not available. Skipping email notification.');
+  if (!apiInstance) {
+    console.warn('⚠️  Brevo API not available. Skipping email notification.');
     console.warn('⚠️  Order was created successfully.');
-    return { success: false, error: 'Email not configured', skipped: true };
+    return { success: false, error: 'Brevo API not configured', skipped: true };
   }
 
   // Get email addresses from environment
-  const fromEmail = process.env.SENDER_EMAIL || process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
+  const fromEmail = process.env.SENDER_EMAIL || 'noreply@goras.com';
+  const fromName = process.env.SENDER_NAME || 'GORAS Orders';
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
   
   const { order, customer, items } = orderData;
 
-  console.log(`📧 From: ${fromEmail}`);
+  console.log(`📧 From: ${fromName} <${fromEmail}>`);
   console.log(`📧 To: ${adminEmail}`);
   console.log(`📧 Order Number: ${order.order_number}`);
 
@@ -222,37 +169,34 @@ Total Amount: ₹${order.total_amount.toFixed(2)}
 This is an automated notification from GORAS Dairy E-commerce System
   `;
 
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  
+  sendSmtpEmail.sender = { name: fromName, email: fromEmail };
+  sendSmtpEmail.to = [{ email: adminEmail }];
+  sendSmtpEmail.subject = `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`;
+  sendSmtpEmail.htmlContent = emailHtml;
+  sendSmtpEmail.textContent = emailText;
+
   try {
-    console.log('📤 Sending email...');
+    console.log('📤 Sending email via Brevo...');
     
-    const info = await transporter.sendMail({
-      from: `"GORAS Orders" <${fromEmail}>`,
-      to: adminEmail,
-      subject: `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`,
-      text: emailText,
-      html: emailHtml,
-    });
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
 
     console.log('✅ ==========================================');
     console.log('✅ ORDER EMAIL SENT SUCCESSFULLY!');
     console.log('✅ ==========================================');
-    console.log(`   Message ID: ${info.messageId}`);
+    console.log(`   Message ID: ${data.messageId}`);
     console.log(`   To: ${adminEmail}`);
-    console.log(`   Response: ${info.response || 'OK'}`);
     console.log('✅ ==========================================\n');
     
-    return { success: true, messageId: info.messageId };
+    return { success: true, messageId: data.messageId };
   } catch (error) {
     console.error('❌ ==========================================');
     console.error('❌ FAILED TO SEND ORDER EMAIL');
     console.error('❌ ==========================================');
     console.error('   Error:', error.message);
-    console.error('   Code:', error.code);
     if (error.response) {
-      console.error('   Response:', error.response);
-    }
-    if (error.responseCode) {
-      console.error('   Response Code:', error.responseCode);
+      console.error('   Response:', JSON.stringify(error.response.body || error.response.text));
     }
     console.error('❌ ==========================================');
     console.warn('⚠️  Order was created successfully despite email error');
@@ -268,19 +212,20 @@ async function sendUPIPaymentEmail(orderData) {
   console.log('📧 UPI Payment Email Triggered');
   console.log('📧 ==========================================');
   
-  const transporter = createTransporter();
+  const apiInstance = initializeBrevo();
   
-  if (!transporter) {
-    console.warn('⚠️  Email transporter not available. Skipping email notification.');
-    return { success: false, error: 'Email not configured', skipped: true };
+  if (!apiInstance) {
+    console.warn('⚠️  Brevo API not available. Skipping email notification.');
+    return { success: false, error: 'Brevo API not configured', skipped: true };
   }
 
-  const fromEmail = process.env.SENDER_EMAIL || process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
+  const fromEmail = process.env.SENDER_EMAIL || 'noreply@goras.com';
+  const fromName = process.env.SENDER_NAME || 'GORAS Orders';
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
   
   const { order, customer, items, paymentProofPath, phone } = orderData;
 
-  console.log(`📧 From: ${fromEmail}`);
+  console.log(`📧 From: ${fromName} <${fromEmail}>`);
   console.log(`📧 To: ${adminEmail}`);
   console.log(`📧 Order Number: ${order.order_number}`);
   console.log(`📧 Attachment: ${paymentProofPath ? 'Yes' : 'No'}`);
@@ -293,13 +238,23 @@ async function sendUPIPaymentEmail(orderData) {
     `  • ${item.product_name} - ${item.quantity} × ₹${item.product_price} = ₹${item.subtotal.toFixed(2)}`
   ).join('\n');
 
+  // Convert attachment to Base64 for Brevo
   let attachments = [];
   if (paymentProofPath && fs.existsSync(paymentProofPath)) {
-    attachments.push({
-      filename: order.payment_proof || 'payment-proof.jpg',
-      path: paymentProofPath
-    });
-    console.log(`📎 Attaching payment proof: ${order.payment_proof}`);
+    try {
+      const fileContent = fs.readFileSync(paymentProofPath);
+      const base64Content = fileContent.toString('base64');
+      const fileName = order.payment_proof || 'payment-proof.jpg';
+      
+      attachments.push({
+        content: base64Content,
+        name: fileName
+      });
+      
+      console.log(`📎 Attaching payment proof: ${fileName}`);
+    } catch (err) {
+      console.error('❌ Failed to read payment proof file:', err.message);
+    }
   }
 
   const emailHtml = `
@@ -423,35 +378,38 @@ Payment screenshot is attached to this email.
 This is an automated notification from GORAS Dairy E-commerce System
   `;
 
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  
+  sendSmtpEmail.sender = { name: fromName, email: fromEmail };
+  sendSmtpEmail.to = [{ email: adminEmail }];
+  sendSmtpEmail.subject = `💰 UPI Payment - ${order.order_number} - ₹${totalAmount.toFixed(2)} [VERIFY]`;
+  sendSmtpEmail.htmlContent = emailHtml;
+  sendSmtpEmail.textContent = emailText;
+  
+  if (attachments.length > 0) {
+    sendSmtpEmail.attachment = attachments;
+  }
+
   try {
-    console.log('📤 Sending UPI payment email...');
+    console.log('📤 Sending UPI payment email via Brevo...');
     
-    const info = await transporter.sendMail({
-      from: `"GORAS Orders" <${fromEmail}>`,
-      to: adminEmail,
-      subject: `💰 UPI Payment - ${order.order_number} - ₹${totalAmount.toFixed(2)} [VERIFY]`,
-      text: emailText,
-      html: emailHtml,
-      attachments: attachments,
-    });
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
 
     console.log('✅ ==========================================');
     console.log('✅ UPI EMAIL SENT SUCCESSFULLY!');
     console.log('✅ ==========================================');
-    console.log(`   Message ID: ${info.messageId}`);
+    console.log(`   Message ID: ${data.messageId}`);
     console.log(`   To: ${adminEmail}`);
-    console.log(`   Response: ${info.response || 'OK'}`);
     console.log('✅ ==========================================\n');
     
-    return { success: true, messageId: info.messageId };
+    return { success: true, messageId: data.messageId };
   } catch (error) {
     console.error('❌ ==========================================');
     console.error('❌ FAILED TO SEND UPI EMAIL');
     console.error('❌ ==========================================');
     console.error('   Error:', error.message);
-    console.error('   Code:', error.code);
     if (error.response) {
-      console.error('   Response:', error.response);
+      console.error('   Response:', JSON.stringify(error.response.body || error.response.text));
     }
     console.error('❌ ==========================================');
     console.warn('⚠️  Order was processed successfully despite email error');
