@@ -1,54 +1,111 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 
-// Create transporter - supports Gmail, Outlook, and other SMTP services
+// Universal SMTP transporter creator
 function createTransporter() {
-  // If SMTP credentials are provided, use them
-  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-    return nodemailer.createTransporter({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+  console.log('🔧 Creating email transporter...');
+  
+  // Check if SMTP is configured
+  const hasSmtp = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
+  const hasGmail = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+  
+  if (!hasSmtp && !hasGmail) {
+    console.warn('⚠️  No email service configured!');
+    console.warn('⚠️  Please set one of the following in your environment variables:');
+    console.warn('   Option 1 - Generic SMTP: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS');
+    console.warn('   Option 2 - Gmail: GMAIL_USER, GMAIL_APP_PASSWORD');
+    console.warn('⚠️  Orders will still work, but email notifications will be skipped.');
+    return null;
   }
 
-  // Default: Use Gmail with app password
-  // For Gmail: Enable 2FA and create an App Password
-  if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-    return nodemailer.createTransporter({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
-  }
+  try {
+    let transporter;
 
-  // Fallback: No email service configured
-  console.warn('⚠️  No email credentials configured. Email sending will be disabled.');
-  return null;
+    // Priority 1: Use SMTP settings (works with ANY provider)
+    if (hasSmtp) {
+      const smtpConfig = {
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || '587'),
+        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for 587
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+        tls: {
+          rejectUnauthorized: false // Allow self-signed certificates
+        },
+        connectionTimeout: 10000, // 10 seconds
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
+      };
+
+      console.log(`✅ Using SMTP: ${process.env.SMTP_HOST}:${smtpConfig.port}`);
+      console.log(`   User: ${process.env.SMTP_USER}`);
+      console.log(`   Secure: ${smtpConfig.secure}`);
+      
+      transporter = nodemailer.createTransport(smtpConfig);
+    }
+    // Priority 2: Use Gmail (fallback)
+    else if (hasGmail) {
+      console.log('✅ Using Gmail SMTP');
+      console.log('   User:', process.env.GMAIL_USER);
+      console.warn('⚠️  Note: Gmail may be unreliable on cloud servers. Consider using a dedicated SMTP service.');
+      
+      transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_APP_PASSWORD,
+        },
+        tls: {
+          rejectUnauthorized: false
+        },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
+      });
+    }
+
+    // Verify the transporter configuration
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error('❌ Email transporter verification failed:', error.message);
+        console.error('   Please check your SMTP credentials and configuration.');
+      } else {
+        console.log('✅ Email transporter is ready to send emails');
+      }
+    });
+
+    return transporter;
+  } catch (error) {
+    console.error('❌ Failed to create email transporter:', error.message);
+    return null;
+  }
 }
 
 // Send order notification email to admin
 async function sendOrderNotificationEmail(orderData) {
-  console.log('📧 Email notification triggered for new order');
+  console.log('\n📧 ==========================================');
+  console.log('📧 Order Notification Email Triggered');
+  console.log('📧 ==========================================');
+  
   const transporter = createTransporter();
   
   if (!transporter) {
-    console.warn('⚠️  Email transporter not configured. Skipping email notification.');
-    console.warn('⚠️  Orders will still be created successfully.');
+    console.warn('⚠️  Email transporter not available. Skipping email notification.');
+    console.warn('⚠️  Order was created successfully.');
     return { success: false, error: 'Email not configured', skipped: true };
   }
-  
-  console.log('✅ Email transporter created successfully');
 
-  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'gorusorganics@gmail.com';
+  // Get email addresses from environment
+  const fromEmail = process.env.SENDER_EMAIL || process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
+  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
   
   const { order, customer, items } = orderData;
+
+  console.log(`📧 From: ${fromEmail}`);
+  console.log(`📧 To: ${adminEmail}`);
+  console.log(`📧 Order Number: ${order.order_number}`);
 
   // Format order items
   const itemsList = items.map(item => 
@@ -166,9 +223,7 @@ This is an automated notification from GORAS Dairy E-commerce System
   `;
 
   try {
-    const fromEmail = process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
-    console.log(`📧 Attempting to send email to: ${adminEmail}`);
-    console.log(`📧 From email: ${fromEmail}`);
+    console.log('📤 Sending email...');
     
     const info = await transporter.sendMail({
       from: `"GORAS Orders" <${fromEmail}>`,
@@ -176,58 +231,75 @@ This is an automated notification from GORAS Dairy E-commerce System
       subject: `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`,
       text: emailText,
       html: emailHtml,
-      timeout: 10000, // 10 second timeout to prevent hanging
     });
 
-    console.log('✅ Order notification email sent successfully!');
-    console.log('   Message ID:', info.messageId);
-    console.log('   To:', adminEmail);
+    console.log('✅ ==========================================');
+    console.log('✅ ORDER EMAIL SENT SUCCESSFULLY!');
+    console.log('✅ ==========================================');
+    console.log(`   Message ID: ${info.messageId}`);
+    console.log(`   To: ${adminEmail}`);
+    console.log(`   Response: ${info.response || 'OK'}`);
+    console.log('✅ ==========================================\n');
+    
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('❌ Error sending order notification email:');
-    console.error('   Error message:', error.message);
-    console.error('   Error code:', error.code);
+    console.error('❌ ==========================================');
+    console.error('❌ FAILED TO SEND ORDER EMAIL');
+    console.error('❌ ==========================================');
+    console.error('   Error:', error.message);
+    console.error('   Code:', error.code);
     if (error.response) {
-      console.error('   SMTP Response:', error.response);
+      console.error('   Response:', error.response);
     }
-    // Don't throw error - just log it and continue
-    // Orders should still be created even if email fails
+    if (error.responseCode) {
+      console.error('   Response Code:', error.responseCode);
+    }
+    console.error('❌ ==========================================');
     console.warn('⚠️  Order was created successfully despite email error');
+    console.error('❌ ==========================================\n');
+    
     return { success: false, error: error.message, skipped: true };
   }
 }
 
 // Send UPI payment confirmation email with screenshot
 async function sendUPIPaymentEmail(orderData) {
-  console.log('📧 UPI payment email notification triggered');
+  console.log('\n📧 ==========================================');
+  console.log('📧 UPI Payment Email Triggered');
+  console.log('📧 ==========================================');
+  
   const transporter = createTransporter();
   
   if (!transporter) {
-    console.warn('⚠️  Email transporter not configured. Skipping email notification.');
+    console.warn('⚠️  Email transporter not available. Skipping email notification.');
     return { success: false, error: 'Email not configured', skipped: true };
   }
 
-  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'gorusorganics@gmail.com';
+  const fromEmail = process.env.SENDER_EMAIL || process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
+  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
   
   const { order, customer, items, paymentProofPath, phone } = orderData;
 
-  // Ensure total_amount is a number
+  console.log(`📧 From: ${fromEmail}`);
+  console.log(`📧 To: ${adminEmail}`);
+  console.log(`📧 Order Number: ${order.order_number}`);
+  console.log(`📧 Attachment: ${paymentProofPath ? 'Yes' : 'No'}`);
+
   const totalAmount = typeof order.total_amount === 'number' 
     ? order.total_amount 
     : parseFloat(order.total_amount) || 0;
 
-  // Format order items
   const itemsList = items.map(item => 
     `  • ${item.product_name} - ${item.quantity} × ₹${item.product_price} = ₹${item.subtotal.toFixed(2)}`
   ).join('\n');
 
-  // Prepare attachment if payment proof exists
   let attachments = [];
   if (paymentProofPath && fs.existsSync(paymentProofPath)) {
     attachments.push({
       filename: order.payment_proof || 'payment-proof.jpg',
       path: paymentProofPath
     });
+    console.log(`📎 Attaching payment proof: ${order.payment_proof}`);
   }
 
   const emailHtml = `
@@ -352,10 +424,7 @@ This is an automated notification from GORAS Dairy E-commerce System
   `;
 
   try {
-    const fromEmail = process.env.SMTP_USER || process.env.GMAIL_USER || 'noreply@goras.com';
-    console.log(`📧 Attempting to send UPI payment email to: ${adminEmail}`);
-    console.log(`📧 From email: ${fromEmail}`);
-    console.log(`📧 Attachment: ${paymentProofPath ? 'Yes' : 'No'}`);
+    console.log('📤 Sending UPI payment email...');
     
     const info = await transporter.sendMail({
       from: `"GORAS Orders" <${fromEmail}>`,
@@ -364,22 +433,30 @@ This is an automated notification from GORAS Dairy E-commerce System
       text: emailText,
       html: emailHtml,
       attachments: attachments,
-      timeout: 10000, // 10 second timeout
     });
 
-    console.log('✅ UPI payment email sent successfully!');
-    console.log('   Message ID:', info.messageId);
-    console.log('   To:', adminEmail);
+    console.log('✅ ==========================================');
+    console.log('✅ UPI EMAIL SENT SUCCESSFULLY!');
+    console.log('✅ ==========================================');
+    console.log(`   Message ID: ${info.messageId}`);
+    console.log(`   To: ${adminEmail}`);
+    console.log(`   Response: ${info.response || 'OK'}`);
+    console.log('✅ ==========================================\n');
+    
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('❌ Error sending UPI payment email:');
-    console.error('   Error message:', error.message);
-    console.error('   Error code:', error.code);
+    console.error('❌ ==========================================');
+    console.error('❌ FAILED TO SEND UPI EMAIL');
+    console.error('❌ ==========================================');
+    console.error('   Error:', error.message);
+    console.error('   Code:', error.code);
     if (error.response) {
-      console.error('   SMTP Response:', error.response);
+      console.error('   Response:', error.response);
     }
-    // Don't throw error - just log it and continue
+    console.error('❌ ==========================================');
     console.warn('⚠️  Order was processed successfully despite email error');
+    console.error('❌ ==========================================\n');
+    
     return { success: false, error: error.message, skipped: true };
   }
 }
