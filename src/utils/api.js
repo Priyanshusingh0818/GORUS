@@ -27,7 +27,7 @@ const apiCall = async (endpoint, options = {}) => {
       
       // Handle authentication errors - but NOT for login/signup endpoints
       // Login/signup 401 means invalid credentials, not expired session
-      if (response.status === 401 && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/register')) {
+      if (response.status === 401 && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/signup')) {
         // Clear invalid token only for authenticated endpoints
         localStorage.removeItem('gorasToken');
         localStorage.removeItem('gorasUser');
@@ -56,10 +56,10 @@ export const authAPI = {
       body: JSON.stringify({ email, password }),
     }),
 
-  signup: (name, email, phone, password) =>
-    apiCall('/api/auth/register', {
+  signup: (name, email, password) =>
+    apiCall('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ name, email, phone, password }),
+      body: JSON.stringify({ name, email, password }),
     }),
 
   updateProfile: (name, email) =>
