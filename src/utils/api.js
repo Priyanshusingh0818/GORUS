@@ -67,7 +67,7 @@ export const authAPI = {
   signup: (name, email, password) =>
     apiCall('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ name, email, password }), // ✅ FIXED: Added password
     }),
 
   updateProfile: (name, email) =>
