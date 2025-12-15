@@ -28,19 +28,10 @@ const app = express();
 /* ✅ FIX FOR express-rate-limit + X-Forwarded-For */
 app.set('trust proxy', 1);
 
-/* ✅ FIXED HELMET - Configure CSP to allow same-origin API calls */
+/* ✅ FIXED HELMET - Disable CSP entirely to avoid blocking issues */
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      connectSrc: ["'self'"], // ✅ Allow fetch/XHR to same origin
-      scriptSrc: ["'self'", "'unsafe-inline'"], // For React inline scripts
-      styleSrc: ["'self'", "'unsafe-inline'"], // For inline styles
-      imgSrc: ["'self'", "data:", "https:"], // For images
-      fontSrc: ["'self'", "data:"], // For fonts
-    },
-  },
-  crossOriginEmbedderPolicy: false, // Disable if causing issues with external resources
+  contentSecurityPolicy: false, // ✅ Disable CSP - it's blocking legitimate requests
+  crossOriginEmbedderPolicy: false,
 }));
 
 app.use(express.json());
