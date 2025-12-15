@@ -1,6 +1,6 @@
-// Use environment variable or default to production URL
-const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "https://gorus.onrender.com";
+// ✅ Use same-origin requests (works on both gorus.in and gorus.onrender.com)
+// Empty string means "same origin" - requests go to the same domain the app is loaded from
+const API_BASE_URL = process.env.REACT_APP_API_URL || "";
 
 // Helper function to get auth token
 const getToken = () => {
@@ -21,6 +21,7 @@ const apiCall = async (endpoint, options = {}) => {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers,
+      credentials: 'same-origin', // ✅ Include credentials for same-origin requests
     });
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'An error occurred' }));

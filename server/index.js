@@ -33,9 +33,18 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* CORS */
+/* ✅ FIXED CORS - Allows credentials and specific origins */
 app.use(cors({
-  origin: process.env.CLIENT_URL || '*',
+  origin: [
+    'https://gorus.in',
+    'https://www.gorus.in',
+    'https://gorus.onrender.com',
+    'http://localhost:3000', // For local development
+    'http://localhost:5000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 /* Rate limiting */
@@ -140,7 +149,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`\n🚀 Server listening on port ${PORT}`);
   console.log(`📡 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`🌐 Client URL: ${process.env.CLIENT_URL || 'http://localhost:3000'}`);
 
   // Check email configuration
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
@@ -160,5 +168,6 @@ app.listen(PORT, () => {
     console.log('✅ Cashfree payment gateway configured');
   }
 
+  console.log('✅ CORS configured for production domains');
   console.log('');
 });
