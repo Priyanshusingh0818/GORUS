@@ -28,8 +28,21 @@ const app = express();
 /* ✅ FIX FOR express-rate-limit + X-Forwarded-For */
 app.set('trust proxy', 1);
 
-/* Security & parsing middlewares */
-app.use(helmet());
+/* ✅ FIXED HELMET - Configure CSP to allow same-origin API calls */
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'"], // ✅ Allow fetch/XHR to same origin
+      scriptSrc: ["'self'", "'unsafe-inline'"], // For React inline scripts
+      styleSrc: ["'self'", "'unsafe-inline'"], // For inline styles
+      imgSrc: ["'self'", "data:", "https:"], // For images
+      fontSrc: ["'self'", "data:"], // For fonts
+    },
+  },
+  crossOriginEmbedderPolicy: false, // Disable if causing issues with external resources
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -169,5 +182,6 @@ app.listen(PORT, () => {
   }
 
   console.log('✅ CORS configured for production domains');
+  console.log('✅ CSP configured to allow same-origin API calls');
   console.log('');
 });
