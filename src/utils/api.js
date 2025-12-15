@@ -1,6 +1,13 @@
-// ✅ Use same-origin requests (works on both gorus.in and gorus.onrender.com)
-// Empty string means "same origin" - requests go to the same domain the app is loaded from
-const API_BASE_URL = process.env.REACT_APP_API_URL || "";
+// ✅ Detect current domain to avoid redirect issues
+// If on www.gorus.in, use www.gorus.in for API calls
+// If on gorus.in, use gorus.in for API calls
+const getCurrentDomain = () => {
+  if (typeof window === 'undefined') return '';
+  return window.location.origin; // Returns full origin including https:// and www
+};
+
+// Use current domain for API calls to avoid redirects
+const API_BASE_URL = process.env.REACT_APP_API_URL || getCurrentDomain();
 
 // Helper function to get auth token
 const getToken = () => {
@@ -60,7 +67,7 @@ export const authAPI = {
   signup: (name, email, password) =>
     apiCall('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email }),
     }),
 
   updateProfile: (name, email) =>
