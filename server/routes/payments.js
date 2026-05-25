@@ -101,25 +101,25 @@ module.exports = function (pool) {
     const { rows: userRows } = await pool.query('SELECT id, name, email FROM users WHERE id = $1', [userId]);
     const customer = userRows[0];
 
-    try {
-      await sendUPIPaymentEmail({
-        order: {
-          ...order,
-          order_number: orderNumber,
-          total_amount: parseFloat(totalAmount) || order.total_amount,
-          payment_proof: publicUrl
-        },
-        customer: customer || { 
-          name: customerName, 
-          email: customerEmail 
-        },
-        items: orderItems,
-        paymentProofPath: publicUrl,
-        phone: customerPhone
-      });
-    } catch (emailError) {
-      console.error('Failed to send UPI payment email:', emailError);
-    }
+    // Send email asynchronously so it doesn't block the API response
+    // (Render free tier can sometimes silently block SMTP causing Nodemailer to hang)
+    sendUPIPaymentEmail({
+      order: {
+        ...order,
+        order_number: orderNumber,
+        total_amount: parseFloat(totalAmount) || order.total_amount,
+        payment_proof: publicUrl
+      },
+      customer: customer || { 
+        name: customerName, 
+        email: customerEmail 
+      },
+      items: orderItems,
+      paymentProofPath: publicUrl,
+      phone: customerPhone
+    }).catch(emailError => {
+      console.error('Failed to send UPI payment email in background:', emailError);
+    });
 
     return res.json({
       success: true,
