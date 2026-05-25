@@ -1,0 +1,1737 @@
+
+> goras-dairy-ecommerce@1.0.0 start
+> react-scripts start
+
+(node:26528) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:26528) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled successfully!
+
+You can now view goras-dairy-ecommerce in the browser.
+
+  Local:            http://localhost:3001
+  On Your Network:  http://192.168.1.13:3001
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve 'ogl' in 'C:\Users\priya\Downloads\GORUS-main\GORUS\src\components'
+[1m[31mERROR[39m[22m in [1m./src/components/CircularGallery.jsx[39m[22m [1m[32m6:0-81[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'ogl' in 'C:\Users\priya\Downloads\GORUS-main\GORUS\src\components'[39m[22m
+
+webpack compiled with [1m[31m1 error[39m[22m
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve 'ogl' in 'C:\Users\priya\Downloads\GORUS-main\GORUS\src\components'
+[1mLOG from webpack.FileSystemInfo[39m[22m
+<w> [1m[33mManaged item C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\ogl isn't a directory or doesn't contain a package.json (see snapshot.managedPaths option)[39m[22m
++ 13 hidden lines
+
+[1m[31mERROR[39m[22m in [1m./src/components/CircularGallery.jsx[39m[22m [1m[32m6:0-81[39m[22m
+[1mModule [1m[31mnot found[39m[22m[1m: [1m[31mError[39m[22m[1m: Can't resolve 'ogl' in 'C:\Users\priya\Downloads\GORUS-main\GORUS\src\components'[39m[22m
+
+webpack compiled with [1m[31m1 error[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\utils\api.js
+Syntax error: Missing semicolon. (97:5) (97:5)
+[1m[31mERROR[39m[22m in [1m./src/utils/api.js[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\utils\api.js: Missing semicolon. (97:5)
+
+[0m [90m  95 |[39m     })[33m,[39m
+ [90m  96 |[39m
+[31m[1m>[22m[39m[90m  97 |[39m     })[33m,[39m
+ [90m     |[39m      [31m[1m^[22m[39m
+ [90m  98 |[39m }[33m;[39m
+ [90m  99 |[39m
+ [90m 100 |[39m [90m// Products API[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.semicolon (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6920:10)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13307:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14010:17)
+    at FlowParserMixin.parseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3147:20)
+    at FlowParserMixin.maybeParseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13969:31)
+    at FlowParserMixin.parseExport (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13888:29)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12954:27)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\utils\api.js
+  Line 97:5:  Parsing [1m[31merror[39m[22m[1m: Missing semicolon. (97:5)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\utils\api.js
+Syntax error: Unexpected keyword 'const'. (87:0) (87:undefined)
+[1m[31mERROR[39m[22m in [1m./src/utils/api.js[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\utils\api.js: Unexpected keyword 'const'. (87:0)
+
+[0m [90m 85 |[39m
+ [90m 86 |[39m [90m// Helper function to get auth token[39m
+[31m[1m>[22m[39m[90m 87 |[39m [36mconst[39m getToken [33m=[39m () [33m=>[39m {
+ [90m    |[39m [31m[1m^[22m[39m
+ [90m 88 |[39m   [36mreturn[39m localStorage[33m.[39mgetItem([32m'gorasToken'[39m)[33m;[39m
+ [90m 89 |[39m }[33m;[39m
+ [90m 90 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.checkReservedWord (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12298:12)
+    at FlowParserMixin.parseObjectProperty (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12028:12)
+    at FlowParserMixin.parseObjPropValue (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12052:100)
+    at FlowParserMixin.parseObjPropValue (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3368:26)
+    at FlowParserMixin.parsePropertyDefinition (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11989:17)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11904:21)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14010:17)
+    at FlowParserMixin.parseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3147:20)
+    at FlowParserMixin.maybeParseExportDeclaration (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13969:31)
+    at FlowParserMixin.parseExport (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13888:29)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12954:27)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\utils\api.js
+  Line 87:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m keyword 'const'. (87:0)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\components\Navbar.jsx
+  Line 80:26:  'searchQuery' is not defined     no-undef
+  Line 81:36:  'setSearchQuery' is not defined  no-undef
+  Line 85:46:  'searchQuery' is not defined     no-undef
+  Line 86:71:  'searchQuery' is not defined     no-undef
+  Line 92:25:  'searchQuery' is not defined     no-undef
+  Line 93:71:  'searchQuery' is not defined     no-undef
+
+Search for the keywords to learn more about each error.
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Navbar.jsx
+  Line 80:26:  'searchQuery' is not defined     no-undef
+  Line 81:36:  'setSearchQuery' is not defined  no-undef
+  Line 85:46:  'searchQuery' is not defined     no-undef
+  Line 86:71:  'searchQuery' is not defined     no-undef
+  Line 92:25:  'searchQuery' is not defined     no-undef
+  Line 93:71:  'searchQuery' is not defined     no-undef
+
+Search for the keywords to learn more about each [1m[31merror[39m[22m[1m.[39m[22m
+
+webpack compiled with [1m[31m1 error[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\App.jsx
+Syntax error: Unterminated JSX contents. (68:21) (68:21)
+[1m[31mERROR[39m[22m in [1m./src/App.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\App.jsx: Unterminated JSX contents. (68:21)
+
+[0m [90m 66 |[39m         [33m<[39m[33m/[39m[33mAuthProvider[39m[33m>[39m
+ [90m 67 |[39m       [33m<[39m[33m/[39m[33mRouter[39m[33m>[39m
+[31m[1m>[22m[39m[90m 68 |[39m     [33m<[39m[33m/[39m[33mHelmetProvider[39m[33m>[39m
+ [90m    |[39m                      [31m[1m^[22m[39m
+ [90m 69 |[39m   )[33m;[39m
+ [90m 70 |[39m }
+ [90m 71 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.jsxReadToken (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4477:20)
+    at FlowParserMixin.getTokenFromCode (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4803:12)
+    at FlowParserMixin.getTokenFromCode (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3224:13)
+    at FlowParserMixin.nextToken (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:5807:10)
+    at FlowParserMixin.next (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:5717:10)
+    at FlowParserMixin.eat (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:5721:12)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6923:15)
+    at FlowParserMixin.jsxParseClosingElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4709:10)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4724:37)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4778:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4788:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:39
+    at FlowParserMixin.tryParse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6932:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12500:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12567:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11747:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3620:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11395:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10848:23)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:17)
+    at FlowParserMixin.parseReturnStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13218:28)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12874:21)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:61)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\App.jsx
+  Line 68:21:  Parsing [1m[31merror[39m[22m[1m: Unterminated JSX contents. (68:21)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\components\Navbar.jsx
+Syntax error: Identifier 'isContactOpen' has already been declared. (19:9) (19:9)
+[1m[31mERROR[39m[22m in [1m./src/components/Navbar.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\components\Navbar.jsx: Identifier 'isContactOpen' has already been declared. (19:9)
+
+[0m [90m 17 |[39m   [36mconst[39m { isDarkMode[33m,[39m toggleTheme } [33m=[39m useTheme()[33m;[39m
+ [90m 18 |[39m   [36mconst[39m navigate [33m=[39m useNavigate()[33m;[39m
+[31m[1m>[22m[39m[90m 19 |[39m   [36mconst[39m [isContactOpen[33m,[39m setIsContactOpen] [33m=[39m useState([36mfalse[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m
+ [90m 20 |[39m   [36mconst[39m [isAccountDropdownOpen[33m,[39m setIsAccountDropdownOpen] [33m=[39m useState([36mfalse[39m)[33m;[39m
+ [90m 21 |[39m   [36mconst[39m [searchQuery[33m,[39m setSearchQuery] [33m=[39m useState([32m''[39m)[33m;[39m
+ [90m 22 |[39m   [36mconst[39m { getCartCount } [33m=[39m useCart()[33m;[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowScopeHandler.checkRedeclarationInScope (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:1646:19)
+    at FlowScopeHandler.declareName (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:1612:12)
+    at FlowScopeHandler.declareName (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:1713:11)
+    at FlowParserMixin.declareNameFromIdentifier (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:7594:16)
+    at FlowParserMixin.checkIdentifier (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:7590:12)
+    at FlowParserMixin.checkLVal (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:7527:12)
+    at FlowParserMixin.checkLVal (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:7567:16)
+    at FlowParserMixin.parseVarId (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13488:10)
+    at FlowParserMixin.parseVarId (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3503:11)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13459:12)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseBlock (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13373:10)
+    at FlowParserMixin.parseFunctionBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12174:24)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2919:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3095:16)
+    at FlowParserMixin.parseFunctionBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2919:12)
+    at FlowParserMixin.parseArrowExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12149:10)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11759:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3620:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11395:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Navbar.jsx
+  Line 19:9:  Parsing [1m[31merror[39m[22m[1m: Identifier 'isContactOpen' has already been declared. (19:9)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\components\Navbar.jsx
+  Line 3:93:   'Sun' is defined but never used                   no-unused-vars
+  Line 3:98:   'Moon' is defined but never used                  no-unused-vars
+  Line 17:11:  'isDarkMode' is assigned a value but never used   no-unused-vars
+  Line 17:23:  'toggleTheme' is assigned a value but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\Navbar.jsx
+  Line 3:93:   'Sun' is defined but never used                   no-unused-vars
+  Line 3:98:   'Moon' is defined but never used                  no-unused-vars
+  Line 17:11:  'isDarkMode' is assigned a value but never used   no-unused-vars
+  Line 17:23:  'toggleTheme' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (787:1) (787:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (787:1)
+
+[0m [90m 785 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 786 |[39m   }
+[31m[1m>[22m[39m[90m 787 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 788 |[39m
+ [90m 789 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 790 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 787:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (787:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "," (775:1) (775:1)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "," (775:1)
+
+[0m [90m 773 |[39m     fontSize[33m:[39m [35m16[39m
+ [90m 774 |[39m   }
+[31m[1m>[22m[39m[90m 775 |[39m }[33m;[39m
+ [90m     |[39m  [31m[1m^[22m[39m
+ [90m 776 |[39m
+ [90m 777 |[39m [36mexport[39m [36mdefault[39m [33mAdminPanel[39m[33m;[39m
+ [90m 778 |[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.parseObjectLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11894:14)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11403:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13460:91)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 775:1:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "," (775:1)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Missing initializer in const declaration. (652:81) (652:81)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Missing initializer in const declaration. (652:81)
+
+[0m [90m 650 |[39m     outline[33m:[39m [32m'none'[39m
+ [90m 651 |[39m   }[33m,[39m
+[31m[1m>[22m[39m[90m 652 |[39m   divider[33m:[39m { height[33m:[39m [35m1[39m[33m,[39m backgroundColor[33m:[39m [32m'hsl(var(--border))'[39m[33m,[39m margin[33m:[39m [32m'20px 0'[39m }[33m,[39m
+ [90m     |[39m                                                                                  [31m[1m^[22m[39m
+ [90m 653 |[39m   orderDetails[33m:[39m { display[33m:[39m [32m'grid'[39m[33m,[39m gridTemplateColumns[33m:[39m [32m'1fr 1fr'[39m[33m,[39m gap[33m:[39m [35m24[39m[33m,[39m marginBottom[33m:[39m [35m16[39m }[33m,[39m
+ [90m 654 |[39m   section[33m:[39m { marginBottom[33m:[39m [35m0[39m }[33m,[39m
+ [90m 655 |[39m   sectionTitle[33m:[39m { fontSize[33m:[39m [35m16[39m[33m,[39m fontWeight[33m:[39m [35m600[39m[33m,[39m color[33m:[39m [32m'hsl(var(--foreground))'[39m[33m,[39m marginBottom[33m:[39m [35m12[39m }[33m,[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.parseVar (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13467:16)
+    at FlowParserMixin.parseVarStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13306:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12927:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12820:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseProgram (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12698:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12688:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3714:28)
+    at FlowParserMixin.parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14568:25)
+    at parse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:14602:38)
+    at parser (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:261:32)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 652:81:  Parsing [1m[31merror[39m[22m[1m: Missing initializer in const declaration. (652:81)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "}" (650:18) (650:18)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "}" (650:18)
+
+[0m [90m 648 |[39m     fontSize[33m:[39m [35m14[39m
+ [90m 649 |[39m   }[33m,[39m
+[31m[1m>[22m[39m[90m 650 |[39m   itemName[33m:[39m { flex[33m:[39m [35m1[39m[33m,[39m color[33m:[39m [32m'hsl(var(--foreground))'[39m[33m,[39m fontWeight[33m:[39m [35m500[39m }[33m,[39m
+ [90m     |[39m                   [31m[1m^[22m[39m
+ [90m 651 |[39m   itemQty[33m:[39m { color[33m:[39m [32m'hsl(var(--muted-foreground))'[39m[33m,[39m margin[33m:[39m [32m'0 12px'[39m }[33m,[39m
+ [90m 652 |[39m   itemPrice[33m:[39m { fontWeight[33m:[39m [35m600[39m[33m,[39m color[33m:[39m [32m'hsl(var(--foreground))'[39m[33m,[39m minWidth[33m:[39m [35m80[39m[33m,[39m textAlign[33m:[39m [32m'right'[39m }[33m,[39m
+ [90m 653 |[39m   addressText[33m:[39m { fontSize[33m:[39m [35m14[39m[33m,[39m color[33m:[39m [32m'hsl(var(--foreground))'[39m[33m,[39m lineHeight[33m:[39m [35m1.6[39m[33m,[39m backgroundColor[33m:[39m [32m'hsl(var(--muted))'[39m[33m,[39m padding[33m:[39m [35m12[39m[33m,[39m borderRadius[33m:[39m [35m6[39m }[33m,[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.jsxParseExpressionContainer (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4666:10)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4740:36)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4778:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4788:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:39
+    at FlowParserMixin.tryParse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6932:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12500:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12567:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11747:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3620:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11395:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10848:23)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:17)
+    at FlowParserMixin.parseReturnStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13218:28)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12874:21)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseBlock (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13373:10)
+    at FlowParserMixin.parseFunctionBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12174:24)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2919:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3095:16)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 650:18:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "}" (650:18)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "}" (643:24) (643:24)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "}" (643:24)
+
+[0m [90m 641 |[39m     borderRadius[33m:[39m [35m8[39m
+ [90m 642 |[39m   }[33m,[39m
+[31m[1m>[22m[39m[90m 643 |[39m   totalLabel[33m:[39m { fontSize[33m:[39m [35m18[39m[33m,[39m fontWeight[33m:[39m [35m600[39m[33m,[39m color[33m:[39m [32m'hsl(var(--foreground))'[39m }[33m,[39m
+ [90m     |[39m                         [31m[1m^[22m[39m
+ [90m 644 |[39m   totalValue[33m:[39m { fontSize[33m:[39m [35m24[39m[33m,[39m fontWeight[33m:[39m [35m700[39m[33m,[39m color[33m:[39m [32m'hsl(var(--primary))'[39m }[33m,[39m
+ [90m 645 |[39m   addButton[33m:[39m { display[33m:[39m [32m'flex'[39m[33m,[39m alignItems[33m:[39m [32m'center'[39m[33m,[39m gap[33m:[39m [35m8[39m[33m,[39m marginBottom[33m:[39m [35m24[39m }[33m,[39m
+ [90m 646 |[39m   productsGrid[33m:[39m { display[33m:[39m [32m'grid'[39m[33m,[39m gridTemplateColumns[33m:[39m [32m'repeat(auto-fill, minmax(250px, 1fr))'[39m[33m,[39m gap[33m:[39m [35m20[39m }[33m,[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.jsxParseExpressionContainer (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4666:10)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4740:36)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4778:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4788:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:39
+    at FlowParserMixin.tryParse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6932:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12500:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12567:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11747:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3620:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11395:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOpBaseRightExpr (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11050:34)
+    at FlowParserMixin.parseExprOpRightExpr (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11045:21)
+    at FlowParserMixin.parseExprOp (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11011:27)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10972:17)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10848:23)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12500:12)
+    at FlowParserMixin.parseExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:17)
+    at FlowParserMixin.jsxParseExpressionContainer (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4661:31)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4740:36)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4727:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4778:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4788:19)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 643:24:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "}" (643:24)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+Syntax error: Unexpected token, expected "}" (218:6) (218:6)
+[1m[31mERROR[39m[22m in [1m./src/pages/AdminPanel.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\priya\Downloads\GORUS-main\GORUS\src\pages\AdminPanel.jsx: Unexpected token, expected "}" (218:6)
+
+[0m [90m 216 |[39m
+ [90m 217 |[39m [36mconst[39m styles [33m=[39m {
+[31m[1m>[22m[39m[90m 218 |[39m   page[33m:[39m { minHeight[33m:[39m [32m'100vh'[39m[33m,[39m padding[33m:[39m [32m'40px 0 80px'[39m }[33m,[39m
+ [90m     |[39m       [31m[1m^[22m[39m
+ [90m 219 |[39m   header[33m:[39m { display[33m:[39m [32m'flex'[39m[33m,[39m justifyContent[33m:[39m [32m'space-between'[39m[33m,[39m alignItems[33m:[39m [32m'center'[39m[33m,[39m marginBottom[33m:[39m [35m32[39m[33m,[39m flexWrap[33m:[39m [32m'wrap'[39m[33m,[39m gap[33m:[39m [35m16[39m }[33m,[39m
+ [90m 220 |[39m   title[33m:[39m { fontSize[33m:[39m [35m36[39m[33m,[39m fontWeight[33m:[39m [35m700[39m[33m,[39m color[33m:[39m [32m'var(--foreground, #111827)'[39m[33m,[39m margin[33m:[39m [35m0[39m }[33m,[39m
+ [90m 221 |[39m   refreshButton[33m:[39m { display[33m:[39m [32m'flex'[39m[33m,[39m alignItems[33m:[39m [32m'center'[39m[33m,[39m gap[33m:[39m [35m8[39m }[33m,[39m[0m
+    at constructor (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6624:19)
+    at FlowParserMixin.unexpected (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6644:16)
+    at FlowParserMixin.expect (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6924:12)
+    at FlowParserMixin.jsxParseExpressionContainer (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4666:10)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4740:36)
+    at FlowParserMixin.jsxParseElement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4778:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4788:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:39
+    at FlowParserMixin.tryParse (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:6932:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3527:18)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12500:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10864:17)
+    at FlowParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12567:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11747:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3620:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11395:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:4793:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11145:23)
+    at FlowParserMixin.parseUpdate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11130:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:11110:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10963:61)
+    at FlowParserMixin.parseExprOps (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10968:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10945:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10895:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3578:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10848:23)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:39
+    at FlowParserMixin.allowInAnd (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12495:16)
+    at FlowParserMixin.parseExpression (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:10844:17)
+    at FlowParserMixin.parseReturnStatement (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13218:28)
+    at FlowParserMixin.parseStatementContent (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12874:21)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12843:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2945:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12823:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13392:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13385:10)
+    at FlowParserMixin.parseBlock (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:13373:10)
+    at FlowParserMixin.parseFunctionBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:12174:24)
+    at C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2919:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:3095:16)
+    at FlowParserMixin.parseFunctionBody (C:\Users\priya\Downloads\GORUS-main\GORUS\node_modules\@babel\parser\lib\index.js:2919:12)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 218:6:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected "}" (218:6)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:   'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:   React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 763:3:  Duplicate key 'productName'                                                                                   no-dupe-keys
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:   'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:   React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 763:3:  [1m[31mDuplicate[39m[22m[1m key 'productName'                                                                                   no-dupe-keys
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\pages\AdminPanel.jsx
+  Line 3:91:  'TrendingUp' is defined but never used                                                                        no-unused-vars
+  Line 40:6:  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m

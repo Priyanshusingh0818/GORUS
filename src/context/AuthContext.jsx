@@ -16,26 +16,36 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('gorasUser');
-    const storedToken = localStorage.getItem('gorasToken');
-    if (storedUser && storedToken) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        localStorage.removeItem('gorasUser');
-        localStorage.removeItem('gorasToken');
+    const validateSession = async () => {
+      const storedUser = localStorage.getItem('gorasUser');
+      if (storedUser) {
+        try {
+          // Verify with backend
+          const response = await authAPI.me();
+          if (response && response.user) {
+            setUser(response.user);
+            localStorage.setItem('gorasUser', JSON.stringify(response.user));
+          } else {
+            throw new Error('Invalid session');
+          }
+        } catch (e) {
+          console.warn('Session invalid or expired:', e.message);
+          setUser(null);
+          localStorage.removeItem('gorasUser');
+          localStorage.removeItem('gorasToken');
+        }
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+    validateSession();
   }, []);
 
   const login = async (email, password) => {
     try {
       const response = await authAPI.login(email, password);
-      const { user: userData, token } = response;
+      const { user: userData } = response;
       setUser(userData);
       localStorage.setItem('gorasUser', JSON.stringify(userData));
-      localStorage.setItem('gorasToken', token);
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message || 'Invalid email or password' };
@@ -45,34 +55,22 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password) => {
     try {
       const response = await authAPI.signup(name, email, password);
-      const { user: userData, token } = response;
+      const { user: userData } = response;
       setUser(userData);
       localStorage.setItem('gorasUser', JSON.stringify(userData));
-      localStorage.setItem('gorasToken', token);
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message || 'Signup failed' };
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
     localStorage.removeItem('gorasUser');
-    localStorage.removeItem('gorasToken');
-  };
-
-  // Check if token is valid (not expired)
-  const isTokenValid = () => {
-    const token = localStorage.getItem('gorasToken');
-    if (!token) return false;
-    
     try {
-      // Decode token without verification (just to check expiry)
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const exp = payload.exp * 1000; // Convert to milliseconds
-      return Date.now() < exp;
-    } catch (e) {
-      return false;
+      await authAPI.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
     }
   };
 

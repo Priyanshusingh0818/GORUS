@@ -1,10 +1,18 @@
 const jwt = require('jsonwebtoken');
 
 function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) return res.status(401).json({ message: 'Missing token' });
+  let token = req.cookies?.gorasToken;
 
-  const token = authHeader.split(' ')[1];
+  if (!token) {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    }
+  }
+
+  if (!token) {
+    return res.status(401).json({ message: 'Missing token' });
+  }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload; // { id, email, is_admin }

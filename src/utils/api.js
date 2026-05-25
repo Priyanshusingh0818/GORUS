@@ -9,6 +9,19 @@ const getCurrentDomain = () => {
 // Use current domain for API calls to avoid redirects
 const API_BASE_URL = process.env.REACT_APP_API_URL || getCurrentDomain();
 
+const toQueryString = (params = {}) => {
+  const query = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      query.set(key, value);
+    }
+  });
+
+  const queryString = query.toString();
+  return queryString ? `?${queryString}` : '';
+};
+
 // Helper function to get auth token
 const getToken = () => {
   return localStorage.getItem('gorasToken');
@@ -28,7 +41,7 @@ const apiCall = async (endpoint, options = {}) => {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers,
-      credentials: 'same-origin', // ✅ Include credentials for same-origin requests
+      credentials: 'include', // Send cookies with requests
     });
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'An error occurred' }));
@@ -67,13 +80,35 @@ export const authAPI = {
   signup: (name, email, password) =>
     apiCall('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ name, email, password }), // ✅ FIXED: Added password
+      body: JSON.stringify({ name, email, password }),
     }),
 
-  updateProfile: (name, email) =>
+  logout: () =>
+    apiCall('/api/auth/logout', {
+      method: 'POST',
+    }),
+
+  forgotPassword: (email) =>
+    apiCall('/api/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+
+  resetPassword: (email, token, newPassword) =>
+    apiCall('/api/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ email, token, newPassword }),
+    }),
+
+  me: () =>
+    apiCall('/api/auth/me', {
+      method: 'GET',
+    }),
+
+  updateProfile: (name, email, phone) =>
     apiCall('/api/auth/profile', {
       method: 'PUT',
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ name, email, phone }),
     }),
 
   changePassword: (currentPassword, newPassword) =>
@@ -85,7 +120,7 @@ export const authAPI = {
 
 // Products API
 export const productsAPI = {
-  getAll: () => apiCall('/api/products'),
+  getAll: (params) => apiCall(`/api/products${toQueryString(params)}`),
   getById: (id) => apiCall(`/api/products/${id}`),
 };
 

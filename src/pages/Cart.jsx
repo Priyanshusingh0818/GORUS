@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, Trash2, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import CartItem from '../components/CartItem';
@@ -20,251 +21,140 @@ const Cart = () => {
     navigate('/checkout');
   };
 
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+  };
+
   if (cartItems.length === 0) {
     return (
-      <div style={styles.emptyCart}>
-        <div className="container">
-          <div style={styles.emptyContent}>
-            <ShoppingBag size={80} style={styles.emptyIcon} />
-            <h2 style={styles.emptyTitle}>Your cart is empty</h2>
-            <p style={styles.emptyText}>
-              Looks like you haven't added any products to your cart yet.
-            </p>
-            <button
-              className="btn-primary"
-              onClick={() => navigate('/products')}
-              style={styles.shopBtn}
-            >
-              Start Shopping
-            </button>
+      <motion.div 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="min-h-[70vh] flex items-center justify-center bg-background px-4"
+      >
+        <div className="max-w-md text-center p-8 rounded-2xl bg-card shadow-sm border border-border">
+          <div className="w-24 h-24 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center text-muted-foreground">
+            <ShoppingBag size={48} strokeWidth={1.5} />
           </div>
+          <h2 className="text-3xl font-bold text-foreground mb-3">Your cart is empty</h2>
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            Looks like you haven't added any premium dairy products to your cart yet.
+          </p>
+          <button
+            onClick={() => navigate('/products')}
+            className="w-full flex items-center justify-center gap-2 py-4 px-8 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-[0.98]"
+          >
+            Start Shopping
+          </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div style={styles.cartPage}>
-      <div className="container">
-        <div style={styles.header}>
-          <h1 style={styles.title}>Shopping Cart</h1>
+    <motion.div 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-10 gap-4">
+          <div>
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Shopping Cart</h1>
+            <p className="text-muted-foreground mt-2">You have {cartItems.length} items in your cart.</p>
+          </div>
           <button
-            style={styles.clearBtn}
             onClick={() => {
               if (window.confirm('Are you sure you want to clear your cart?')) {
                 clearCart();
               }
             }}
+            className="flex items-center gap-2 text-destructive font-medium px-4 py-2 rounded-full hover:bg-destructive/10 border border-transparent hover:border-destructive/20 transition-all"
           >
+            <Trash2 size={18} />
             Clear Cart
           </button>
         </div>
 
-        <div style={styles.content}>
-          {/* Cart Items */}
-          <div style={styles.itemsSection}>
-            {cartItems.map(item => (
-              <CartItem key={item.id} item={item} />
-            ))}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
+          {/* Cart Items List */}
+          <div className="lg:col-span-8 space-y-4">
+            <AnimatePresence>
+              {cartItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <CartItem item={item} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
 
           {/* Order Summary */}
-          <div style={styles.summarySection}>
-            <div className="card" style={styles.summaryCard}>
-              <h2 style={styles.summaryTitle}>Order Summary</h2>
-              
-              <div style={styles.summaryRow}>
-                <span style={styles.summaryLabel}>Subtotal</span>
-                <span style={styles.summaryValue}>₹{total.toFixed(2)}</span>
+          <div className="lg:col-span-4 mt-8 lg:mt-0">
+            <div className="sticky top-28 space-y-6">
+              <div className="bg-card rounded-2xl p-8 shadow-sm border border-border">
+                <h2 className="text-xl font-bold text-foreground mb-6">Order Summary</h2>
+                
+                <div className="space-y-4 text-sm text-muted-foreground">
+                  <div className="flex justify-between items-center py-2">
+                    <span className="font-medium">Subtotal</span>
+                    <span className="font-bold text-foreground">₹{total.toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center py-2">
+                    <span className="font-medium">Delivery</span>
+                    <span className="font-bold text-primary bg-primary/10 px-3 py-1 rounded-full text-xs">Free</span>
+                  </div>
+                </div>
+
+                <div className="my-6 border-t border-border" />
+
+                <div className="flex justify-between items-center mb-8">
+                  <span className="text-xl font-bold text-foreground">Total</span>
+                  <span className="text-3xl font-extrabold text-primary">₹{total.toFixed(2)}</span>
+                </div>
+
+                <button
+                  onClick={handleCheckout}
+                  className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-[0.98]"
+                >
+                  Proceed to Checkout
+                  <ArrowRight size={20} />
+                </button>
+
+                <button
+                  onClick={() => navigate('/products')}
+                  className="w-full mt-4 flex items-center justify-center gap-2 py-3 px-6 bg-background text-foreground font-medium rounded-full hover:bg-muted border-2 border-border transition-all"
+                >
+                  <ArrowLeft size={18} />
+                  Continue Shopping
+                </button>
               </div>
 
-              <div style={styles.summaryRow}>
-                <span style={styles.summaryLabel}>Delivery</span>
-                <span style={styles.summaryValue}>Free</span>
+              {/* Help Card */}
+              <div className="bg-primary/5 rounded-2xl p-6 border border-primary/10 mt-6">
+                <h3 className="font-bold text-foreground mb-2">Need Help?</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Contact us at <a href="mailto:Gorusorganics@gmail.com" className="text-primary font-medium hover:underline">Gorusorganics@gmail.com</a> or call <a href="tel:+919876543210" className="text-primary font-medium hover:underline">+91 98765 43210</a>
+                </p>
               </div>
-
-              <div style={styles.divider} />
-
-              <div style={styles.summaryRow}>
-                <span style={styles.totalLabel}>Total</span>
-                <span style={styles.totalValue}>₹{total.toFixed(2)}</span>
-              </div>
-
-              <button
-                className="btn-primary"
-                onClick={handleCheckout}
-                style={styles.checkoutBtn}
-              >
-                Proceed to Checkout
-                <ArrowRight size={20} />
-              </button>
-
-              <button
-                className="btn-secondary"
-                onClick={() => navigate('/products')}
-                style={styles.continueBtn}
-              >
-                Continue Shopping
-              </button>
-            </div>
-
-            <div className="card" style={styles.infoCard}>
-              <h3 style={styles.infoTitle}>Need Help?</h3>
-              <p style={styles.infoText}>
-                Contact us at <a href="mailto:Gorusorganics@gmail.com" style={styles.link}>Gorusorganics@gmail.com</a> or call <a href="tel:+919876543210" style={styles.link}>+91 98765 43210</a>
-              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
-};
-
-const styles = {
-  cartPage: {
-    minHeight: '100vh',
-    padding: '40px 0 80px'
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '40px',
-    flexWrap: 'wrap',
-    gap: '16px'
-  },
-  title: {
-    fontSize: '36px',
-    fontWeight: '700',
-    color: '#111827'
-  },
-  clearBtn: {
-    background: 'none',
-    border: '2px solid #ef4444',
-    color: '#ef4444',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontWeight: '600',
-    transition: 'all 0.3s ease'
-  },
-  content: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 400px',
-    gap: '40px'
-  },
-  itemsSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px'
-  },
-  summarySection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px'
-  },
-  summaryCard: {
-    position: 'sticky',
-    top: '100px'
-  },
-  summaryTitle: {
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '24px'
-  },
-  summaryRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '16px'
-  },
-  summaryLabel: {
-    fontSize: '16px',
-    color: '#6b7280'
-  },
-  summaryValue: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#111827'
-  },
-  divider: {
-    height: '1px',
-    backgroundColor: '#e5e7eb',
-    margin: '20px 0'
-  },
-  totalLabel: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#111827'
-  },
-  totalValue: {
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#22c55e'
-  },
-  checkoutBtn: {
-    width: '100%',
-    marginTop: '24px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px'
-  },
-  continueBtn: {
-    width: '100%',
-    marginTop: '12px'
-  },
-  infoCard: {
-    backgroundColor: '#f0fdf4'
-  },
-  infoTitle: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  infoText: {
-    fontSize: '14px',
-    color: '#6b7280',
-    lineHeight: '1.6'
-  },
-  link: {
-    color: '#22c55e',
-    textDecoration: 'none',
-    fontWeight: '600'
-  },
-  emptyCart: {
-    minHeight: '70vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  emptyContent: {
-    textAlign: 'center',
-    maxWidth: '500px',
-    margin: '0 auto'
-  },
-  emptyIcon: {
-    color: '#9ca3af',
-    marginBottom: '24px'
-  },
-  emptyTitle: {
-    fontSize: '32px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '16px'
-  },
-  emptyText: {
-    fontSize: '16px',
-    color: '#6b7280',
-    marginBottom: '32px'
-  },
-  shopBtn: {
-    fontSize: '16px',
-    padding: '12px 32px'
-  }
 };
 
 export default Cart;

@@ -1,31 +1,74 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk');
+const nodemailer = require('nodemailer');
 const fs = require('fs');
 
 // Initialize Brevo API
 function initializeBrevo() {
-  console.log('🔧 Initializing Brevo API...');
-  
   const apiKey = process.env.BREVO_API_KEY;
-  
-  if (!apiKey) {
-    console.warn('⚠️  No Brevo API key configured!');
-    console.warn('⚠️  Please set BREVO_API_KEY in your environment variables.');
-    console.warn('⚠️  Orders will still work, but email notifications will be skipped.');
-    return null;
-  }
+  if (!apiKey) return null;
 
   try {
     const defaultClient = SibApiV3Sdk.ApiClient.instance;
     const apiKeyAuth = defaultClient.authentications['api-key'];
     apiKeyAuth.apiKey = apiKey;
-    
-    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-    
-    console.log('✅ Brevo API initialized successfully');
-    return apiInstance;
+    return new SibApiV3Sdk.TransactionalEmailsApi();
   } catch (error) {
     console.error('❌ Failed to initialize Brevo API:', error.message);
     return null;
+  }
+}
+
+// Send Email abstraction to handle both Brevo and Nodemailer (Gmail)
+async function sendEmail({ to, subject, htmlContent, textContent, attachments = [] }) {
+  const fromEmail = process.env.SENDER_EMAIL || process.env.GMAIL_USER || 'noreply@goras.com';
+  const fromName = process.env.SENDER_NAME || 'GORAS Orders';
+
+  const brevoApi = initializeBrevo();
+
+  if (brevoApi) {
+    console.log('📤 Sending email via Brevo...');
+    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+    sendSmtpEmail.sender = { name: fromName, email: fromEmail };
+    sendSmtpEmail.to = [{ email: to }];
+    sendSmtpEmail.subject = subject;
+    sendSmtpEmail.htmlContent = htmlContent;
+    sendSmtpEmail.textContent = textContent;
+    
+    if (attachments.length > 0) {
+      sendSmtpEmail.attachment = attachments.map(att => ({
+        name: att.filename,
+        content: att.content // Base64 string expected by Brevo
+      }));
+    }
+
+    const data = await brevoApi.sendTransacEmail(sendSmtpEmail);
+    return { success: true, messageId: data.messageId };
+  } else if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+    console.log('📤 Sending email via Gmail (Nodemailer)...');
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD
+      }
+    });
+
+    const mailOptions = {
+      from: `"${fromName}" <${fromEmail}>`,
+      to,
+      subject,
+      html: htmlContent,
+      text: textContent,
+      attachments: attachments.map(att => ({
+        filename: att.filename,
+        content: Buffer.from(att.content, 'base64')
+      }))
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    return { success: true, messageId: info.messageId };
+  } else {
+    throw new Error('No email service configured (Missing Brevo API key or Gmail credentials)');
   }
 }
 
@@ -35,22 +78,9 @@ async function sendOrderNotificationEmail(orderData) {
   console.log('📧 Order Notification Email Triggered');
   console.log('📧 ==========================================');
   
-  const apiInstance = initializeBrevo();
-  
-  if (!apiInstance) {
-    console.warn('⚠️  Brevo API not available. Skipping email notification.');
-    console.warn('⚠️  Order was created successfully.');
-    return { success: false, error: 'Brevo API not configured', skipped: true };
-  }
-
-  // Get email addresses from environment
-  const fromEmail = process.env.SENDER_EMAIL || 'noreply@goras.com';
-  const fromName = process.env.SENDER_NAME || 'GORAS Orders';
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
-  
   const { order, customer, items } = orderData;
 
-  console.log(`📧 From: ${fromName} <${fromEmail}>`);
   console.log(`📧 To: ${adminEmail}`);
   console.log(`📧 Order Number: ${order.order_number}`);
 
@@ -169,18 +199,13 @@ Total Amount: ₹${order.total_amount.toFixed(2)}
 This is an automated notification from GORAS Dairy E-commerce System
   `;
 
-  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-  
-  sendSmtpEmail.sender = { name: fromName, email: fromEmail };
-  sendSmtpEmail.to = [{ email: adminEmail }];
-  sendSmtpEmail.subject = `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`;
-  sendSmtpEmail.htmlContent = emailHtml;
-  sendSmtpEmail.textContent = emailText;
-
   try {
-    console.log('📤 Sending email via Brevo...');
-    
-    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    const data = await sendEmail({
+      to: adminEmail,
+      subject: `🛒 New Order: ${order.order_number} - ₹${order.total_amount.toFixed(2)}`,
+      htmlContent: emailHtml,
+      textContent: emailText
+    });
 
     console.log('✅ ==========================================');
     console.log('✅ ORDER EMAIL SENT SUCCESSFULLY!');
@@ -191,18 +216,83 @@ This is an automated notification from GORAS Dairy E-commerce System
     
     return { success: true, messageId: data.messageId };
   } catch (error) {
-    console.error('❌ ==========================================');
-    console.error('❌ FAILED TO SEND ORDER EMAIL');
-    console.error('❌ ==========================================');
-    console.error('   Error:', error.message);
-    if (error.response) {
-      console.error('   Response:', JSON.stringify(error.response.body || error.response.text));
-    }
-    console.error('❌ ==========================================');
-    console.warn('⚠️  Order was created successfully despite email error');
-    console.error('❌ ==========================================\n');
-    
+    console.warn('\n⚠️  Failed to send email notification:', error.message);
+    console.warn('⚠️  Order was created successfully despite email error.\n');
     return { success: false, error: error.message, skipped: true };
+  }
+}
+
+// Send order confirmation email to customer
+async function sendCustomerOrderConfirmationEmail(orderData) {
+  const { order, customer, items } = orderData;
+  const customerEmail = customer.email;
+
+  if (!customerEmail || customerEmail === 'N/A') {
+    return { success: false, skipped: true, error: 'No email address' };
+  }
+
+  const itemsList = items.map(item => 
+    `  • ${item.product_name} - ${item.quantity} × ₹${item.product_price} = ₹${item.subtotal.toFixed(2)}`
+  ).join('\n');
+
+  const emailHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #22c55e; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
+        .content { background-color: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; }
+        .items { background-color: white; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .total { background-color: #22c55e; color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; border-radius: 5px; margin-top: 15px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>Thank You For Your Order!</h1>
+        </div>
+        <div class="content">
+          <p>Hi ${customer.name || 'Customer'},</p>
+          <p>We have received your order <strong>#${order.order_number}</strong>.</p>
+          <div class="items">
+            <h2>Order Items</h2>
+            <pre style="font-family: Arial, sans-serif; white-space: pre-wrap;">${itemsList}</pre>
+          </div>
+          <div class="total">
+            Total Amount: ₹${order.total_amount.toFixed(2)}
+          </div>
+          <p>We will notify you once your order is shipped.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const emailText = `
+Thank You For Your Order!
+Hi ${customer.name || 'Customer'},
+We have received your order #${order.order_number}.
+
+Order Items:
+${itemsList}
+
+Total Amount: ₹${order.total_amount.toFixed(2)}
+We will notify you once your order is shipped.
+  `;
+
+  try {
+    const data = await sendEmail({
+      to: customerEmail,
+      subject: `Order Confirmed: ${order.order_number}`,
+      htmlContent: emailHtml,
+      textContent: emailText
+    });
+    return { success: true, messageId: data.messageId };
+  } catch (error) {
+    console.error('Failed to send customer email:', error);
+    return { success: false, error: error.message };
   }
 }
 
@@ -212,20 +302,9 @@ async function sendUPIPaymentEmail(orderData) {
   console.log('📧 UPI Payment Email Triggered');
   console.log('📧 ==========================================');
   
-  const apiInstance = initializeBrevo();
-  
-  if (!apiInstance) {
-    console.warn('⚠️  Brevo API not available. Skipping email notification.');
-    return { success: false, error: 'Brevo API not configured', skipped: true };
-  }
-
-  const fromEmail = process.env.SENDER_EMAIL || 'noreply@goras.com';
-  const fromName = process.env.SENDER_NAME || 'GORAS Orders';
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@goras.com';
-  
   const { order, customer, items, paymentProofPath, phone } = orderData;
 
-  console.log(`📧 From: ${fromName} <${fromEmail}>`);
   console.log(`📧 To: ${adminEmail}`);
   console.log(`📧 Order Number: ${order.order_number}`);
   console.log(`📧 Attachment: ${paymentProofPath ? 'Yes' : 'No'}`);
@@ -238,22 +317,36 @@ async function sendUPIPaymentEmail(orderData) {
     `  • ${item.product_name} - ${item.quantity} × ₹${item.product_price} = ₹${item.subtotal.toFixed(2)}`
   ).join('\n');
 
-  // Convert attachment to Base64 for Brevo
+  // Load attachment
   let attachments = [];
-  if (paymentProofPath && fs.existsSync(paymentProofPath)) {
+  if (paymentProofPath) {
     try {
-      const fileContent = fs.readFileSync(paymentProofPath);
-      const base64Content = fileContent.toString('base64');
-      const fileName = order.payment_proof || 'payment-proof.jpg';
-      
-      attachments.push({
-        content: base64Content,
-        name: fileName
-      });
-      
-      console.log(`📎 Attaching payment proof: ${fileName}`);
+      let base64Content = null;
+      let fileName = order.payment_proof ? order.payment_proof.split('/').pop().split('?')[0] : 'payment-proof.jpg';
+      if (!fileName.includes('.')) fileName += '.jpg';
+
+      if (paymentProofPath.startsWith('http')) {
+        const response = await fetch(paymentProofPath);
+        if (response.ok) {
+          const arrayBuffer = await response.arrayBuffer();
+          base64Content = Buffer.from(arrayBuffer).toString('base64');
+        } else {
+          throw new Error(`Failed to fetch image from URL: ${response.statusText}`);
+        }
+      } else if (fs.existsSync(paymentProofPath)) {
+        const fileContent = fs.readFileSync(paymentProofPath);
+        base64Content = fileContent.toString('base64');
+      }
+
+      if (base64Content) {
+        attachments.push({
+          content: base64Content,
+          filename: fileName
+        });
+        console.log(`📎 Attaching payment proof: ${fileName}`);
+      }
     } catch (err) {
-      console.error('❌ Failed to read payment proof file:', err.message);
+      console.error('❌ Failed to read or download payment proof file:', err.message);
     }
   }
 
@@ -378,22 +471,14 @@ Payment screenshot is attached to this email.
 This is an automated notification from GORAS Dairy E-commerce System
   `;
 
-  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-  
-  sendSmtpEmail.sender = { name: fromName, email: fromEmail };
-  sendSmtpEmail.to = [{ email: adminEmail }];
-  sendSmtpEmail.subject = `💰 UPI Payment - ${order.order_number} - ₹${totalAmount.toFixed(2)} [VERIFY]`;
-  sendSmtpEmail.htmlContent = emailHtml;
-  sendSmtpEmail.textContent = emailText;
-  
-  if (attachments.length > 0) {
-    sendSmtpEmail.attachment = attachments;
-  }
-
   try {
-    console.log('📤 Sending UPI payment email via Brevo...');
-    
-    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    const data = await sendEmail({
+      to: adminEmail,
+      subject: `💰 UPI Payment - ${order.order_number} - ₹${totalAmount.toFixed(2)} [VERIFY]`,
+      htmlContent: emailHtml,
+      textContent: emailText,
+      attachments
+    });
 
     console.log('✅ ==========================================');
     console.log('✅ UPI EMAIL SENT SUCCESSFULLY!');
@@ -404,22 +489,15 @@ This is an automated notification from GORAS Dairy E-commerce System
     
     return { success: true, messageId: data.messageId };
   } catch (error) {
-    console.error('❌ ==========================================');
-    console.error('❌ FAILED TO SEND UPI EMAIL');
-    console.error('❌ ==========================================');
-    console.error('   Error:', error.message);
-    if (error.response) {
-      console.error('   Response:', JSON.stringify(error.response.body || error.response.text));
-    }
-    console.error('❌ ==========================================');
-    console.warn('⚠️  Order was processed successfully despite email error');
-    console.error('❌ ==========================================\n');
-    
+    console.warn('\n⚠️  Failed to send UPI payment email:', error.message);
+    console.warn('⚠️  Order was processed successfully despite email error.\n');
     return { success: false, error: error.message, skipped: true };
   }
 }
 
 module.exports = {
+  sendEmail,
   sendOrderNotificationEmail,
   sendUPIPaymentEmail,
+  sendCustomerOrderConfirmationEmail,
 };

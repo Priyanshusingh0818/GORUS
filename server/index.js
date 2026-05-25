@@ -1,8 +1,10 @@
 require('dotenv').config();
+require('express-async-errors'); // Catch async errors without wrapping routes in try-catch
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const { initDatabase } = require('./db');
 const authRoutesFactory = require('./routes/auth');
@@ -28,14 +30,24 @@ const app = express();
 /* ✅ FIX FOR express-rate-limit + X-Forwarded-For */
 app.set('trust proxy', 1);
 
-/* ✅ FIXED HELMET - Disable CSP entirely to avoid blocking issues */
+/* Configure Helmet CSP instead of disabling it */
 app.use(helmet({
-  contentSecurityPolicy: false, // ✅ Disable CSP - it's blocking legitimate requests
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://*"],
+      connectSrc: ["'self'", "https://api.razorpay.com", "https://api.cashfree.com"],
+    },
+  },
   crossOriginEmbedderPolicy: false,
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /* ✅ FIXED CORS - Allows credentials and specific origins */
 app.use(cors({
@@ -51,37 +63,32 @@ app.use(cors({
   credentials: true
 }));
 
-/* Rate limiting */
-app.use(
-  rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 200,
-    standardHeaders: true,
-    legacyHeaders: false,
-  })
-);
+/* General Rate limiting */
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(generalLimiter);
+
+/* Strict Rate limiting for Auth */
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 login/signup requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many authentication attempts, please try again after 15 minutes' }
+});
 
 // Serve uploaded payment proofs (only accessible with proper authentication)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Initialize database
-let db;
+let pool;
 try {
-  db = initDatabase(DB_FILE);
-  console.log('✅ Database initialized successfully');
-  
-  // Add payment_proof column if it doesn't exist
-  try {
-    db.prepare('SELECT payment_proof FROM orders LIMIT 1').get();
-    console.log('✅ payment_proof column exists');
-  } catch (e) {
-    try {
-      db.prepare('ALTER TABLE orders ADD COLUMN payment_proof TEXT').run();
-      console.log('✅ Added payment_proof column to orders table');
-    } catch (err) {
-      console.error('❌ Could not add payment_proof column:', err.message);
-    }
-  }
+  pool = initDatabase();
+  console.log('✅ PostgreSQL database pool initialized successfully');
 } catch (error) {
   console.error('❌ Database initialization failed:', error.message);
   process.exit(1);
@@ -98,15 +105,15 @@ try {
       return;
     }
 
-    const find = db.prepare('SELECT id FROM users WHERE email = ?').get(adminEmail);
+    const { rows } = await pool.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
 
-    if (!find) {
+    if (rows.length === 0) {
       const bcrypt = require('bcrypt');
       const hash = await bcrypt.hash(adminPassword, 12);
-      const insert = db.prepare(
-        'INSERT INTO users (name, email, password_hash, is_admin) VALUES (?, ?, ?, 1)'
+      await pool.query(
+        'INSERT INTO users (name, email, password_hash, is_admin) VALUES ($1, $2, $3, 1)',
+        ['Admin', adminEmail, hash]
       );
-      insert.run('Admin', adminEmail, hash);
       console.log('✅ Admin user created:', adminEmail);
     } else {
       console.log('ℹ️  Admin user already exists:', adminEmail);
@@ -117,37 +124,40 @@ try {
 })();
 
 /* Routes */
-app.use('/api/auth', authRoutesFactory(db));
-app.use('/api/auth/profile', authMiddleware);
-app.use('/api/auth/change-password', authMiddleware);
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/signup', authLimiter);
+app.use('/api/auth', authRoutesFactory(pool));
 
-app.use('/api/products', productsRoutesFactory(db));
-app.use('/api/orders', authMiddleware, ordersRoutesFactory(db));
-app.use('/api/payments', authMiddleware, paymentsRoutesFactory(db));
+app.use('/api/products', productsRoutesFactory(pool));
+app.use('/api/orders', authMiddleware, ordersRoutesFactory(pool));
+app.use('/api/payments', authMiddleware, paymentsRoutesFactory(pool));
 
-app.use('/api/admin', authMiddleware, adminOnly, adminRoutesFactory(db));
-app.use('/api/admin/products', authMiddleware, adminOnly, productsRoutesFactory(db));
-app.use('/api/admin/orders', authMiddleware, adminOnly, ordersRoutesFactory(db));
-app.use('/api/admin/analytics', authMiddleware, adminOnly, analyticsRoutesFactory(db));
+app.use('/api/admin', authMiddleware, adminOnly, adminRoutesFactory(pool));
+app.use('/api/admin/products', authMiddleware, adminOnly, productsRoutesFactory(pool, { allowWrites: true }));
+app.use('/api/admin/orders', authMiddleware, adminOnly, ordersRoutesFactory(pool, { admin: true }));
+app.use('/api/admin/analytics', authMiddleware, adminOnly, analyticsRoutesFactory(pool));
 
 /* Health check */
 app.get('/api/health', (req, res) => {
   res.json({ ok: true });
 });
 
-// Serve React build
-app.use(express.static(path.join(__dirname, '..', 'build')));
+const fs = require('fs');
+const buildPath = path.join(__dirname, '..', 'build');
+if (fs.existsSync(buildPath)) {
+  // Serve React build
+  app.use(express.static(buildPath));
 
-// SPA fallback
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
-});
+  // SPA fallback
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
+
+const errorHandler = require('./middleware/errorHandler');
 
 /* Error handling middleware */
-app.use((err, req, res, next) => {
-  console.error('Server error:', err);
-  res.status(500).json({ message: 'Internal server error' });
-});
+app.use(errorHandler);
 
 /* Start server */
 app.listen(PORT, () => {

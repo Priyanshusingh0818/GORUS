@@ -14,196 +14,79 @@ const CartItem = ({ item }) => {
   };
 
   return (
-    <div className="card" style={styles.cartItem}>
-      <div style={styles.imageContainer}>
+    <div className="flex flex-col sm:flex-row gap-6 p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 transition-all duration-300">
+      
+      {/* Image Container */}
+      <div className="w-full sm:w-32 h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-muted border border-border relative">
         {item.image ? (
-          <img src={item.image} alt={item.name} style={styles.image} />
+          <img 
+            src={item.image} 
+            alt={item.name} 
+            className="w-full h-full object-cover" 
+          />
         ) : (
-          <div style={styles.placeholder}>
-            <p style={styles.placeholderText}>No Image</p>
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+            No Image
           </div>
         )}
       </div>
 
-      <div style={styles.content}>
-        <div style={styles.info}>
-          <h3 style={styles.name}>{item.name}</h3>
-          <p style={styles.description}>{item.description}</p>
-          <div style={styles.priceRow}>
-            <span style={styles.price}>₹{item.price}</span>
-            <span style={styles.unit}>/ {item.unit}</span>
+      {/* Content */}
+      <div className="flex flex-col sm:flex-row flex-1 gap-6 sm:items-center justify-between">
+        <div className="flex-1">
+          <h3 className="text-xl font-bold text-foreground mb-1">{item.name}</h3>
+          <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{item.description}</p>
+          <div className="flex items-baseline gap-1">
+            <span className="text-lg font-bold text-primary">₹{item.price}</span>
+            <span className="text-xs font-medium text-muted-foreground">/ {item.unit}</span>
           </div>
         </div>
 
-        <div style={styles.controls}>
-          <div style={styles.quantityControls}>
+        <div className="flex flex-wrap items-center gap-6 sm:gap-8 justify-between sm:justify-end">
+          
+          {/* Quantity Controls */}
+          <div className="flex items-center gap-3 p-1 rounded-full border border-border bg-muted">
             <button
-              style={styles.quantityBtn}
               onClick={() => handleQuantityChange(item.quantity - 1)}
               aria-label="Decrease quantity"
+              className="w-8 h-8 flex items-center justify-center rounded-full text-foreground hover:bg-background hover:text-primary hover:shadow-sm transition-all active:scale-95"
             >
-              <Minus size={16} />
+              <Minus size={16} strokeWidth={2.5} />
             </button>
-            <span style={styles.quantity}>{item.quantity}</span>
+            <span className="w-6 text-center font-bold text-foreground">{item.quantity}</span>
             <button
-              style={styles.quantityBtn}
               onClick={() => handleQuantityChange(item.quantity + 1)}
               aria-label="Increase quantity"
+              className="w-8 h-8 flex items-center justify-center rounded-full text-foreground hover:bg-background hover:text-primary hover:shadow-sm transition-all active:scale-95"
             >
-              <Plus size={16} />
+              <Plus size={16} strokeWidth={2.5} />
             </button>
           </div>
 
-          <div style={styles.total}>
-            <span style={styles.totalLabel}>Total:</span>
-            <span style={styles.totalValue}>₹{(item.price * item.quantity).toFixed(2)}</span>
+          {/* Total Price */}
+          <div className="flex flex-col items-end hidden sm:flex min-w-[80px]">
+            <span className="text-xs font-medium text-muted-foreground">Total</span>
+            <span className="text-lg font-bold text-foreground">₹{(item.price * item.quantity).toFixed(2)}</span>
           </div>
 
+          {/* Mobile Total */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <span className="text-sm font-medium text-muted-foreground">Total:</span>
+            <span className="text-lg font-bold text-foreground">₹{(item.price * item.quantity).toFixed(2)}</span>
+          </div>
+
+          {/* Remove Button */}
           <button
-            style={styles.removeBtn}
             onClick={handleRemove}
             aria-label="Remove item"
+            className="w-10 h-10 flex items-center justify-center rounded-full text-destructive/70 hover:text-destructive hover:bg-destructive/10 transition-all active:scale-95"
           >
-            <Trash2 size={18} />
+            <Trash2 size={20} />
           </button>
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  cartItem: {
-    display: 'flex',
-    gap: '20px',
-    padding: '20px',
-    marginBottom: '16px'
-  },
-  imageContainer: {
-    width: '120px',
-    height: '120px',
-    flexShrink: 0,
-    borderRadius: '8px',
-    overflow: 'hidden',
-    backgroundColor: '#f3f4f6'
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover'
-  },
-  placeholder: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#e5e7eb'
-  },
-  placeholderText: {
-    color: '#9ca3af',
-    fontSize: '12px'
-  },
-  content: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    gap: '16px'
-  },
-  info: {
-    flex: 1
-  },
-  name: {
-    fontSize: '20px',
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  description: {
-    fontSize: '14px',
-    color: '#6b7280',
-    marginBottom: '12px',
-    lineHeight: '1.5'
-  },
-  priceRow: {
-    display: 'flex',
-    alignItems: 'baseline',
-    gap: '4px'
-  },
-  price: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#22c55e'
-  },
-  unit: {
-    fontSize: '14px',
-    color: '#6b7280'
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    flexWrap: 'wrap'
-  },
-  quantityControls: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    border: '2px solid #e5e7eb',
-    borderRadius: '8px',
-    padding: '4px'
-  },
-  quantityBtn: {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#374151',
-    padding: '8px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '4px',
-    transition: 'background-color 0.2s ease'
-  },
-  quantity: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#111827',
-    minWidth: '30px',
-    textAlign: 'center'
-  },
-  total: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    marginLeft: 'auto'
-  },
-  totalLabel: {
-    fontSize: '16px',
-    color: '#6b7280',
-    fontWeight: '500'
-  },
-  totalValue: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#22c55e'
-  },
-  removeBtn: {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#ef4444',
-    padding: '8px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '8px',
-    transition: 'background-color 0.2s ease'
-  },
-  removeBtnHover: {
-    backgroundColor: '#fee2e2'
-  }
 };
 
 export default CartItem;

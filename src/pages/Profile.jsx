@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Mail, Phone, Lock, Save, X } from 'lucide-react';
+import { User, Mail, Phone, Lock, Save } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { authAPI } from '../utils/api';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
@@ -270,18 +270,18 @@ const styles = {
   title: {
     fontSize: '36px',
     fontWeight: '700',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '8px'
   },
   subtitle: {
     fontSize: '18px',
-    color: '#6b7280'
+    color: 'hsl(var(--muted-foreground))'
   },
   tabs: {
     display: 'flex',
     gap: '12px',
     marginBottom: '32px',
-    borderBottom: '2px solid #e5e7eb',
+    borderBottom: '2px solid hsl(var(--border))',
     justifyContent: 'center'
   },
   tab: {
@@ -295,12 +295,12 @@ const styles = {
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: '600',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     transition: 'all 0.3s'
   },
   tabActive: {
-    color: '#22c55e',
-    borderBottomColor: '#22c55e'
+    color: 'hsl(var(--primary))',
+    borderBottomColor: 'hsl(var(--primary))'
   },
   card: {
     maxWidth: '600px',
@@ -310,7 +310,7 @@ const styles = {
   cardTitle: {
     fontSize: '24px',
     fontWeight: '700',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '24px'
   },
   form: {
@@ -326,18 +326,20 @@ const styles = {
   label: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#374151',
+    color: 'hsl(var(--foreground))',
     display: 'flex',
     alignItems: 'center',
     gap: '8px'
   },
   labelIcon: {
-    color: '#22c55e'
+    color: 'hsl(var(--primary))'
   },
   input: {
     padding: '12px 16px',
     borderRadius: '8px',
-    border: '2px solid #e5e7eb',
+    border: '2px solid hsl(var(--border))',
+    backgroundColor: 'hsl(var(--background))',
+    color: 'hsl(var(--foreground))',
     fontSize: '16px',
     transition: 'border-color 0.2s'
   },
@@ -349,16 +351,16 @@ const styles = {
     marginTop: '8px'
   },
   error: {
-    backgroundColor: '#fee2e2',
-    color: '#b91c1c',
+    backgroundColor: 'hsl(var(--destructive))',
+    color: 'hsl(var(--destructive-foreground))',
     padding: '12px 16px',
     borderRadius: '8px',
     marginBottom: '20px',
     fontSize: '14px'
   },
   success: {
-    backgroundColor: '#d1fae5',
-    color: '#065f46',
+    backgroundColor: 'hsl(var(--primary) / 0.1)',
+    color: 'hsl(var(--primary))',
     padding: '12px 16px',
     borderRadius: '8px',
     marginBottom: '20px',

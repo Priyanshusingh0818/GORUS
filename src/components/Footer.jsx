@@ -1,56 +1,57 @@
 import React from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer style={styles.footer}>
-      <div style={styles.container}>
-        <div style={styles.content}>
-          <div style={styles.section}>
-            <img src="/images/logo.png" alt="GORAS" style={styles.logo} />
-            <p style={styles.tagline}>Proof of 100% Purity</p>
-            <p style={styles.description}>
+    <footer className="bg-background border-t border-border mt-20 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] dark:shadow-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+          <div className="flex flex-col gap-3">
+            <img src="/images/logo.png" alt="GORAS" className="h-16 w-auto object-contain mb-2" />
+            <p className="text-sm font-semibold text-primary -mt-2">Proof of 100% Purity</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Premium quality dairy products delivered fresh from our farm to your home.
             </p>
           </div>
 
-          <div style={styles.section}>
-            <h3 style={styles.heading}>Contact Us</h3>
-            <div style={styles.contactItem}>
-              <Phone size={18} style={styles.icon} />
-              <a href="tel:+919876543210" style={styles.link}>+91 78383 80192</a>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-semibold text-foreground mb-2">Contact Us</h3>
+            <div className="flex items-center gap-2">
+              <Phone size={18} className="text-primary shrink-0" />
+              <a href="tel:+919876543210" className="text-sm text-foreground hover:text-primary transition-colors">+91 78383 80192</a>
             </div>
-            <div style={styles.contactItem}>
-              <Mail size={18} style={styles.icon} />
-              <a href="mailto:Gorusorganics@gmail.com" style={styles.link}>
+            <div className="flex items-center gap-2">
+              <Mail size={18} className="text-primary shrink-0" />
+              <a href="mailto:Gorusorganics@gmail.com" className="text-sm text-foreground hover:text-primary transition-colors">
                 Gorusorganics@gmail.com
               </a>
             </div>
-            <div style={styles.contactItem}>
-              <MapPin size={18} style={styles.icon} />
-              <span style={styles.text}>Buxar, Bihar</span>
+            <div className="flex items-center gap-2">
+              <MapPin size={18} className="text-primary shrink-0" />
+              <span className="text-sm text-muted-foreground">Buxar, Bihar</span>
             </div>
           </div>
 
-          <div style={styles.section}>
-            <h3 style={styles.heading}>Quick Links</h3>
-            <a href="/" style={styles.footerLink}>Home</a>
-            <a href="/products" style={styles.footerLink}>Products</a>
-            <a href="/cart" style={styles.footerLink}>Shopping Cart</a>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-semibold text-foreground mb-2">Quick Links</h3>
+            <Link to="/" className="text-sm text-foreground hover:text-primary transition-colors block">Home</Link>
+            <Link to="/products" className="text-sm text-foreground hover:text-primary transition-colors block">Products</Link>
+            <Link to="/cart" className="text-sm text-foreground hover:text-primary transition-colors block">Shopping Cart</Link>
           </div>
 
-          <div style={styles.section}>
-            <h3 style={styles.heading}>Business Hours</h3>
-            <p style={styles.text}>Monday - Saturday</p>
-            <p style={styles.text}>Sunday: Closed</p>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-semibold text-foreground mb-2">Business Hours</h3>
+            <p className="text-sm text-muted-foreground">Monday - Saturday</p>
+            <p className="text-sm text-muted-foreground">Sunday: Closed</p>
           </div>
         </div>
 
-        <div style={styles.bottom}>
-          <p style={styles.copyright}>
+        <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
             © 2024 GORAS. All rights reserved.
           </p>
-          <p style={styles.madeWith}>
+          <p className="text-sm text-muted-foreground">
             Made with 💚 for pure dairy lovers
           </p>
         </div>
@@ -58,96 +59,5 @@ const Footer = () => {
     </footer>
   );
 };
-
-const styles = {
-  footer: {
-    backgroundColor: 'white',
-    marginTop: '80px',
-    boxShadow: '0 -2px 10px rgba(0,0,0,0.05)'
-  },
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '60px 20px 20px'
-  },
-  content: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '40px',
-    marginBottom: '40px'
-  },
-  section: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px'
-  },
-  logo: {
-    height: '60px',
-    width: 'auto',
-    marginBottom: '8px'
-  },
-  tagline: {
-    fontSize: '14px',
-    fontWeight: '600',
-    color: '#22c55e',
-    marginTop: '-8px'
-  },
-  description: {
-    fontSize: '14px',
-    color: '#6b7280',
-    lineHeight: '1.6'
-  },
-  heading: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  contactItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  },
-  icon: {
-    color: '#22c55e',
-    flexShrink: 0
-  },
-  link: {
-    color: '#374151',
-    textDecoration: 'none',
-    fontSize: '14px',
-    transition: 'color 0.3s ease'
-  },
-  text: {
-    color: '#6b7280',
-    fontSize: '14px'
-  },
-  footerLink: {
-    color: '#374151',
-    textDecoration: 'none',
-    fontSize: '14px',
-    transition: 'color 0.3s ease',
-    display: 'block',
-    marginBottom: '8px'
-  },
-  bottom: {
-    borderTop: '1px solid #e5e7eb',
-    paddingTop: '20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '16px'
-  },
-  copyright: {
-    fontSize: '14px',
-    color: '#6b7280'
-  },
-  madeWith: {
-    fontSize: '14px',
-    color: '#6b7280'
-  }
-};
-
 
 export default Footer;

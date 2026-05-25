@@ -1,57 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingBag, Award, Truck, Shield } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import ProductCard from '../components/ProductCard';
+import TextType from '../components/TextType';
+import CircularGallery from '../components/CircularGallery';
 import { productsAPI } from '../utils/api';
 
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
+      setError('');
+
       try {
-        const response = await productsAPI.getAll();
-        // Show only first 3 available products on home page
-        const available = (response.products || []).filter(p => p.available === 1).slice(0, 3);
-        setProducts(available);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        // Fallback products
-        const fallbackProducts = [
-          {
-            id: 1,
-            name: 'Pure Desi Ghee',
-            description: '100% pure desi cow ghee made from traditional bilona method',
-            price: 1800,
-            unit: 'kg',
-            image: '/images/ghee.jpg',
-            available: 1,
-            tag: 'Premium'
-          },
-          {
-            id: 2,
-            name: 'Sarso Tel (Mustard Oil)',
-            description: 'Cold-pressed mustard oil, rich in nutrients',
-            price: 210,
-            unit: 'litre',
-            image: '/images/sarso-tel.jpg',
-            available: 1,
-            tag: 'Fresh'
-          },
-          {
-            id: 3,
-            name: 'Fresh Cow Milk',
-            description: 'Farm-fresh pure cow milk delivered daily',
-            price: 60,
-            unit: 'litre',
-            image: '/images/milk.jpg',
-            available: 1,
-            tag: 'Daily Fresh'
-          }
-        ];
-        setProducts(fallbackProducts);
+        const response = await productsAPI.getAll({ available: '1', limit: 8 });
+        setProducts(response.products || []);
+      } catch (err) {
+        setProducts([]);
+        setError(err.message || 'Unable to load products.');
       } finally {
         setLoading(false);
       }
@@ -60,245 +33,173 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  const features = [
-    {
-      icon: <Award size={40} />,
-      title: '100% Pure',
-      description: 'Guaranteed purity in every product'
-    },
-    {
-      icon: <Shield size={40} />,
-      title: 'Quality Tested',
-      description: 'Lab tested for quality assurance'
-    },
-    {
-      icon: <Truck size={40} />,
-      title: 'Fast Delivery',
-      description: 'Quick and safe delivery to your doorstep'
-    },
-    {
-      icon: <ShoppingBag size={40} />,
-      title: 'Easy Ordering',
-      description: 'Simple and secure online ordering'
-    }
-  ];
+  const tags = useMemo(() => {
+    const values = products
+      .map(product => product.tag)
+      .filter(Boolean);
+
+    return [...new Set(values)].slice(0, 5);
+  }, [products]);
+
+  const galleryItems = useMemo(() => products
+    .filter(product => product.image)
+    .slice(0, 8)
+    .map(product => ({
+      image: product.image,
+      text: product.name
+    })), [products]);
 
   return (
-    <div style={styles.home}>
-      {/* Hero Section */}
-      <section style={styles.hero}>
-        <div className="container">
-          <div style={styles.heroContent}>
-            <h1 style={styles.heroTitle}>
-              Experience the Purity of <span style={styles.highlight}>GORAS</span>
-            </h1>
-            <p style={styles.heroSubtitle}>
-              Premium quality dairy products sourced directly from our farm. 
-              100% pure, 100% natural, 100% trusted.
-            </p>
-            <div style={styles.heroBtns}>
-              <button 
-                className="btn-primary"
-                onClick={() => navigate('/products')}
-                style={styles.heroBtn}
+    <div className="flex flex-col min-h-screen bg-background">
+      <Helmet>
+        <title>GORUS - Fresh Dairy Products</title>
+        <meta name="description" content="Browse the current GORUS dairy catalogue." />
+      </Helmet>
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 w-full">
+        <section className="relative overflow-hidden rounded-2xl bg-muted/50 mb-8 border border-border">
+          <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 items-center p-8 md:p-12 lg:px-16">
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-xl z-10"
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary dark:text-green-400 leading-tight mb-5">
+                <TextType 
+                  text="GORUS dairy catalogue" 
+                  typingSpeed={75}
+                  pauseDuration={1500}
+                  showCursor
+                  cursorCharacter="_"
+                />
+              </h1>
+              <p className="text-base sm:text-lg text-muted-foreground leading-7 mb-8">
+                Product details, prices, and availability are loaded from the store backend.
+              </p>
+              <button
+                onClick={() => navigate('/products?available=1')}
+                className="cursor-target inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#064e3b] text-white font-semibold shadow-md hover:bg-[#043729] hover:shadow-lg transition-all duration-300"
               >
-                Shop Now
+                Browse products
+                <ArrowRight size={18} />
               </button>
-              <button 
-                className="btn-secondary"
-                onClick={() => navigate('/products')}
-                style={styles.heroBtn}
-              >
-                View Products
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section style={styles.features}>
-        <div className="container">
-          <h2 style={styles.sectionTitle}>Why Choose GORAS?</h2>
-          <div style={styles.featuresGrid}>
-            {features.map((feature, index) => (
-              <div key={index} className="card" style={styles.featureCard}>
-                <div style={styles.featureIcon}>{feature.icon}</div>
-                <h3 style={styles.featureTitle}>{feature.title}</h3>
-                <p style={styles.featureDesc}>{feature.description}</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="grid grid-cols-2 gap-4"
+            >
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-background border border-border shadow-sm">
+                <img src="/images/milk.jpg" alt="GORUS milk" className="w-full h-full object-cover" />
               </div>
+              <div className="space-y-4 pt-8">
+                <div className="aspect-square rounded-2xl overflow-hidden bg-background border border-border shadow-sm">
+                  <img src="/images/ghee.jpg" alt="GORUS ghee" className="w-full h-full object-cover" />
+                </div>
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-background border border-border shadow-sm">
+                  <img src="/images/paneer.jpg" alt="GORUS paneer" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => navigate('/products?available=1')}
+              className="cursor-target px-4 py-2 rounded-full text-sm font-semibold bg-foreground text-background hover:bg-foreground/90 transition-colors"
+            >
+              Available now
+            </button>
+            {tags.map(tag => (
+              <button
+                key={tag}
+                onClick={() => navigate(`/products?tag=${encodeURIComponent(tag)}`)}
+                className="cursor-target px-4 py-2 rounded-full text-sm font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors"
+              >
+                {tag}
+              </button>
             ))}
           </div>
-        </div>
-      </section>
+          
+          <button
+            onClick={() => navigate('/products?sort=price_asc')}
+            className="cursor-target inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+          >
+            Sort by price
+            <ArrowRight size={15} />
+          </button>
+        </section>
 
-      {/* Products Section */}
-      <section style={styles.productsSection}>
-        <div className="container">
-          <h2 style={styles.sectionTitle}>Our Premium Products</h2>
-          <p style={styles.sectionSubtitle}>
-            Discover our range of pure and organic dairy products
-          </p>
-          <div style={styles.productsGrid}>
-            {products.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div style={styles.viewAllBtn}>
-            <button 
-              className="btn-primary"
+        {galleryItems.length > 1 && (
+          <section className="mb-14">
+            <div className="flex items-end justify-between gap-4 mb-5">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">Product Gallery</h2>
+                <p className="text-sm text-muted-foreground mt-1">Drag or scroll to browse product images.</p>
+              </div>
+            </div>
+            <div className="h-[460px] sm:h-[540px] rounded-2xl border border-border bg-muted/50 overflow-hidden">
+              <CircularGallery
+                items={galleryItems}
+                bend={1.4}
+                textColor="#064e3b"
+                borderRadius={0.05}
+                scrollSpeed={2}
+                scrollEase={0.05}
+              />
+            </div>
+          </section>
+        )}
+
+        <section>
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Available Products</h2>
+              <p className="text-sm text-muted-foreground mt-1">Pulled from the live product catalogue.</p>
+            </div>
+            <button
               onClick={() => navigate('/products')}
+              className="hidden sm:inline-flex text-sm font-semibold text-primary hover:underline"
             >
-              View All Products
+              View all
             </button>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section style={styles.cta}>
-        <div className="container">
-          <div className="card" style={styles.ctaCard}>
-            <h2 style={styles.ctaTitle}>Ready to Experience Pure Goodness?</h2>
-            <p style={styles.ctaText}>
-              Join thousands of happy customers who trust GORAS for their daily dairy needs
-            </p>
-            <button 
-              className="btn-primary"
-              onClick={() => navigate('/products')}
-              style={styles.ctaBtn}
-            >
-              Start Shopping
-            </button>
-          </div>
-        </div>
-      </section>
+          
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="h-[390px] rounded-2xl bg-card border border-border p-3 animate-pulse">
+                  <div className="h-64 rounded-2xl bg-muted mb-4" />
+                  <div className="h-4 bg-muted rounded w-2/3 mb-3" />
+                  <div className="h-3 bg-muted rounded w-full mb-6" />
+                  <div className="h-9 bg-muted rounded-full w-28" />
+                </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="rounded-2xl border border-destructive/50 bg-destructive/10 p-8 text-destructive">
+              {error}
+            </div>
+          ) : products.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border bg-muted/50 p-10 text-center text-muted-foreground">
+              No available products are listed right now.
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   );
-};
-
-const styles = {
-  home: {
-    minHeight: '100vh'
-  },
-  hero: {
-    padding: '80px 0',
-    textAlign: 'center'
-  },
-  heroContent: {
-    maxWidth: '800px',
-    margin: '0 auto'
-  },
-  heroTitle: {
-    fontSize: '48px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '24px',
-    lineHeight: '1.2'
-  },
-  highlight: {
-    color: '#22c55e'
-  },
-  heroSubtitle: {
-    fontSize: '18px',
-    color: '#6b7280',
-    marginBottom: '40px',
-    lineHeight: '1.6'
-  },
-  heroBtns: {
-    display: 'flex',
-    gap: '16px',
-    justifyContent: 'center',
-    flexWrap: 'wrap'
-  },
-  heroBtn: {
-    fontSize: '16px'
-  },
-  features: {
-    padding: '60px 0'
-  },
-  sectionTitle: {
-    fontSize: '36px',
-    fontWeight: '700',
-    color: '#111827',
-    textAlign: 'center',
-    marginBottom: '16px'
-  },
-  sectionSubtitle: {
-    fontSize: '16px',
-    color: '#6b7280',
-    textAlign: 'center',
-    marginBottom: '48px'
-  },
-  featuresGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '32px'
-  },
-  featureCard: {
-    textAlign: 'center'
-  },
-  featureIcon: {
-    color: '#22c55e',
-    marginBottom: '16px',
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  featureTitle: {
-    fontSize: '20px',
-    fontWeight: '600',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  featureDesc: {
-    fontSize: '14px',
-    color: '#6b7280',
-    lineHeight: '1.5'
-  },
-  productsSection: {
-    padding: '60px 0'
-  },
-  productsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '32px',
-    marginBottom: '48px'
-  },
-  viewAllBtn: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  cta: {
-    padding: '60px 0 80px'
-  },
-  ctaCard: {
-    textAlign: 'center',
-    padding: '60px 40px',
-    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%)'
-  },
-  ctaTitle: {
-    fontSize: '32px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '16px'
-  },
-  ctaText: {
-    fontSize: '16px',
-    color: '#6b7280',
-    marginBottom: '32px',
-    maxWidth: '600px',
-    margin: '0 auto 32px'
-  },
-  ctaBtn: {
-    fontSize: '18px',
-    padding: '14px 32px'
-  },
-  loading: {
-    textAlign: 'center',
-    padding: '40px 20px',
-    fontSize: '18px',
-    color: '#6b7280'
-  }
 };
 
 export default Home;

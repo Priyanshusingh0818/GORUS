@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, Calendar, MapPin, Phone, Eye } from 'lucide-react';
+import { Package, Calendar, MapPin, Phone, Eye, ShoppingBag } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { ordersAPI } from '../utils/api';
 
@@ -31,14 +32,14 @@ const Dashboard = () => {
   }, [user, navigate]);
 
   const getStatusColor = (status) => {
-    const colors = {
-      pending: '#f59e0b',
-      processing: '#3b82f6',
-      shipped: '#8b5cf6',
-      delivered: '#22c55e',
-      cancelled: '#ef4444'
+    const statusMap = {
+      pending: 'bg-amber-100 text-amber-700 border-amber-200',
+      processing: 'bg-blue-100 text-blue-700 border-blue-200',
+      shipped: 'bg-purple-100 text-purple-700 border-purple-200',
+      delivered: 'bg-green-100 text-green-700 border-green-200',
+      cancelled: 'bg-red-100 text-red-700 border-red-200'
     };
-    return colors[status] || '#6b7280';
+    return statusMap[status] || 'bg-gray-100 text-gray-700 border-gray-200';
   };
 
   const formatDate = (dateString) => {
@@ -52,96 +53,129 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div style={styles.page}>
-        <div className="container">
-          <div style={styles.loading}>Loading your orders...</div>
-        </div>
+      <div className="min-h-screen bg-background flex justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div style={styles.page}>
-      <div className="container">
-        <div style={styles.header}>
-          <h1 style={styles.title}>My Orders</h1>
-          <p style={styles.subtitle}>Welcome back, {user?.name || 'User'}!</p>
+    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-10 text-center sm:text-left">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-extrabold text-foreground tracking-tight"
+          >
+            My Orders
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="text-lg text-muted-foreground mt-2"
+          >
+            Welcome back, <span className="font-semibold text-foreground">{user?.name || 'User'}</span>! Here is your purchase history.
+          </motion.p>
         </div>
 
         {orders.length === 0 ? (
-          <div style={styles.emptyState}>
-            <Package size={80} style={styles.emptyIcon} />
-            <h2 style={styles.emptyTitle}>No orders yet</h2>
-            <p style={styles.emptyText}>Start shopping to see your orders here</p>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-card rounded-3xl p-12 text-center shadow-xl shadow-primary/5 border border-border max-w-2xl mx-auto"
+          >
+            <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-6 text-muted-foreground">
+              <Package size={48} />
+            </div>
+            <h2 className="text-3xl font-bold text-foreground mb-4">No orders yet</h2>
+            <p className="text-muted-foreground mb-8 text-lg">You haven't placed any orders. Start exploring our premium products!</p>
             <button
-              className="btn-primary"
               onClick={() => navigate('/products')}
-              style={styles.shopButton}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 active:scale-95"
             >
+              <ShoppingBag size={20} />
               Browse Products
             </button>
-          </div>
+          </motion.div>
         ) : (
-          <div style={styles.ordersList}>
-            {orders.map((order) => (
-              <div key={order.id} className="card" style={styles.orderCard}>
-                <div style={styles.orderHeader}>
-                  <div>
-                    <h3 style={styles.orderNumber}>Order #{order.order_number}</h3>
-                    <p style={styles.orderDate}>
-                      <Calendar size={16} style={styles.icon} />
-                      {formatDate(order.created_at)}
-                    </p>
-                  </div>
-                  <div style={{...styles.statusBadge, backgroundColor: getStatusColor(order.status) + '20', color: getStatusColor(order.status)}}>
-                    {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                  </div>
-                </div>
-
-                <div style={styles.divider} />
-
-                <div style={styles.orderItems}>
-                  {order.items?.slice(0, 3).map((item, index) => (
-                    <div key={index} style={styles.itemRow}>
-                      <span style={styles.itemName}>{item.product_name}</span>
-                      <span style={styles.itemQuantity}>× {item.quantity}</span>
-                      <span style={styles.itemPrice}>₹{item.subtotal.toFixed(2)}</span>
-                    </div>
-                  ))}
-                  {order.items?.length > 3 && (
-                    <div style={styles.moreItems}>+ {order.items.length - 3} more items</div>
-                  )}
-                </div>
-
-                <div style={styles.divider} />
-
-                <div style={styles.orderFooter}>
-                  <div style={styles.shippingInfo}>
-                    <div style={styles.shippingRow}>
-                      <MapPin size={16} style={styles.icon} />
-                      <span style={styles.shippingText}>{order.shipping_address}</span>
-                    </div>
-                    <div style={styles.shippingRow}>
-                      <Phone size={16} style={styles.icon} />
-                      <span style={styles.shippingText}>{order.shipping_phone}</span>
-                    </div>
-                  </div>
-                  <div style={styles.orderTotal}>
-                    <span style={styles.totalLabel}>Total:</span>
-                    <span style={styles.totalValue}>₹{order.total_amount.toFixed(2)}</span>
-                  </div>
-                </div>
-
-                <button
-                  className="btn-secondary"
-                  onClick={() => navigate(`/order/${order.id}`)}
-                  style={styles.viewButton}
+          <div className="space-y-6">
+            <AnimatePresence>
+              {orders.map((order, index) => (
+                <motion.div 
+                  key={order.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-card rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-primary/5 border border-border transition-all"
                 >
-                  <Eye size={16} />
-                  View Details
-                </button>
-              </div>
-            ))}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground mb-1 flex items-center gap-2">
+                        Order #{order.order_number}
+                      </h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-2 font-medium">
+                        <Calendar size={16} className="text-muted-foreground" />
+                        {formatDate(order.created_at)}
+                      </p>
+                    </div>
+                    <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border ${getStatusColor(order.status)}`}>
+                      {order.status}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-border my-6" />
+
+                  <div className="mb-6 space-y-3">
+                    {order.items?.slice(0, 3).map((item, index) => (
+                      <div key={index} className="flex justify-between items-center py-2">
+                        <div className="flex-1 min-w-0">
+                          <span className="block font-medium text-foreground truncate">{item.product_name}</span>
+                          <span className="text-sm text-muted-foreground">Qty: {item.quantity}</span>
+                        </div>
+                        <span className="font-bold text-foreground">₹{item.subtotal.toFixed(2)}</span>
+                      </div>
+                    ))}
+                    {order.items?.length > 3 && (
+                      <div className="text-sm font-medium text-primary bg-primary/5 px-4 py-2 rounded-lg inline-block">
+                        + {order.items.length - 3} more items in this order
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="border-t border-border my-6" />
+
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div className="flex-1 space-y-2 w-full">
+                      <div className="flex items-start gap-3 text-sm text-muted-foreground">
+                        <MapPin size={18} className="text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <span className="line-clamp-2">{order.shipping_address}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <Phone size={18} className="text-muted-foreground flex-shrink-0" />
+                        <span>{order.shipping_phone}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full md:w-auto gap-4">
+                      <div className="text-left md:text-right md:mr-6">
+                        <span className="block text-sm font-medium text-muted-foreground">Order Total</span>
+                        <span className="text-2xl font-black text-primary">₹{order.total_amount.toFixed(2)}</span>
+                      </div>
+                      
+                      <button
+                        onClick={() => navigate(`/order/${order.id}`)}
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-background text-foreground font-semibold rounded-xl hover:bg-muted border border-border transition-all active:scale-95 whitespace-nowrap"
+                      >
+                        <Eye size={18} />
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>
@@ -149,169 +183,4 @@ const Dashboard = () => {
   );
 };
 
-const styles = {
-  page: {
-    minHeight: '100vh',
-    padding: '40px 0 80px'
-  },
-  header: {
-    marginBottom: '40px',
-    textAlign: 'center'
-  },
-  title: {
-    fontSize: '36px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  subtitle: {
-    fontSize: '18px',
-    color: '#6b7280'
-  },
-  loading: {
-    textAlign: 'center',
-    padding: '60px 20px',
-    fontSize: '18px',
-    color: '#6b7280'
-  },
-  emptyState: {
-    textAlign: 'center',
-    padding: '80px 20px'
-  },
-  emptyIcon: {
-    color: '#9ca3af',
-    marginBottom: '24px'
-  },
-  emptyTitle: {
-    fontSize: '28px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '12px'
-  },
-  emptyText: {
-    fontSize: '16px',
-    color: '#6b7280',
-    marginBottom: '32px'
-  },
-  shopButton: {
-    fontSize: '16px',
-    padding: '12px 32px'
-  },
-  ordersList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '24px'
-  },
-  orderCard: {
-    padding: '24px'
-  },
-  orderHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '16px'
-  },
-  orderNumber: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: '8px'
-  },
-  orderDate: {
-    fontSize: '14px',
-    color: '#6b7280',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px'
-  },
-  statusBadge: {
-    padding: '6px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: '600'
-  },
-  divider: {
-    height: '1px',
-    backgroundColor: '#e5e7eb',
-    margin: '16px 0'
-  },
-  orderItems: {
-    marginBottom: '16px'
-  },
-  itemRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '8px 0',
-    fontSize: '14px'
-  },
-  itemName: {
-    flex: 1,
-    color: '#374151'
-  },
-  itemQuantity: {
-    color: '#6b7280',
-    marginRight: '12px'
-  },
-  itemPrice: {
-    fontWeight: '600',
-    color: '#111827'
-  },
-  moreItems: {
-    fontSize: '14px',
-    color: '#6b7280',
-    fontStyle: 'italic',
-    marginTop: '8px'
-  },
-  orderFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '16px',
-    flexWrap: 'wrap',
-    gap: '16px'
-  },
-  shippingInfo: {
-    flex: 1,
-    minWidth: '200px'
-  },
-  shippingRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    marginBottom: '8px',
-    fontSize: '14px',
-    color: '#6b7280'
-  },
-  shippingText: {
-    flex: 1
-  },
-  orderTotal: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px'
-  },
-  totalLabel: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#374151'
-  },
-  totalValue: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#22c55e'
-  },
-  viewButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    width: '100%',
-    justifyContent: 'center'
-  },
-  icon: {
-    color: '#6b7280'
-  }
-};
-
 export default Dashboard;
-

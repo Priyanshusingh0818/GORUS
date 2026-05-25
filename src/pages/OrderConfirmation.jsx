@@ -227,12 +227,12 @@ const styles = {
   title: {
     fontSize: '36px',
     fontWeight: '700',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '12px'
   },
   subtitle: {
     fontSize: '18px',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     marginBottom: '40px'
   },
   orderCard: {
@@ -249,7 +249,7 @@ const styles = {
   orderTitle: {
     fontSize: '24px',
     fontWeight: '700',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '8px'
   },
   orderNumber: {
@@ -264,7 +264,7 @@ const styles = {
   },
   divider: {
     height: '1px',
-    backgroundColor: '#e5e7eb',
+    backgroundColor: 'hsl(var(--border))',
     margin: '24px 0'
   },
   section: {
@@ -273,7 +273,7 @@ const styles = {
   sectionTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '16px'
   },
   itemRow: {
@@ -281,21 +281,21 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '12px 0',
-    borderBottom: '1px solid #f3f4f6'
+    borderBottom: '1px solid hsl(var(--border))'
   },
   itemMeta: {
     fontSize: '14px',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     marginTop: '4px'
   },
   itemTotal: {
     fontSize: '16px',
     fontWeight: '600',
-    color: '#111827'
+    color: 'hsl(var(--foreground))'
   },
   addressText: {
     fontSize: '16px',
-    color: '#374151',
+    color: 'hsl(var(--foreground))',
     lineHeight: '1.6'
   },
   totalRow: {
@@ -307,12 +307,12 @@ const styles = {
   totalLabel: {
     fontSize: '20px',
     fontWeight: '700',
-    color: '#111827'
+    color: 'hsl(var(--foreground))'
   },
   totalValue: {
     fontSize: '24px',
     fontWeight: '700',
-    color: '#22c55e'
+    color: 'hsl(var(--primary))'
   },
   actions: {
     display: 'flex',
@@ -331,13 +331,13 @@ const styles = {
     textAlign: 'center',
     padding: '40px',
     fontSize: '18px',
-    color: '#6b7280'
+    color: 'hsl(var(--muted-foreground))'
   },
   error: {
     textAlign: 'center',
     padding: '40px',
     fontSize: '18px',
-    color: '#ef4444'
+    color: 'hsl(var(--destructive))'
   },
   paymentWarning: {
     backgroundColor: '#fef3c7',

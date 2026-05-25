@@ -1,111 +1,97 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const AuthService = require('../services/authService');
+const { authMiddleware } = require('../middleware/auth');
+const { validate, signupSchema, loginSchema, updateProfileSchema, changePasswordSchema } = require('../validators/authValidator');
 
-module.exports = function (db) {
-  const insertUser = db.prepare('INSERT INTO users (name, email, password_hash, is_admin) VALUES (?, ?, ?, ?)');
-  const findByEmail = db.prepare('SELECT id, name, email, password_hash, is_admin, created_at FROM users WHERE email = ?');
+module.exports = function (pool) {
+  const authService = new AuthService(pool);
 
-  router.post('/signup', async (req, res) => {
+  router.post('/signup', validate(signupSchema), async (req, res) => {
     const { name, email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'email and password required' });
+    const { user, token } = await authService.signup(name, email, password);
+    
+    res.cookie('gorasToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
 
-    const existing = findByEmail.get(email);
-    if (existing) return res.status(409).json({ message: 'User already exists' });
-
-    const password_hash = await bcrypt.hash(password, 12);
-    try {
-      const info = insertUser.run(name || null, email, password_hash, 0);
-      const user = { id: info.lastInsertRowid, name: name || null, email, is_admin: 0 };
-      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
-      return res.status(201).json({ user: { id: user.id, name: user.name, email: user.email, is_admin: false }, token });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
+    return res.status(201).json({ user, token });
   });
 
-  router.post('/login', async (req, res) => {
+  router.post('/login', validate(loginSchema), async (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'email and password required' });
+    const { user, token } = await authService.login(email, password);
+    
+    res.cookie('gorasToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
 
-    const user = findByEmail.get(email);
-    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const ok = await bcrypt.compare(password, user.password_hash);
-    if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const payload = { id: user.id, email: user.email, is_admin: !!user.is_admin };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
-    return res.json({ user: { id: user.id, name: user.name, email: user.email, is_admin: !!user.is_admin }, token });
+    return res.json({ user, token });
   });
 
-  // PUT update profile (requires auth)
-  const updateUser = db.prepare('UPDATE users SET name = ?, email = ? WHERE id = ?');
-  router.put('/profile', (req, res) => {
-    try {
-      const userId = req.user?.id;
-      if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-      const { name, email } = req.body;
-      
-      if (!name || !email) {
-        return res.status(400).json({ message: 'Name and email are required' });
-      }
-
-      // Check if email is already taken by another user
-      const existingUser = findByEmail.get(email);
-      if (existingUser && existingUser.id !== userId) {
-        return res.status(409).json({ message: 'Email already in use' });
-      }
-
-      updateUser.run(name, email, userId);
-      const updatedUser = db.prepare('SELECT id, name, email, is_admin FROM users WHERE id = ?').get(userId);
-      
-      return res.json({ user: updatedUser });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
+  router.post('/logout', (req, res) => {
+    res.clearCookie('gorasToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
+    return res.json({ message: 'Logged out successfully' });
   });
 
-  // PUT change password (requires auth)
-  router.put('/change-password', async (req, res) => {
-    try {
-      const userId = req.user?.id;
-      if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-      const { currentPassword, newPassword } = req.body;
-      
-      if (!currentPassword || !newPassword) {
-        return res.status(400).json({ message: 'Current password and new password are required' });
-      }
+  router.get('/me', authMiddleware, async (req, res) => {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+    
+    const { rows } = await pool.query('SELECT id, name, email, phone, is_admin FROM users WHERE id = $1', [userId]);
+    const user = rows[0];
+    if (!user) return res.status(401).json({ message: 'Unauthorized' });
+    
+    return res.json({ user: { id: user.id, name: user.name, email: user.email, phone: user.phone || null, is_admin: !!user.is_admin } });
+  });
 
-      if (newPassword.length < 6) {
-        return res.status(400).json({ message: 'New password must be at least 6 characters' });
-      }
-
-      const user = db.prepare('SELECT password_hash FROM users WHERE id = ?').get(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      const ok = await bcrypt.compare(currentPassword, user.password_hash);
-      if (!ok) {
-        return res.status(401).json({ message: 'Current password is incorrect' });
-      }
-
-      const newPasswordHash = await bcrypt.hash(newPassword, 12);
-      db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(newPasswordHash, userId);
-      
-      return res.json({ message: 'Password changed successfully' });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+  router.put('/profile', authMiddleware, validate(updateProfileSchema), async (req, res) => {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
+    const { name, email, phone } = req.body;
+    const updatedUser = await authService.updateProfile(userId, name, email, phone);
+    return res.json({ user: updatedUser });
+  });
+
+  router.put('/change-password', authMiddleware, validate(changePasswordSchema), async (req, res) => {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const { currentPassword, newPassword } = req.body;
+    await authService.changePassword(userId, currentPassword, newPassword);
+    return res.json({ message: 'Password changed successfully' });
+  });
+
+  router.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ message: 'Email is required' });
+    await authService.requestPasswordReset(email, process.env.CLIENT_URL);
+    return res.json({ message: 'If an account with that email exists, we sent a password reset link.' });
+  });
+
+  router.post('/reset-password', async (req, res) => {
+    const { email, token, newPassword } = req.body;
+    if (!email || !token || !newPassword) {
+      return res.status(400).json({ message: 'Email, token, and new password are required' });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+    await authService.resetPassword(email, token, newPassword);
+    return res.json({ message: 'Password has been successfully reset' });
   });
 
   return router;

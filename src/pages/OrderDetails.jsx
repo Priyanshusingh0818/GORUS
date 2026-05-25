@@ -206,12 +206,12 @@ const styles = {
   orderTitle: {
     fontSize: '28px',
     fontWeight: '700',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '8px'
   },
   orderDate: {
     fontSize: '16px',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     display: 'flex',
     alignItems: 'center',
     gap: '8px'
@@ -224,7 +224,7 @@ const styles = {
   },
   divider: {
     height: '1px',
-    backgroundColor: '#e5e7eb',
+    backgroundColor: 'hsl(var(--border))',
     margin: '24px 0'
   },
   section: {
@@ -233,21 +233,21 @@ const styles = {
   sectionTitle: {
     fontSize: '20px',
     fontWeight: '600',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '16px',
     display: 'flex',
     alignItems: 'center',
     gap: '8px'
   },
   sectionIcon: {
-    color: '#22c55e'
+    color: 'hsl(var(--primary))'
   },
   itemRow: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '16px',
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'hsl(var(--muted))',
     borderRadius: '8px',
     marginBottom: '12px'
   },
@@ -257,38 +257,38 @@ const styles = {
   itemName: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '4px'
   },
   itemMeta: {
     fontSize: '14px',
-    color: '#6b7280'
+    color: 'hsl(var(--muted-foreground))'
   },
   itemTotal: {
     fontSize: '18px',
     fontWeight: '700',
-    color: '#22c55e'
+    color: 'hsl(var(--primary))'
   },
   addressBox: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'hsl(var(--muted))',
     padding: '20px',
     borderRadius: '8px'
   },
   addressName: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#111827',
+    color: 'hsl(var(--foreground))',
     marginBottom: '8px'
   },
   addressText: {
     fontSize: '16px',
-    color: '#374151',
+    color: 'hsl(var(--foreground))',
     lineHeight: '1.6',
     marginBottom: '12px'
   },
   addressPhone: {
     fontSize: '16px',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     display: 'flex',
     alignItems: 'center',
     gap: '8px'
@@ -301,33 +301,33 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '20px',
-    backgroundColor: '#f0fdf4',
+    backgroundColor: 'hsl(var(--muted))',
     borderRadius: '8px'
   },
   totalLabel: {
     fontSize: '20px',
     fontWeight: '600',
-    color: '#111827'
+    color: 'hsl(var(--foreground))'
   },
   totalValue: {
     fontSize: '28px',
     fontWeight: '700',
-    color: '#22c55e'
+    color: 'hsl(var(--primary))'
   },
   icon: {
-    color: '#6b7280'
+    color: 'hsl(var(--muted-foreground))'
   },
   loading: {
     textAlign: 'center',
     padding: '60px 20px',
     fontSize: '18px',
-    color: '#6b7280'
+    color: 'hsl(var(--muted-foreground))'
   },
   error: {
     textAlign: 'center',
     padding: '60px 20px',
     fontSize: '18px',
-    color: '#ef4444'
+    color: 'hsl(var(--destructive))'
   },
   errorMessage: {
     backgroundColor: '#fee2e2',
@@ -340,7 +340,7 @@ const styles = {
   cancelSection: {
     marginTop: '32px',
     paddingTop: '24px',
-    borderTop: '2px solid #e5e7eb',
+    borderTop: '2px solid hsl(var(--border))',
     textAlign: 'center'
   },
   cancelButton: {
@@ -354,7 +354,7 @@ const styles = {
   },
   cancelNote: {
     fontSize: '12px',
-    color: '#6b7280',
+    color: 'hsl(var(--muted-foreground))',
     fontStyle: 'italic'
   }
 };
