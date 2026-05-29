@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Package, Calendar, MapPin, Phone, X } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Calendar, MapPin, Package, Phone, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { ordersAPI } from '../utils/api';
+import { formatCurrency } from '../utils/format';
+
+const statusClass = {
+  pending: 'bg-accent text-accent-foreground border-border',
+  processing: 'bg-primary/10 text-primary border-primary/20',
+  shipped: 'bg-muted text-foreground border-border',
+  delivered: 'bg-primary/10 text-primary border-primary/20',
+  cancelled: 'bg-destructive/10 text-destructive border-destructive/20'
+};
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -19,35 +28,26 @@ const OrderDetails = () => {
       return;
     }
 
+    let isMounted = true;
     const fetchOrder = async () => {
       try {
         const response = await ordersAPI.getById(id);
-        setOrder(response.order);
-      } catch (error) {
-        console.error('Error fetching order:', error);
+        if (isMounted) setOrder(response.order);
+      } catch (fetchError) {
+        if (isMounted) setOrder(null);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchOrder();
+    return () => {
+      isMounted = false;
+    };
   }, [id, user, navigate]);
 
-  const getStatusColor = (status) => {
-    const colors = {
-      pending: '#f59e0b',
-      processing: '#3b82f6',
-      shipped: '#8b5cf6',
-      delivered: '#22c55e',
-      cancelled: '#ef4444'
-    };
-    return colors[status] || '#6b7280';
-  };
-
   const handleCancelOrder = async () => {
-    if (!window.confirm('Are you sure you want to cancel this order? This action cannot be undone.')) {
-      return;
-    }
+    if (!window.confirm('Cancel this order? This action cannot be undone.')) return;
 
     setCancelling(true);
     setError('');
@@ -65,299 +65,116 @@ const OrderDetails = () => {
 
   if (loading) {
     return (
-      <div style={styles.page}>
-        <div className="container">
-          <div style={styles.loading}>Loading order details...</div>
+      <main className="min-h-screen bg-background">
+        <div className="page-shell section-y max-w-4xl">
+          <div className="skeleton mb-8 h-11 w-40 rounded-full" />
+          <div className="premium-card p-6">
+            <div className="skeleton h-8 w-64 rounded-full" />
+            <div className="mt-8 space-y-4">
+              <div className="skeleton h-16 w-full rounded-lg" />
+              <div className="skeleton h-16 w-full rounded-lg" />
+              <div className="skeleton h-24 w-full rounded-lg" />
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (!order) {
     return (
-      <div style={styles.page}>
-        <div className="container">
-          <div style={styles.error}>Order not found</div>
+      <main className="flex min-h-screen items-center justify-center bg-background px-4">
+        <div className="premium-card p-8 text-center">
+          <h1 className="mb-2 text-2xl font-bold text-foreground">Order not found</h1>
+          <button type="button" onClick={() => navigate('/dashboard')} className="premium-button-primary mt-4">
+            Back to orders
+          </button>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div style={styles.page}>
-      <div className="container">
-        <button
-          onClick={() => navigate('/dashboard')}
-          style={styles.backButton}
-          className="btn-secondary"
-        >
+    <main className="min-h-screen bg-background">
+      <div className="page-shell section-y max-w-4xl">
+        <button type="button" onClick={() => navigate('/dashboard')} className="premium-button-secondary mb-8">
           <ArrowLeft size={18} />
           Back to Orders
         </button>
 
-        <div className="card" style={styles.orderCard}>
-          <div style={styles.orderHeader}>
+        <article className="premium-card p-5 sm:p-8">
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h1 style={styles.orderTitle}>Order #{order.order_number}</h1>
-              <p style={styles.orderDate}>
-                <Calendar size={16} style={styles.icon} />
-                {new Date(order.created_at).toLocaleString()}
+              <h1 className="mb-2 text-3xl font-extrabold text-foreground">Order #{order.order_number}</h1>
+              <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Calendar size={16} />
+                {new Date(order.created_at).toLocaleString('en-IN')}
               </p>
             </div>
-            <div style={{...styles.statusBadge, backgroundColor: getStatusColor(order.status) + '20', color: getStatusColor(order.status)}}>
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+            <div className={`w-fit rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${statusClass[order.status] || 'bg-gray-100 text-gray-700 border-gray-200'}`}>
+              {order.status}
             </div>
           </div>
 
-          <div style={styles.divider} />
+          <div className="my-6 border-t border-border" />
 
-          <div style={styles.section}>
-            <h2 style={styles.sectionTitle}>
-              <Package size={20} style={styles.sectionIcon} />
+          <section className="mb-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-foreground">
+              <Package size={20} className="text-primary" />
               Order Items
             </h2>
-            {order.items?.map((item, index) => (
-              <div key={index} style={styles.itemRow}>
-                <div style={styles.itemInfo}>
-                  <h3 style={styles.itemName}>{item.product_name}</h3>
-                  <p style={styles.itemMeta}>Quantity: {item.quantity} × ₹{item.product_price}</p>
+            <div className="grid gap-3">
+              {order.items?.map((item, index) => (
+                <div key={index} className="flex items-center justify-between gap-4 rounded-lg bg-muted p-4">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-base font-semibold text-foreground">{item.product_name}</h3>
+                    <p className="text-sm text-muted-foreground">Quantity: {item.quantity} x {formatCurrency(item.product_price)}</p>
+                  </div>
+                  <div className="font-bold text-primary">{formatCurrency(item.subtotal)}</div>
                 </div>
-                <div style={styles.itemTotal}>₹{item.subtotal.toFixed(2)}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </section>
 
-          <div style={styles.divider} />
+          <div className="my-6 border-t border-border" />
 
-          <div style={styles.section}>
-            <h2 style={styles.sectionTitle}>
-              <MapPin size={20} style={styles.sectionIcon} />
+          <section className="mb-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-foreground">
+              <MapPin size={20} className="text-primary" />
               Shipping Address
             </h2>
-            <div style={styles.addressBox}>
-              <p style={styles.addressName}>{order.shipping_name}</p>
-              <p style={styles.addressText}>{order.shipping_address}</p>
-              <p style={styles.addressPhone}>
-                <Phone size={16} style={styles.icon} />
+            <div className="rounded-lg bg-muted p-5">
+              <p className="mb-2 text-lg font-semibold text-foreground">{order.shipping_name}</p>
+              <p className="mb-3 leading-7 text-foreground">{order.shipping_address}</p>
+              <p className="flex items-center gap-2 text-muted-foreground">
+                <Phone size={16} />
                 {order.shipping_phone}
               </p>
             </div>
-          </div>
+          </section>
 
-          <div style={styles.divider} />
-
-          <div style={styles.totalSection}>
-            <div style={styles.totalRow}>
-              <span style={styles.totalLabel}>Total Amount</span>
-              <span style={styles.totalValue}>₹{order.total_amount.toFixed(2)}</span>
+          <div className="rounded-lg bg-muted p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xl font-bold text-foreground">Total Amount</span>
+              <span className="text-3xl font-black text-primary">{formatCurrency(order.total_amount)}</span>
             </div>
           </div>
 
-          {error && (
-            <div style={styles.errorMessage}>
-              {error}
-            </div>
-          )}
+          {error && <div className="mt-6 rounded-lg bg-destructive/10 p-4 text-sm font-medium text-destructive">{error}</div>}
 
           {canCancel && (
-            <div style={styles.cancelSection}>
-              <button
-                onClick={handleCancelOrder}
-                disabled={cancelling}
-                style={styles.cancelButton}
-                className="btn-secondary"
-              >
+            <div className="mt-8 border-t border-border pt-6 text-center">
+              <button type="button" onClick={handleCancelOrder} disabled={cancelling} className="premium-button border border-destructive/40 bg-destructive/10 text-destructive hover:bg-destructive/15">
                 <X size={18} />
                 {cancelling ? 'Cancelling...' : 'Cancel Order'}
               </button>
-              <p style={styles.cancelNote}>
-                You can only cancel orders that are still pending.
-              </p>
+              <p className="mt-3 text-xs text-muted-foreground">Only pending orders can be cancelled.</p>
             </div>
           )}
-        </div>
+        </article>
       </div>
-    </div>
+    </main>
   );
 };
 
-const styles = {
-  page: {
-    minHeight: '100vh',
-    padding: '40px 0 80px'
-  },
-  backButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    marginBottom: '32px'
-  },
-  orderCard: {
-    padding: '32px',
-    maxWidth: '800px',
-    margin: '0 auto'
-  },
-  orderHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '24px'
-  },
-  orderTitle: {
-    fontSize: '28px',
-    fontWeight: '700',
-    color: 'hsl(var(--foreground))',
-    marginBottom: '8px'
-  },
-  orderDate: {
-    fontSize: '16px',
-    color: 'hsl(var(--muted-foreground))',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  },
-  statusBadge: {
-    padding: '8px 16px',
-    borderRadius: '20px',
-    fontSize: '14px',
-    fontWeight: '600'
-  },
-  divider: {
-    height: '1px',
-    backgroundColor: 'hsl(var(--border))',
-    margin: '24px 0'
-  },
-  section: {
-    marginBottom: '24px'
-  },
-  sectionTitle: {
-    fontSize: '20px',
-    fontWeight: '600',
-    color: 'hsl(var(--foreground))',
-    marginBottom: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  },
-  sectionIcon: {
-    color: 'hsl(var(--primary))'
-  },
-  itemRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '16px',
-    backgroundColor: 'hsl(var(--muted))',
-    borderRadius: '8px',
-    marginBottom: '12px'
-  },
-  itemInfo: {
-    flex: 1
-  },
-  itemName: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: 'hsl(var(--foreground))',
-    marginBottom: '4px'
-  },
-  itemMeta: {
-    fontSize: '14px',
-    color: 'hsl(var(--muted-foreground))'
-  },
-  itemTotal: {
-    fontSize: '18px',
-    fontWeight: '700',
-    color: 'hsl(var(--primary))'
-  },
-  addressBox: {
-    backgroundColor: 'hsl(var(--muted))',
-    padding: '20px',
-    borderRadius: '8px'
-  },
-  addressName: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: 'hsl(var(--foreground))',
-    marginBottom: '8px'
-  },
-  addressText: {
-    fontSize: '16px',
-    color: 'hsl(var(--foreground))',
-    lineHeight: '1.6',
-    marginBottom: '12px'
-  },
-  addressPhone: {
-    fontSize: '16px',
-    color: 'hsl(var(--muted-foreground))',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  },
-  totalSection: {
-    marginTop: '24px'
-  },
-  totalRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '20px',
-    backgroundColor: 'hsl(var(--muted))',
-    borderRadius: '8px'
-  },
-  totalLabel: {
-    fontSize: '20px',
-    fontWeight: '600',
-    color: 'hsl(var(--foreground))'
-  },
-  totalValue: {
-    fontSize: '28px',
-    fontWeight: '700',
-    color: 'hsl(var(--primary))'
-  },
-  icon: {
-    color: 'hsl(var(--muted-foreground))'
-  },
-  loading: {
-    textAlign: 'center',
-    padding: '60px 20px',
-    fontSize: '18px',
-    color: 'hsl(var(--muted-foreground))'
-  },
-  error: {
-    textAlign: 'center',
-    padding: '60px 20px',
-    fontSize: '18px',
-    color: 'hsl(var(--destructive))'
-  },
-  errorMessage: {
-    backgroundColor: '#fee2e2',
-    color: '#b91c1c',
-    padding: '12px 16px',
-    borderRadius: '8px',
-    marginTop: '24px',
-    fontSize: '14px'
-  },
-  cancelSection: {
-    marginTop: '32px',
-    paddingTop: '24px',
-    borderTop: '2px solid hsl(var(--border))',
-    textAlign: 'center'
-  },
-  cancelButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    margin: '0 auto 12px',
-    backgroundColor: '#fee2e2',
-    color: '#b91c1c',
-    borderColor: '#b91c1c'
-  },
-  cancelNote: {
-    fontSize: '12px',
-    color: 'hsl(var(--muted-foreground))',
-    fontStyle: 'italic'
-  }
-};
-
 export default OrderDetails;
-

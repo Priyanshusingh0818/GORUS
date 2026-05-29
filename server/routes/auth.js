@@ -8,8 +8,8 @@ module.exports = function (pool) {
   const authService = new AuthService(pool);
 
   router.post('/signup', validate(signupSchema), async (req, res) => {
-    const { name, email, password } = req.body;
-    const { user, token } = await authService.signup(name, email, password);
+    const { name, email, phone, password } = req.body;
+    const { user, token } = await authService.signup(name, email, phone, password);
     
     res.cookie('gorasToken', token, {
       httpOnly: true,

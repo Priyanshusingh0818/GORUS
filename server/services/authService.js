@@ -8,27 +8,45 @@ class AuthService {
     this.pool = pool;
   }
 
-  async signup(name, email, password) {
-    const { rows: existingRows } = await this.pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  normalizePhone(phone) {
+    return String(phone || '').replace(/[^\d+]/g, '');
+  }
+
+  async signup(name, email, phone, password) {
+    await this.pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);');
+    const normalizedPhone = this.normalizePhone(phone);
+    const { rows: existingRows } = await this.pool.query(
+      'SELECT * FROM users WHERE LOWER(email) = LOWER($1) OR phone = $2',
+      [email, normalizedPhone]
+    );
     if (existingRows.length > 0) {
-      const error = new Error('User already exists');
+      const error = new Error('An account already exists with this email or phone number');
       error.statusCode = 409;
       throw error;
     }
 
     const password_hash = await bcrypt.hash(password, 12);
     const { rows } = await this.pool.query(
-      'INSERT INTO users (name, email, password_hash, is_admin) VALUES ($1, $2, $3, $4) RETURNING id',
-      [name || null, email, password_hash, 0]
+      'INSERT INTO users (name, email, phone, password_hash, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+      [name || null, email, normalizedPhone, password_hash, 0]
     );
     
-    const user = { id: rows[0].id, name: name || null, email, is_admin: 0 };
+    const user = { id: rows[0].id, name: name || null, email, phone: normalizedPhone, is_admin: 0 };
     const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
-    return { user: { id: user.id, name: user.name, email: user.email, is_admin: false }, token };
+    return { user: { id: user.id, name: user.name, email: user.email, phone: user.phone, is_admin: false }, token };
   }
 
-  async login(email, password) {
-    const { rows } = await this.pool.query('SELECT id, name, email, phone, password_hash, is_admin FROM users WHERE email = $1', [email]);
+  async login(identifier, password) {
+    await this.pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);');
+    const normalizedIdentifier = this.normalizePhone(identifier);
+    const { rows } = await this.pool.query(
+      `SELECT id, name, email, phone, password_hash, is_admin
+       FROM users
+       WHERE LOWER(email) = LOWER($1) OR phone = $2
+       ORDER BY created_at DESC
+       LIMIT 1`,
+      [identifier, normalizedIdentifier]
+    );
     const user = rows[0];
     
     if (!user) {
@@ -50,14 +68,25 @@ class AuthService {
   }
 
   async updateProfile(userId, name, email, phone) {
-    const { rows: existingRows } = await this.pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    await this.pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);');
+    const normalizedPhone = this.normalizePhone(phone);
+    const { rows: existingRows } = await this.pool.query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [email]);
     if (existingRows.length > 0 && existingRows[0].id !== userId) {
       const error = new Error('Email already in use');
       error.statusCode = 409;
       throw error;
     }
 
-    await this.pool.query('UPDATE users SET name = $1, email = $2, phone = $3 WHERE id = $4', [name, email, phone || null, userId]);
+    if (normalizedPhone) {
+      const { rows: phoneRows } = await this.pool.query('SELECT id FROM users WHERE phone = $1', [normalizedPhone]);
+      if (phoneRows.length > 0 && phoneRows[0].id !== userId) {
+        const error = new Error('Phone number already in use');
+        error.statusCode = 409;
+        throw error;
+      }
+    }
+
+    await this.pool.query('UPDATE users SET name = $1, email = $2, phone = $3 WHERE id = $4', [name, email, normalizedPhone || null, userId]);
     
     const { rows } = await this.pool.query('SELECT id, name, email, phone, is_admin FROM users WHERE id = $1', [userId]);
     const updatedUser = rows[0];

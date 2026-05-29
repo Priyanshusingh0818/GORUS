@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, Users, ShoppingBag, Plus, Edit, Trash2, Check, X, RefreshCw, BarChart3, TrendingUp, DollarSign, UserPlus } from 'lucide-react';
+import { Package, Users, ShoppingBag, Plus, Edit, Trash2, Check, X, RefreshCw, BarChart3, DollarSign, UserPlus, MapPin, Milk } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../utils/api';
+import { formatCurrency } from '../utils/format';
 
 const AdminPanel = () => {
   const { user } = useAuth();
@@ -26,20 +27,7 @@ const AdminPanel = () => {
     stock: 100
   });
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-    if (!user.is_admin) {
-      // Don't redirect, show message instead
-      setLoading(false);
-      return;
-    }
-    fetchData();
-  }, [user, navigate, activeTab]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       if (activeTab === 'dashboard') {
@@ -60,7 +48,20 @@ const AdminPanel = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    if (!user.is_admin) {
+      // Don't redirect, show message instead
+      setLoading(false);
+      return;
+    }
+    fetchData();
+  }, [user, navigate, fetchData]);
 
   const handleUpdateOrderStatus = async (orderId, newStatus) => {
     try {
@@ -199,15 +200,33 @@ const AdminPanel = () => {
         <div style={styles.header}>
           <h1 style={styles.title}>Admin Panel</h1>
           {(activeTab === 'orders' || activeTab === 'dashboard') && (
-            <button
-              onClick={fetchData}
-              className="btn-secondary"
-              style={styles.refreshButton}
-              title="Refresh data"
-            >
-              <RefreshCw size={18} />
-              Refresh
-            </button>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => navigate('/admin/subscriptions')}
+                className="btn-secondary"
+                style={styles.refreshButton}
+              >
+                <Milk size={18} />
+                Subscriptions
+              </button>
+              <button
+                onClick={() => navigate('/admin/delivery-requests')}
+                className="btn-secondary"
+                style={styles.refreshButton}
+              >
+                <MapPin size={18} />
+                Delivery Requests
+              </button>
+              <button
+                onClick={fetchData}
+                className="btn-secondary"
+                style={styles.refreshButton}
+                title="Refresh data"
+              >
+                <RefreshCw size={18} />
+                Refresh
+              </button>
+            </div>
           )}
         </div>
 
@@ -256,7 +275,7 @@ const AdminPanel = () => {
                       </div>
                       <div style={styles.statContent}>
                         <div style={styles.statLabel}>Total Sales</div>
-                        <div style={styles.statValue}>₹{dashboardStats.stats.totalSales.toFixed(2)}</div>
+                        <div style={styles.statValue}>{formatCurrency(dashboardStats.stats.totalSales)}</div>
                       </div>
                     </div>
 
@@ -302,7 +321,7 @@ const AdminPanel = () => {
                           <div key={idx} style={styles.barContainer}>
                             <div style={styles.barWrapper}>
                               <div style={{...styles.bar, height: `${height}px`}}>
-                                <div style={styles.barValue}>₹{day.sales.toFixed(0)}</div>
+                                <div style={styles.barValue}>{formatCurrency(day.sales)}</div>
                               </div>
                             </div>
                             <div style={styles.barLabel}>
@@ -326,7 +345,7 @@ const AdminPanel = () => {
                             <div style={styles.productInfo}>
                               <div style={styles.productName}>{product.name}</div>
                               <div style={styles.productStats}>
-                                {product.quantity} sold • ₹{product.revenue.toFixed(2)} revenue
+                                {product.quantity} sold | {formatCurrency(product.revenue)} revenue
                               </div>
                             </div>
                           </div>
@@ -367,7 +386,7 @@ const AdminPanel = () => {
                             <div style={styles.recentOrderNumber}>Order #{order.order_number}</div>
                             <div style={styles.recentOrderCustomer}>{order.shipping_name}</div>
                           </div>
-                          <div style={styles.recentOrderAmount}>₹{order.total_amount.toFixed(2)}</div>
+                          <div style={styles.recentOrderAmount}>{formatCurrency(order.total_amount)}</div>
                           <div style={{...styles.recentOrderStatus, color: getStatusColor(order.status)}}>
                             {order.status}
                           </div>
@@ -399,7 +418,7 @@ const AdminPanel = () => {
                           📅 {new Date(order.created_at).toLocaleString()}
                         </p>
                         <p style={styles.customerInfo}>
-                          👤 Customer: {order.shipping_name} | 📞 {order.shipping_phone}
+                          <Users size={15} style={styles.inlineIcon} /> Customer: {order.shipping_name} | {order.shipping_phone}
                         </p>
                       </div>
                       <div style={styles.statusSection}>
@@ -409,11 +428,11 @@ const AdminPanel = () => {
                           onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
                           style={{...styles.statusSelect, borderColor: getStatusColor(order.status), backgroundColor: getStatusColor(order.status) + '10'}}
                         >
-                          <option value="pending">⏳ Pending</option>
-                          <option value="processing">🔄 Processing</option>
-                          <option value="shipped">📦 Shipped</option>
-                          <option value="delivered">✅ Delivered</option>
-                          <option value="cancelled">❌ Cancelled</option>
+                          <option value="pending">Pending</option>
+                          <option value="processing">Processing</option>
+                          <option value="shipped">Shipped</option>
+                          <option value="delivered">Delivered</option>
+                          <option value="cancelled">Cancelled</option>
                         </select>
                       </div>
                     </div>
@@ -422,20 +441,20 @@ const AdminPanel = () => {
                     
                     <div style={styles.orderDetails}>
                       <div style={styles.section}>
-                        <h4 style={styles.sectionTitle}>📦 Order Items</h4>
+                        <h4 style={styles.sectionTitle}><Package size={18} /> Order Items</h4>
                         <div style={styles.orderItems}>
                           {order.items?.map((item, idx) => (
                             <div key={idx} style={styles.itemRow}>
                               <span style={styles.itemName}>{item.product_name}</span>
                               <span style={styles.itemQty}>× {item.quantity}</span>
-                              <span style={styles.itemPrice}>₹{item.subtotal.toFixed(2)}</span>
+                              <span style={styles.itemPrice}>{formatCurrency(item.subtotal)}</span>
                             </div>
                           ))}
                         </div>
                       </div>
                       
                       <div style={styles.section}>
-                        <h4 style={styles.sectionTitle}>📍 Shipping Address</h4>
+                        <h4 style={styles.sectionTitle}><MapPin size={18} /> Shipping Address</h4>
                         <p style={styles.addressText}>
                           {order.shipping_name}<br />
                           {order.shipping_address}<br />
@@ -449,7 +468,7 @@ const AdminPanel = () => {
                     <div style={styles.orderFooter}>
                       <div style={styles.totalSection}>
                         <span style={styles.totalLabel}>Total Amount:</span>
-                        <span style={styles.totalValue}>₹{order.total_amount.toFixed(2)}</span>
+                        <span style={styles.totalValue}>{formatCurrency(order.total_amount)}</span>
                       </div>
                     </div>
                   </div>
@@ -490,7 +509,7 @@ const AdminPanel = () => {
                     <img src={product.image} alt={product.name} style={styles.productImage} />
                   )}
                   <h3 style={styles.productName}>{product.name}</h3>
-                  <p style={styles.productPrice}>₹{product.price} / {product.unit}</p>
+                  <p style={styles.productPrice}>{formatCurrency(product.price)} / {product.unit}</p>
                   <div style={styles.productActions}>
                     <button
                       className="btn-secondary"
@@ -664,7 +683,8 @@ const styles = {
   orderInfo: { flex: 1, minWidth: 300 },
   orderNumber: { fontSize: 20, fontWeight: 700, marginBottom: 8, color: 'hsl(var(--foreground))' },
   orderDate: { fontSize: 14, color: 'hsl(var(--muted-foreground))', marginBottom: 4 },
-  customerInfo: { fontSize: 14, color: 'hsl(var(--foreground))', marginTop: 8 },
+  customerInfo: { fontSize: 14, color: 'hsl(var(--foreground))', marginTop: 8, display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
+  inlineIcon: { color: 'hsl(var(--muted-foreground))', flexShrink: 0 },
   statusSection: { display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 },
   statusLabel: { fontSize: 12, fontWeight: 600, color: 'hsl(var(--muted-foreground))', textTransform: 'uppercase' },
   statusSelect: {
@@ -679,7 +699,7 @@ const styles = {
   divider: { height: 1, backgroundColor: 'hsl(var(--border))', margin: '20px 0' },
   orderDetails: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 16 },
   section: { marginBottom: 0 },
-  sectionTitle: { fontSize: 16, fontWeight: 600, color: 'hsl(var(--foreground))', marginBottom: 12 },
+  sectionTitle: { fontSize: 16, fontWeight: 600, color: 'hsl(var(--foreground))', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 },
   orderItems: { display: 'flex', flexDirection: 'column', gap: 8 },
   itemRow: { 
     display: 'flex', 

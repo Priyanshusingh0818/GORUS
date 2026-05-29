@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { sendOrderNotificationEmail, sendCustomerOrderConfirmationEmail } = require('../utils/emailService');
+const { PREMIUM_UNAVAILABLE_MESSAGE, validateDeliveryArea } = require('../services/deliveryService');
 
 module.exports = function (pool, options = {}) {
   const isAdminRoute = options.admin === true;
@@ -25,6 +26,21 @@ module.exports = function (pool, options = {}) {
     if (!['upi', 'cod'].includes(paymentMethod)) {
       return res.status(400).json({ message: 'Invalid payment method. Only UPI and COD are allowed.' });
     }
+
+    const availability = await validateDeliveryArea(pool, {
+      pincode: shipping.pincode,
+      address: shipping.address
+    });
+
+    if (!availability.allowed) {
+      return res.status(422).json({
+        code: 'DELIVERY_AREA_UNAVAILABLE',
+        message: availability.message || PREMIUM_UNAVAILABLE_MESSAGE,
+        availability
+      });
+    }
+
+    await pool.query('ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_pincode VARCHAR(6);');
 
     const client = await pool.connect();
     let orderId;
@@ -73,8 +89,8 @@ module.exports = function (pool, options = {}) {
       const paymentStatus = paymentMethod === 'cod' ? 'cod' : 'pending';
 
       const { rows: orderRows } = await client.query(
-        'INSERT INTO orders (user_id, order_number, total_amount, shipping_name, shipping_address, shipping_phone, payment_method, payment_status, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
-        [userId, orderNumber, calculatedTotal, shipping.name, shipping.address, shipping.phone, paymentMethod, paymentStatus, 'pending']
+        'INSERT INTO orders (user_id, order_number, total_amount, shipping_name, shipping_address, shipping_phone, shipping_pincode, payment_method, payment_status, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id',
+        [userId, orderNumber, calculatedTotal, shipping.name, shipping.address, shipping.phone, availability.pincode, paymentMethod, paymentStatus, 'pending']
       );
       orderId = orderRows[0].id;
 

@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, LogOut, Search, Phone, ChevronDown, LayoutDashboard, Settings, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  LogOut,
+  MapPin,
+  Menu,
+  Milk,
+  Moon,
+  Search,
+  Settings,
+  ShoppingCart,
+  Sun,
+  User,
+  X
+} from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import ContactForm from './ContactForm';
-import PillNav from './PillNav';
+
+const navLinks = [
+  { name: 'Products', path: '/products' },
+  { name: 'Milk Subscription', path: '/subscriptions' },
+  { name: 'Available', path: '/products/available' },
+  { name: 'Latest', path: '/products/latest' }
+];
 
 const Navbar = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { getCartCount } = useCart();
+  const { getCartCount, openCart } = useCart();
   const { user, logout } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -20,214 +39,243 @@ const Navbar = () => {
 
   const cartCount = getCartCount();
 
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsMobileOpen(false);
+    setIsAccountOpen(false);
+  }, [location.pathname]);
+
+  const isProductPath = location.pathname.startsWith('/products') || location.pathname.startsWith('/category');
+  const isActive = (path) => location.pathname === path || (path === '/products' && location.pathname.startsWith('/category'));
+
+  const submitSearch = (event) => {
+    event?.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+
+    navigate('/products', {
+      replace: isProductPath,
+      state: { filters: { search: query }, source: 'navbar-search' }
+    });
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/');
-    setIsAccountDropdownOpen(false);
   };
 
-  const isActive = (path) => location.pathname === path;
-
-  const navLinks = [
-    { name: 'Products', path: '/products' },
-    { name: 'Available', path: '/products?available=1' },
-    { name: 'Latest', path: '/products?sort=latest' },
-  ];
+  const linkClass = (path) => (
+    `relative rounded-full px-4 py-2 text-sm font-semibold transition duration-200 ${
+      isActive(path)
+        ? 'bg-primary text-primary-foreground shadow-sm'
+        : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+    }`
+  );
 
   return (
-    <>
-      <header className="w-full flex flex-col z-50 sticky top-0 bg-white">
-        {/* Top Notification Bar */}
-        <div className="w-full bg-[#064e3b] text-white text-xs py-2 px-4 sm:px-6 lg:px-8 hidden md:block">
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Phone size={14} />
-              <span>+91 78383 80192</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span>Browse current product availability</span>
-              <span className="text-gray-300">|</span>
-              <Link to="/products?available=1" className="font-semibold hover:underline">Open catalogue</Link>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-1 hover:text-gray-200">
-                Eng <ChevronDown size={14} />
-              </button>
-              <button className="flex items-center gap-1 hover:text-gray-200">
-                Location <ChevronDown size={14} />
-              </button>
-            </div>
-          </div>
-        </div>
+    <header
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        isScrolled
+          ? 'border-border/80 bg-background/90 shadow-[0_10px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl'
+          : 'border-transparent bg-background/95'
+      }`}
+    >
+      <div className="page-shell">
+        <div className="flex min-h-[72px] items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary p-2">
+              <img src="/images/logo.png" alt="GORUS" className="h-full w-full object-contain" loading="eager" />
+            </span>
+            <span className="hidden leading-tight sm:block">
+              <span className="block text-sm font-black tracking-[0.18em] text-foreground">GORUS</span>
+              <span className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Pure dairy</span>
+            </span>
+          </Link>
 
-        {/* Main Navbar */}
-        <nav className="w-full border-b border-border bg-background py-4 transition-colors">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center gap-6">
-              <PillNav
-                logo="/images/logo.png"
-                logoAlt="GORUS"
-                items={navLinks.map(link => ({ label: link.name, href: link.path }))}
-                activeHref={navLinks.find(link => isActive(link.path))?.path || location.pathname}
-                baseColor="#064e3b"
-                pillColor="#ffffff"
-                hoveredPillTextColor="#ffffff"
-                pillTextColor="#064e3b"
-                initialLoadAnimation={false}
+          <nav className="hidden items-center rounded-full border border-border bg-card p-1 shadow-sm lg:flex" aria-label="Primary navigation">
+            {navLinks.map(link => (
+              <Link key={link.path} to={link.path} className={linkClass(link.path)}>
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden flex-1 justify-center px-2 md:flex lg:max-w-sm">
+            <form onSubmit={submitSearch} className="relative w-full">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search products"
+                aria-label="Search products"
+                className="premium-input w-full rounded-full pl-11 pr-4"
               />
-
-              {/* Search Bar */}
-              <div className="hidden md:flex flex-1 max-w-md relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search Product"
-                  className="w-full bg-muted border border-border focus:border-primary/50 text-foreground text-sm rounded-full py-2.5 px-5 transition-all outline-none"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && searchQuery.trim()) {
-                      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-                    }
-                  }}
-                />
-                <button 
-                  onClick={() => {
-                    if (searchQuery.trim()) {
-                      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-                    }
-                  }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"
-                >
-                  <Search size={18} />
-                </button>
-              </div>
-
-              {/* Right Section (Cart & Auth) */}
-              <div className="flex items-center gap-4 sm:gap-6">
-                {/* Theme Toggle */}
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-full text-foreground hover:bg-muted transition-colors cursor-target"
-                  aria-label="Toggle Dark Mode"
-                >
-                  {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-
-                {/* Account Dropdown */}
-                <div className="relative hidden sm:block">
-                  {user ? (
-                    <button 
-                      onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                      className="cursor-target flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium text-sm"
-                    >
-                      <User size={20} />
-                      <span className="truncate max-w-[80px]">{user.name.split(' ')[0]}</span>
-                    </button>
-                  ) : (
-                    <Link 
-                      to="/login" 
-                      className="cursor-target flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium text-sm"
-                    >
-                      <User size={20} />
-                      <span>Account</span>
-                    </Link>
-                  )}
-
-                  {/* Account Dropdown Menu */}
-                  <AnimatePresence>
-                    {isAccountDropdownOpen && user && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute right-0 mt-3 w-48 bg-background rounded-xl shadow-lg border border-border overflow-hidden"
-                      >
-                        <div className="px-4 py-3 border-b border-border">
-                          <p className="text-sm font-medium text-foreground truncate">{user.name}</p>
-                          <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-                        </div>
-                        <div className="py-1">
-                          <Link onClick={() => setIsAccountDropdownOpen(false)} to="/profile" className="flex items-center px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary">
-                            <Settings size={16} className="mr-2" /> Profile
-                          </Link>
-                          <Link onClick={() => setIsAccountDropdownOpen(false)} to="/dashboard" className="flex items-center px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary">
-                            <LayoutDashboard size={16} className="mr-2" /> My Orders
-                          </Link>
-                          {user.is_admin && (
-                            <Link onClick={() => setIsAccountDropdownOpen(false)} to="/admin" className="flex items-center px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary">
-                              <User size={16} className="mr-2" /> Admin Panel
-                            </Link>
-                          )}
-                        </div>
-                        <div className="border-t border-border py-1">
-                          <button onClick={handleLogout} className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30">
-                            <LogOut size={16} className="mr-2" /> Sign out
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Cart Icon */}
-                <Link 
-                  to="/cart" 
-                  className="cursor-target flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium text-sm relative"
-                >
-                  <ShoppingCart size={20} />
-                  <span className="hidden sm:inline">Cart</span>
-                  <AnimatePresence>
-                    {cartCount > 0 && (
-                      <motion.span 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                        className="absolute -top-2 left-3 sm:-top-2 sm:left-3 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-primary rounded-full border-2 border-background"
-                      >
-                        {cartCount}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </Link>
-
-              </div>
-            </div>
+            </form>
           </div>
-        </nav>
 
-        {/* Mobile Search Bar (visible only on small screens) */}
-        <div className="md:hidden w-full bg-background border-b border-border px-4 py-3">
-          <div className="relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Product"
-              className="w-full bg-muted border border-border focus:border-primary/50 text-foreground text-sm rounded-full py-2.5 px-5 transition-all outline-none"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && searchQuery.trim()) {
-                  navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-                }
-              }}
-            />
-            <button 
-              onClick={() => {
-                if (searchQuery.trim()) {
-                  navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-                }
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="premium-button-secondary h-11 w-11 px-0"
+              aria-label="Toggle color mode"
             >
-              <Search size={18} />
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <div className="relative hidden sm:block">
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => setIsAccountOpen(open => !open)}
+                  className="premium-button-secondary"
+                  aria-expanded={isAccountOpen}
+                >
+                  <User size={18} />
+                  <span className="max-w-[90px] truncate">{user.name.split(' ')[0]}</span>
+                </button>
+              ) : (
+                <Link to="/login" className="premium-button-secondary">
+                  <User size={18} />
+                  Account
+                </Link>
+              )}
+
+              <AnimatePresence>
+                {isAccountOpen && user && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.16, ease: 'easeOut' }}
+                    className="absolute right-0 mt-3 w-56 overflow-hidden rounded-lg border border-border bg-background shadow-[0_20px_60px_rgba(15,23,42,0.14)]"
+                  >
+                    <div className="border-b border-border px-4 py-3">
+                      <p className="truncate text-sm font-semibold text-foreground">{user.name}</p>
+                      <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+                    </div>
+                    <Link to="/profile" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                      <Settings size={16} /> Profile
+                    </Link>
+                    <Link to="/dashboard" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                      <LayoutDashboard size={16} /> My Orders
+                    </Link>
+                    <Link to="/subscriptions" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                      <Milk size={16} /> Milk Subscription
+                    </Link>
+                    {user.is_admin && (
+                      <>
+                        <Link to="/admin" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                          <User size={16} /> Admin Panel
+                        </Link>
+                        <Link to="/admin/subscriptions" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                          <Milk size={16} /> Subscription Admin
+                        </Link>
+                        <Link to="/admin/delivery-requests" className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-foreground hover:bg-muted">
+                          <MapPin size={16} /> Delivery Requests
+                        </Link>
+                      </>
+                    )}
+                    <button type="button" onClick={handleLogout} className="flex w-full items-center gap-2 border-t border-border px-4 py-3 text-left text-sm font-semibold text-destructive hover:bg-destructive/10">
+                      <LogOut size={16} /> Sign out
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button type="button" onClick={openCart} className="premium-button-secondary relative h-11 w-11 px-0 sm:w-auto sm:px-4" aria-label="Cart">
+              <ShoppingCart size={18} />
+              <span className="hidden sm:inline">Cart</span>
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-bold text-primary-foreground ring-2 ring-background">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsMobileOpen(open => !open)}
+              className="premium-button-secondary h-11 w-11 px-0 lg:hidden"
+              aria-label="Open menu"
+              aria-expanded={isMobileOpen}
+            >
+              {isMobileOpen ? <X size={19} /> : <Menu size={19} />}
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
-      {isContactOpen && (
-        <ContactForm onClose={() => setIsContactOpen(false)} />
-      )}
-    </>
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="overflow-hidden border-t border-border bg-background lg:hidden"
+          >
+            <div className="page-shell py-4">
+              <form onSubmit={submitSearch} className="relative mb-4 md:hidden">
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search products"
+                  aria-label="Search products"
+                  className="premium-input w-full rounded-full pl-11 pr-4"
+                />
+              </form>
+
+              <nav className="grid gap-2" aria-label="Mobile navigation">
+                {navLinks.map(link => (
+                  <Link key={link.path} to={link.path} className={`${linkClass(link.path)} flex min-h-[46px] items-center justify-center`}>
+                    {link.name}
+                  </Link>
+                ))}
+                {!user && (
+                  <Link to="/login" className="premium-button-secondary justify-center sm:hidden">
+                    <User size={18} /> Account
+                  </Link>
+                )}
+                {user && (
+                  <>
+                    <Link to="/profile" className="premium-button-secondary justify-center sm:hidden">
+                      <Settings size={18} /> Profile
+                    </Link>
+                    <Link to="/subscriptions" className="premium-button-secondary justify-center sm:hidden">
+                      <Milk size={18} /> Milk Subscription
+                    </Link>
+                    {user.is_admin && (
+                      <>
+                        <Link to="/admin/subscriptions" className="premium-button-secondary justify-center sm:hidden">
+                          <Milk size={18} /> Subscription Admin
+                        </Link>
+                        <Link to="/admin/delivery-requests" className="premium-button-secondary justify-center sm:hidden">
+                          <MapPin size={18} /> Delivery Requests
+                        </Link>
+                      </>
+                    )}
+                    <button type="button" onClick={handleLogout} className="premium-button-secondary justify-center text-destructive sm:hidden">
+                      <LogOut size={18} /> Sign out
+                    </button>
+                  </>
+                )}
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 

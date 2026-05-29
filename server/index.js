@@ -13,6 +13,8 @@ const productsRoutesFactory = require('./routes/products');
 const ordersRoutesFactory = require('./routes/orders');
 const analyticsRoutesFactory = require('./routes/analytics');
 const paymentsRoutesFactory = require('./routes/payments');
+const subscriptionsRoutesFactory = require('./routes/subscriptions');
+const deliveryRoutesFactory = require('./routes/delivery');
 const { authMiddleware, adminOnly } = require('./middleware/auth');
 
 // Check for required environment variables
@@ -129,13 +131,17 @@ app.use('/api/auth/signup', authLimiter);
 app.use('/api/auth', authRoutesFactory(pool));
 
 app.use('/api/products', productsRoutesFactory(pool));
+app.use('/api/delivery', deliveryRoutesFactory(pool));
 app.use('/api/orders', authMiddleware, ordersRoutesFactory(pool));
 app.use('/api/payments', authMiddleware, paymentsRoutesFactory(pool));
+app.use('/api/subscriptions', authMiddleware, subscriptionsRoutesFactory(pool));
 
 app.use('/api/admin', authMiddleware, adminOnly, adminRoutesFactory(pool));
 app.use('/api/admin/products', authMiddleware, adminOnly, productsRoutesFactory(pool, { allowWrites: true }));
 app.use('/api/admin/orders', authMiddleware, adminOnly, ordersRoutesFactory(pool, { admin: true }));
 app.use('/api/admin/analytics', authMiddleware, adminOnly, analyticsRoutesFactory(pool));
+app.use('/api/admin/subscriptions', authMiddleware, adminOnly, subscriptionsRoutesFactory(pool, { admin: true }));
+app.use('/api/admin/delivery', authMiddleware, adminOnly, deliveryRoutesFactory(pool, { admin: true }));
 
 /* Health check */
 app.get('/api/health', (req, res) => {

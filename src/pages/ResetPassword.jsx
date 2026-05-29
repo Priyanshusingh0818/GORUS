@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AlertCircle, CheckCircle, Eye, EyeOff, Lock } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import AuthShell from '../components/AuthShell';
 import { authAPI } from '../utils/api';
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
   const token = searchParams.get('token');
   const email = searchParams.get('email');
-
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
 
-  // If no token or email, show error
   useEffect(() => {
     if (!token || !email) {
       setStatus('error');
@@ -25,9 +23,9 @@ const ResetPassword = () => {
     }
   }, [token, email]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (status === 'error' && !token) return;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!token || !email) return;
 
     if (password !== confirmPassword) {
       setStatus('error');
@@ -52,145 +50,75 @@ const ResetPassword = () => {
     }
   };
 
+  const fieldClass = 'premium-input w-full bg-background pl-11 pr-12';
+
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-        >
-          <Link to="/" className="inline-block">
-            <span className="text-4xl font-extrabold text-primary tracking-tight">GORUS</span>
-          </Link>
-          <h2 className="mt-6 text-3xl font-extrabold text-foreground tracking-tight">
-            Create new password
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Please enter your new password below.
-          </p>
-        </motion.div>
-      </div>
-
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.1 }}
-        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10"
-      >
-        <div className="bg-card py-10 px-6 shadow-2xl shadow-primary/5 sm:rounded-3xl sm:px-12 border border-border">
-          
-          <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle size={32} />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Password Reset Complete</h3>
-                <p className="text-muted-foreground mb-8">{message}</p>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-md text-sm font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all active:scale-[0.98]"
-                >
-                  Continue to login
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="space-y-6"
-                onSubmit={handleSubmit}
-              >
-                {status === 'error' && (
-                  <div className="p-4 bg-red-50 rounded-2xl flex items-start gap-3 border border-red-100">
-                    <AlertCircle className="text-red-500 mt-0.5 flex-shrink-0" size={18} />
-                    <p className="text-sm font-medium text-red-800">{message}</p>
-                  </div>
-                )}
-
-                <div>
-                  <label htmlFor="password" className="block text-sm font-semibold text-foreground mb-2">
-                    New Password
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="appearance-none block w-full pl-11 pr-12 py-3 border border-border rounded-2xl shadow-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm bg-background text-foreground"
-                      placeholder="••••••••"
-                      disabled={!token}
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-foreground mb-2">
-                    Confirm New Password
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="appearance-none block w-full pl-11 pr-12 py-3 border border-border rounded-2xl shadow-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm bg-background text-foreground"
-                      placeholder="••••••••"
-                      disabled={!token}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    disabled={status === 'loading' || !token}
-                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-md text-sm font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed h-12"
-                  >
-                    {status === 'loading' ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      'Reset Password'
-                    )}
-                  </button>
-                </div>
-              </motion.form>
+    <AuthShell title="Create new password" subtitle="Choose a fresh password for your GORUS account.">
+      <AnimatePresence mode="wait">
+        {status === 'success' ? (
+          <motion.div key="success" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <CheckCircle size={32} />
+            </div>
+            <h2 className="mb-2 text-xl font-bold text-foreground">Password reset complete</h2>
+            <p className="mb-8 text-muted-foreground">{message}</p>
+            <button type="button" onClick={() => navigate('/login')} className="premium-button-primary w-full">
+              Continue to login
+            </button>
+          </motion.div>
+        ) : (
+          <motion.form key="form" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="space-y-5" onSubmit={handleSubmit}>
+            {status === 'error' && (
+              <div className="flex items-start gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4">
+                <AlertCircle className="mt-0.5 shrink-0 text-destructive" size={18} />
+                <p className="text-sm font-medium text-destructive">{message}</p>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
 
-      {/* Decorative background blobs */}
-      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[80px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[80px]" />
-      </div>
-    </div>
+            <div>
+              <label htmlFor="password" className="mb-2 block text-sm font-semibold text-foreground">New password</label>
+              <div className="relative">
+                <Lock className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  className={fieldClass}
+                  placeholder="New password"
+                  disabled={!token}
+                />
+                <button type="button" onClick={() => setShowPassword(value => !value)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label="Toggle password visibility">
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword" className="mb-2 block text-sm font-semibold text-foreground">Confirm password</label>
+              <div className="relative">
+                <Lock className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  id="confirmPassword"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  className={fieldClass}
+                  placeholder="Confirm password"
+                  disabled={!token}
+                />
+              </div>
+            </div>
+
+            <button type="submit" disabled={status === 'loading' || !token} className="premium-button-primary w-full">
+              {status === 'loading' ? <span className="h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin" /> : 'Reset password'}
+            </button>
+          </motion.form>
+        )}
+      </AnimatePresence>
+    </AuthShell>
   );
 };
 

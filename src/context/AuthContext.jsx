@@ -52,9 +52,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (name, email, password) => {
+  const signup = async (name, email, phone, password) => {
     try {
-      const response = await authAPI.signup(name, email, password);
+      const response = await authAPI.signup(name, email, phone, password);
       const { user: userData } = response;
       setUser(userData);
       localStorage.setItem('gorasUser', JSON.stringify(userData));

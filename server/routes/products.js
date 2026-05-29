@@ -31,7 +31,7 @@ module.exports = function (pool, options = {}) {
     }
 
     if (tag) {
-      where.push(`tag = ${addValue(tag)}`);
+      where.push(`LOWER(tag) = LOWER(${addValue(tag)})`);
     }
 
     if (unit) {

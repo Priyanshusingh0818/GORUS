@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Smartphone, Building2, CheckCircle, Clock, Upload, X, ShieldCheck } from 'lucide-react';
+import { Smartphone, Building2, CheckCircle, Clock, PackageCheck, ShieldCheck, ShoppingBag, Upload, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ordersAPI } from '../utils/api';
+import { formatCurrency } from '../utils/format';
+import OptimizedImage from '../components/OptimizedImage';
+import DeliveryAvailability from '../components/DeliveryAvailability';
+
+const deliveryUnavailableMessage = "Gorus currently delivers only in Buxar (802101). We'll be expanding to your area soon.";
 
 const Checkout = () => {
   const { cartItems, getCartTotal, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [shipping, setShipping] = useState({ name: user?.name || '', address: '', phone: '' });
+  const [shipping, setShipping] = useState({ name: user?.name || '', address: '', phone: '', pincode: '' });
   const [paymentMethod, setPaymentMethod] = useState('upi');
+  const [deliveryAvailability, setDeliveryAvailability] = useState(null);
   const [isPlacing, setIsPlacing] = useState(false);
   const [error, setError] = useState('');
   const [showQRCode, setShowQRCode] = useState(false);
@@ -24,8 +30,15 @@ const Checkout = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const total = getCartTotal();
+  const isDeliveryAllowed = deliveryAvailability?.allowed === true;
+  const hasFullPincode = shipping.pincode.replace(/\D/g, '').length === 6;
 
-  const handleChange = (e) => setShipping({ ...shipping, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const value = e.target.name === 'pincode'
+      ? e.target.value.replace(/\D/g, '').slice(0, 6)
+      : e.target.value;
+    setShipping({ ...shipping, [e.target.name]: value });
+  };
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -38,6 +51,11 @@ const Checkout = () => {
 
     if (cartItems.length === 0) {
       setError('Your cart is empty');
+      return;
+    }
+
+    if (!isDeliveryAllowed) {
+      setError(hasFullPincode ? deliveryUnavailableMessage : 'Please enter your 6-digit delivery pincode before payment.');
       return;
     }
 
@@ -87,12 +105,12 @@ const Checkout = () => {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('Please upload only image files (PNG, JPG, etc.)');
+      setError('Please upload a PNG or JPG payment screenshot.');
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert('File size should be less than 5MB');
+      setError('Payment screenshot should be less than 5MB.');
       return;
     }
 
@@ -111,7 +129,7 @@ const Checkout = () => {
 
   const handlePaymentComplete = async () => {
     if (!screenshot) {
-      alert('Please upload payment screenshot before confirming');
+      setError('Please upload the payment screenshot before confirming.');
       return;
     }
 
@@ -171,12 +189,37 @@ const Checkout = () => {
         exit="exit"
         className="min-h-screen bg-background flex justify-center items-center px-4"
       >
-        <div className="max-w-md w-full bg-card rounded-2xl p-8 shadow-sm border border-border text-center">
+        <div className="premium-card w-full max-w-md p-8 text-center">
           <ShieldCheck size={48} className="mx-auto text-primary mb-4" />
           <h2 className="text-2xl font-bold text-foreground mb-2">Authentication Required</h2>
           <p className="text-muted-foreground mb-8">Please log in to your account to securely proceed with your checkout.</p>
-          <button onClick={() => navigate('/login')} className="w-full py-4 rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-all shadow-md hover:shadow-primary/30">
+          <button onClick={() => navigate('/login')} className="premium-button-primary w-full">
             Proceed to Login
+          </button>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (cartItems.length === 0 && !showQRCode) {
+    return (
+      <motion.div
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex min-h-[72vh] items-center justify-center bg-background px-4"
+      >
+        <div className="premium-card max-w-md p-8 text-center">
+          <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <ShoppingBag size={38} strokeWidth={1.5} />
+          </div>
+          <h2 className="text-2xl font-bold text-foreground">Your cart is empty</h2>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Add a fresh essential first, then checkout will keep your order details simple and secure.
+          </p>
+          <button type="button" onClick={() => navigate('/products/available')} className="premium-button-primary mt-6 w-full">
+            Browse available products
           </button>
         </div>
       </motion.div>
@@ -192,7 +235,7 @@ const Checkout = () => {
         exit="exit"
         className="min-h-screen bg-background py-12 px-4"
       >
-        <div className="max-w-xl mx-auto bg-card rounded-2xl p-8 sm:p-10 shadow-sm border border-border">
+        <div className="premium-card mx-auto max-w-xl p-6 sm:p-10">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
               <Clock size={32} />
@@ -201,11 +244,11 @@ const Checkout = () => {
             <p className="text-muted-foreground mt-2">Order #{orderNumber}</p>
           </div>
 
-          <div className="bg-muted rounded-2xl p-6 border-2 border-dashed border-border text-center mb-8">
+          <div className="mb-8 rounded-lg border border-dashed border-border bg-muted p-6 text-center">
             <img 
               src="/images/upi-qr-code.png" 
               alt="UPI QR Code" 
-              className="mx-auto max-w-[200px] h-auto rounded-xl shadow-sm mb-4"
+              className="mx-auto mb-4 h-auto max-w-[200px] rounded-lg shadow-sm"
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'flex';
@@ -215,13 +258,13 @@ const Checkout = () => {
               <Smartphone size={48} className="text-primary opacity-50 mb-4" />
               <p>QR Code Unavailable</p>
             </div>
-            <div className="mt-4 p-4 bg-background rounded-xl shadow-sm inline-block mx-auto border border-border">
+            <div className="mx-auto mt-4 inline-block rounded-lg border border-border bg-background p-4 shadow-sm">
               <span className="text-sm text-muted-foreground block mb-1">Amount to Pay</span>
-              <span className="text-3xl font-black text-primary">₹{total.toFixed(2)}</span>
+              <span className="text-3xl font-black text-primary">{formatCurrency(total)}</span>
             </div>
           </div>
 
-          <div className="bg-primary/5 rounded-2xl p-6 mb-8 text-sm text-foreground">
+          <div className="mb-8 rounded-lg bg-primary/5 p-6 text-sm text-foreground">
             <h3 className="font-bold text-foreground mb-3 text-base flex items-center gap-2">
               <Smartphone size={18} className="text-primary"/> Instructions:
             </h3>
@@ -245,7 +288,7 @@ const Checkout = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-primary/40 rounded-2xl bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors"
+                  className="flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-primary/40 bg-primary/5 p-8 transition-colors hover:bg-primary/10"
                 >
                   <input type="file" accept="image/*" onChange={handleScreenshotChange} className="hidden" />
                   <Upload size={32} className="text-primary mb-3" />
@@ -257,12 +300,12 @@ const Checkout = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative rounded-2xl overflow-hidden border-2 border-primary bg-muted"
+                  className="relative overflow-hidden rounded-lg border border-primary bg-muted"
                 >
                   <img src={screenshotPreview} alt="Preview" className="w-full max-h-64 object-contain" />
                   <button 
                     onClick={removeScreenshot}
-                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                    className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-lg transition-colors hover:bg-destructive/90"
                   >
                     <X size={16} />
                   </button>
@@ -281,7 +324,7 @@ const Checkout = () => {
             <button 
               onClick={handlePaymentComplete}
               disabled={!screenshot || isUploading}
-              className="w-full py-4 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-md active:scale-[0.98]"
+              className="premium-button-primary w-full disabled:cursor-not-allowed"
             >
               {isUploading ? (
                 <span className="flex items-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"/> Processing...</span>
@@ -296,13 +339,13 @@ const Checkout = () => {
                 setScreenshotPreview(null);
               }}
               disabled={isUploading}
-              className="w-full py-4 rounded-full bg-background text-foreground font-semibold border-2 border-border hover:bg-muted transition-all"
+              className="premium-button-secondary w-full"
             >
               Cancel & Go Back
             </button>
           </div>
-          <p className="text-center text-xs text-destructive mt-4 font-medium italic">
-            ⚠️ Please do not refresh or close this page until payment is verified.
+          <p className="text-center text-xs text-muted-foreground mt-4 font-medium">
+            Please keep this page open until payment is confirmed.
           </p>
         </div>
       </motion.div>
@@ -315,20 +358,24 @@ const Checkout = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-background"
     >
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-foreground tracking-tight mb-10">Secure Checkout</h1>
+      <div className="page-shell section-y">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-primary">Final step</p>
+        <h1 className="mb-10 text-4xl font-extrabold tracking-tight text-foreground">Secure Checkout</h1>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
-            <form onSubmit={handlePlaceOrder} className="bg-card rounded-2xl p-8 shadow-sm border border-border mb-8 lg:mb-0">
+            <form onSubmit={handlePlaceOrder} className="premium-card mb-8 p-6 sm:p-8 lg:mb-0">
               
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-sm">1</span>
                   Shipping Details
                 </h2>
+                <p className="mb-5 text-sm leading-6 text-muted-foreground">
+                  Share the delivery details a real person can use. Add landmarks if they help your order reach you cleanly.
+                </p>
                 
                 {error && (
                   <div className="p-4 bg-destructive/10 text-destructive rounded-xl mb-6 text-sm font-medium">
@@ -344,7 +391,7 @@ const Checkout = () => {
                       value={shipping.name} 
                       onChange={handleChange} 
                       required 
-                      className="w-full px-4 py-3 rounded-xl border-2 border-border focus:border-primary focus:ring-0 transition-colors bg-background focus:bg-background"
+                      className="premium-input w-full bg-background"
                       placeholder="John Doe"
                     />
                   </div>
@@ -355,8 +402,21 @@ const Checkout = () => {
                       value={shipping.phone} 
                       onChange={handleChange} 
                       required 
-                      className="w-full px-4 py-3 rounded-xl border-2 border-border focus:border-primary focus:ring-0 transition-colors bg-background focus:bg-background"
+                      className="premium-input w-full bg-background"
                       placeholder="+91 98765 43210"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">Delivery Pincode</label>
+                    <input
+                      name="pincode"
+                      value={shipping.pincode}
+                      onChange={handleChange}
+                      required
+                      inputMode="numeric"
+                      maxLength={6}
+                      className="premium-input w-full bg-background"
+                      placeholder="802101"
                     />
                   </div>
                   <div>
@@ -367,10 +427,16 @@ const Checkout = () => {
                       onChange={handleChange} 
                       required 
                       rows={4} 
-                      className="w-full px-4 py-3 rounded-xl border-2 border-border focus:border-primary focus:ring-0 transition-colors bg-background focus:bg-background resize-none"
+                      className="premium-input w-full resize-none bg-background"
                       placeholder="House No, Street, Landmark, City, State, PIN"
                     />
                   </div>
+                  <DeliveryAvailability
+                    pincode={shipping.pincode}
+                    user={user}
+                    source="checkout"
+                    onChange={setDeliveryAvailability}
+                  />
                 </div>
               </div>
 
@@ -381,10 +447,13 @@ const Checkout = () => {
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-sm">2</span>
                   Payment Method
                 </h2>
+                <p className="mb-5 text-sm leading-6 text-muted-foreground">
+                  Choose UPI for a quick confirmation or Cash on Delivery if you prefer to pay at handoff.
+                </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className={`relative flex items-center p-5 cursor-pointer rounded-2xl border-2 transition-all ${paymentMethod === 'upi' ? 'border-primary bg-primary/5' : 'border-border hover:border-border bg-background'}`}>
-                    <input type="radio" name="paymentMethod" value="upi" checked={paymentMethod === 'upi'} onChange={(e) => setPaymentMethod(e.target.value)} className="sr-only" />
+                  <label className={`relative flex items-center rounded-lg border p-5 transition-all ${isDeliveryAllowed ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'} ${paymentMethod === 'upi' ? 'border-primary bg-primary/5' : 'border-border bg-background hover:border-primary/30'}`}>
+                    <input type="radio" name="paymentMethod" value="upi" checked={paymentMethod === 'upi'} onChange={(e) => setPaymentMethod(e.target.value)} className="sr-only" disabled={!isDeliveryAllowed} />
                     <Smartphone size={28} className={paymentMethod === 'upi' ? 'text-primary' : 'text-muted-foreground'} />
                     <div className="ml-4">
                       <span className={`block font-bold ${paymentMethod === 'upi' ? 'text-primary' : 'text-foreground'}`}>UPI Payment</span>
@@ -393,8 +462,8 @@ const Checkout = () => {
                     {paymentMethod === 'upi' && <div className="absolute right-4 w-4 h-4 rounded-full bg-primary border-4 border-primary/20" />}
                   </label>
 
-                  <label className={`relative flex items-center p-5 cursor-pointer rounded-2xl border-2 transition-all ${paymentMethod === 'cod' ? 'border-primary bg-primary/5' : 'border-border hover:border-border bg-background'}`}>
-                    <input type="radio" name="paymentMethod" value="cod" checked={paymentMethod === 'cod'} onChange={(e) => setPaymentMethod(e.target.value)} className="sr-only" />
+                  <label className={`relative flex items-center rounded-lg border p-5 transition-all ${isDeliveryAllowed ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'} ${paymentMethod === 'cod' ? 'border-primary bg-primary/5' : 'border-border bg-background hover:border-primary/30'}`}>
+                    <input type="radio" name="paymentMethod" value="cod" checked={paymentMethod === 'cod'} onChange={(e) => setPaymentMethod(e.target.value)} className="sr-only" disabled={!isDeliveryAllowed} />
                     <Building2 size={28} className={paymentMethod === 'cod' ? 'text-primary' : 'text-muted-foreground'} />
                     <div className="ml-4">
                       <span className={`block font-bold ${paymentMethod === 'cod' ? 'text-primary' : 'text-foreground'}`}>Cash on Delivery</span>
@@ -407,8 +476,8 @@ const Checkout = () => {
 
               <button 
                 type="submit" 
-                disabled={isPlacing}
-                className="w-full mt-10 py-4 rounded-full bg-primary text-primary-foreground font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center"
+                disabled={isPlacing || !isDeliveryAllowed}
+                className="premium-button-primary mt-10 w-full text-base"
               >
                 {isPlacing ? (
                   <span className="flex items-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"/> Processing...</span>
@@ -420,15 +489,15 @@ const Checkout = () => {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="sticky top-28 bg-card rounded-2xl p-8 shadow-sm border border-border">
+            <div className="premium-card sticky top-28 p-6 sm:p-8">
               <h2 className="text-xl font-bold text-foreground mb-6">Order Summary</h2>
               
               <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
                 {cartItems.map(item => (
-                  <div key={item.id} className="flex items-center gap-4 bg-background p-3 rounded-2xl border border-border shadow-sm">
-                    <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
+                  <div key={item.id} className="flex items-center gap-4 rounded-lg border border-border bg-background p-3 shadow-sm">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                       {item.image ? (
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        <OptimizedImage src={item.image} alt={item.name} loading="lazy" sizes="64px" className="h-full w-full object-contain p-1" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-muted text-xs text-muted-foreground">Img</div>
                       )}
@@ -438,7 +507,7 @@ const Checkout = () => {
                       <p className="text-xs text-muted-foreground mt-1">Qty: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold text-primary">₹{(item.price * item.quantity).toFixed(2)}</div>
+                      <div className="font-bold text-primary">{formatCurrency(item.price * item.quantity)}</div>
                     </div>
                   </div>
                 ))}
@@ -447,7 +516,7 @@ const Checkout = () => {
               <div className="mt-6 pt-6 border-t border-border">
                 <div className="flex justify-between items-center mb-3 text-sm text-muted-foreground">
                   <span>Subtotal</span>
-                  <span className="font-bold text-foreground">₹{total.toFixed(2)}</span>
+                  <span className="font-bold text-foreground">{formatCurrency(total)}</span>
                 </div>
                 <div className="flex justify-between items-center mb-4 text-sm text-muted-foreground">
                   <span>Shipping</span>
@@ -455,7 +524,19 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-border">
                   <span className="text-lg font-bold text-foreground">Total</span>
-                  <span className="text-3xl font-black text-primary">₹{total.toFixed(2)}</span>
+                  <span className="text-3xl font-black text-primary">{formatCurrency(total)}</span>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-lg border border-primary/15 bg-primary/10 p-4">
+                <div className="flex gap-3">
+                  <PackageCheck size={20} className="mt-0.5 shrink-0 text-primary" />
+                  <div>
+                    <h3 className="text-sm font-bold text-foreground">Order confidence</h3>
+                    <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                      You will receive a clear order confirmation. If anything is incorrect or damaged, contact support with the order details for help.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

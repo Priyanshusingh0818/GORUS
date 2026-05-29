@@ -69,6 +69,37 @@ const apiCall = async (endpoint, options = {}) => {
   }
 };
 
+const uploadCall = async (endpoint, formData, options = {}) => {
+  const token = getToken();
+  const headers = {
+    ...options.headers,
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    method: options.method || 'POST',
+    headers,
+    body: formData,
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'Upload failed' }));
+    if (response.status === 401) {
+      localStorage.removeItem('gorasToken');
+      localStorage.removeItem('gorasUser');
+      throw new Error('SESSION_EXPIRED');
+    }
+    throw new Error(error.message || 'Upload failed');
+  }
+
+  return response.json();
+};
+
 // Auth API
 export const authAPI = {
   login: (email, password) =>
@@ -77,10 +108,10 @@ export const authAPI = {
       body: JSON.stringify({ email, password }),
     }),
 
-  signup: (name, email, password) =>
+  signup: (name, email, phone, password) =>
     apiCall('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, phone, password }),
     }),
 
   logout: () =>
@@ -179,5 +210,94 @@ export const paymentsAPI = {
     apiCall('/api/payments/verify-payment', {
       method: 'POST',
       body: JSON.stringify({ orderId, paymentReference }),
+    }),
+};
+
+export const deliveryAPI = {
+  checkAvailability: (pincode) => apiCall(`/api/delivery/availability${toQueryString({ pincode })}`),
+
+  notify: (requestData) =>
+    apiCall('/api/delivery/notify', {
+      method: 'POST',
+      body: JSON.stringify(requestData),
+    }),
+};
+
+export const adminDeliveryAPI = {
+  getRequests: (params) => apiCall(`/api/admin/delivery/requests${toQueryString(params)}`),
+  getPincodes: () => apiCall('/api/admin/delivery/pincodes'),
+};
+
+export const subscriptionsAPI = {
+  create: (subscriptionData) =>
+    apiCall('/api/subscriptions', {
+      method: 'POST',
+      body: JSON.stringify(subscriptionData),
+    }),
+
+  confirmPayment: (subscriptionId, paymentProof) => {
+    const formData = new FormData();
+    formData.append('paymentProof', paymentProof);
+    return uploadCall(`/api/subscriptions/${subscriptionId}/confirm-payment`, formData);
+  },
+
+  getMySubscriptions: () => apiCall('/api/subscriptions/my'),
+  getDeliveryHistory: (subscriptionId) => apiCall(`/api/subscriptions/${subscriptionId}/delivery-history`),
+
+  pause: (subscriptionId, data = {}) =>
+    apiCall(`/api/subscriptions/${subscriptionId}/pause`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  resume: (subscriptionId, data = {}) =>
+    apiCall(`/api/subscriptions/${subscriptionId}/resume`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  cancel: (subscriptionId) =>
+    apiCall(`/api/subscriptions/${subscriptionId}/cancel`, {
+      method: 'POST',
+    }),
+
+  renew: (subscriptionId, duration) =>
+    apiCall(`/api/subscriptions/${subscriptionId}/renew`, {
+      method: 'POST',
+      body: JSON.stringify({ duration }),
+    }),
+};
+
+export const adminSubscriptionsAPI = {
+  getAll: (params) => apiCall(`/api/admin/subscriptions${toQueryString(params)}`),
+
+  update: (subscriptionId, data) =>
+    apiCall(`/api/admin/subscriptions/${subscriptionId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+
+  remove: (subscriptionId) =>
+    apiCall(`/api/admin/subscriptions/${subscriptionId}`, {
+      method: 'DELETE',
+    }),
+
+  markDelivery: (subscriptionId, data) =>
+    apiCall(`/api/admin/subscriptions/${subscriptionId}/delivery`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+
+  getBillingHistory: (subscriptionId) => apiCall(`/api/admin/subscriptions/${subscriptionId}/billing-history`),
+
+  generateInvoices: (invoiceMonth) =>
+    apiCall('/api/admin/subscriptions/generate-invoices', {
+      method: 'POST',
+      body: JSON.stringify({ invoiceMonth }),
+    }),
+
+  sendRenewalReminders: () =>
+    apiCall('/api/admin/subscriptions/send-renewal-reminders', {
+      method: 'POST',
     }),
 };

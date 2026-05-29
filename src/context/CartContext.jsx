@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 
 const CartContext = createContext();
 
@@ -12,6 +12,8 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [lastAddedItem, setLastAddedItem] = useState(null);
 
   useEffect(() => {
     try {
@@ -36,7 +38,10 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (product, quantity = 1) => {
+  const openCart = useCallback(() => setIsCartOpen(true), []);
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
+
+  const addToCart = useCallback((product, quantity = 1, options = {}) => {
     const quantityToAdd = Math.max(1, Number(quantity) || Number(product.quantity) || 1);
     const stockLimit = Number.isFinite(Number(product.stock)) ? Number(product.stock) : null;
 
@@ -53,15 +58,20 @@ export const CartProvider = ({ children }) => {
       
       return [...prevItems, { ...product, quantity: stockLimit === null ? quantityToAdd : Math.min(stockLimit, quantityToAdd) }];
     });
-  };
 
-  const removeFromCart = (productId) => {
+    setLastAddedItem({ ...product, quantity: quantityToAdd, addedAt: Date.now() });
+    if (options.openDrawer !== false) {
+      setIsCartOpen(true);
+    }
+  }, []);
+
+  const removeFromCart = useCallback((productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
-  };
+  }, []);
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = useCallback((productId, quantity) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
       return;
     }
     
@@ -72,29 +82,45 @@ export const CartProvider = ({ children }) => {
         return { ...item, quantity: stockLimit === null ? quantity : Math.min(stockLimit, quantity) };
       })
     );
-  };
+  }, []);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([]);
-  };
+  }, []);
 
-  const getCartTotal = () => {
+  const getCartTotal = useCallback(() => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  }, [cartItems]);
 
-  const getCartCount = () => {
+  const getCartCount = useCallback(() => {
     return cartItems.reduce((count, item) => count + item.quantity, 0);
-  };
+  }, [cartItems]);
 
-  const value = {
+  const value = useMemo(() => ({
     cartItems,
+    isCartOpen,
+    lastAddedItem,
     addToCart,
+    openCart,
+    closeCart,
     removeFromCart,
     updateQuantity,
     clearCart,
     getCartTotal,
     getCartCount
-  };
+  }), [
+    cartItems,
+    clearCart,
+    closeCart,
+    getCartCount,
+    getCartTotal,
+    isCartOpen,
+    lastAddedItem,
+    openCart,
+    addToCart,
+    removeFromCart,
+    updateQuantity
+  ]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

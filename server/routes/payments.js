@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { sendUPIPaymentEmail } = require('../utils/emailService');
+const { PREMIUM_UNAVAILABLE_MESSAGE, validateDeliveryArea } = require('../services/deliveryService');
 
 const { createClient } = require('@supabase/supabase-js');
 
@@ -69,6 +70,19 @@ module.exports = function (pool) {
 
     if (order.payment_method !== 'upi') {
       return res.status(400).json({ message: 'This order is not a UPI payment' });
+    }
+
+    const availability = await validateDeliveryArea(pool, {
+      pincode: order.shipping_pincode,
+      address: order.shipping_address
+    });
+
+    if (!availability.allowed) {
+      return res.status(422).json({
+        code: 'DELIVERY_AREA_UNAVAILABLE',
+        message: availability.message || PREMIUM_UNAVAILABLE_MESSAGE,
+        availability
+      });
     }
 
     const supabaseClient = getSupabaseClient();
