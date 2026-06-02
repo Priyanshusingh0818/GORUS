@@ -1,5 +1,85 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
+const { createClient } = require('@supabase/supabase-js');
 const router = express.Router();
+
+const uploadDir = path.join(__dirname, '..', 'uploads', 'products');
+const productImagesBucket = process.env.SUPABASE_PRODUCT_IMAGES_BUCKET || 'product-images';
+let supabase;
+
+const ensureUploadDir = () => {
+  fs.mkdirSync(uploadDir, { recursive: true });
+};
+
+const getSupabaseClient = () => {
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) return null;
+  if (!supabase) {
+    supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+  }
+  return supabase;
+};
+
+const getProductImageName = (file) => {
+  const ext = path.extname(file.originalname || '').toLowerCase();
+  const safeExt = ['.jpg', '.jpeg', '.png', '.webp'].includes(ext) ? ext : '.jpg';
+  return `product-${Date.now()}-${Math.round(Math.random() * 1e9)}${safeExt}`;
+};
+
+const uploadProductImage = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) {
+      return cb(new Error('Only JPG, PNG, or WebP product photos are allowed'));
+    }
+    cb(null, true);
+  }
+});
+
+const handleProductImageUpload = (req, res, next) => {
+  uploadProductImage.single('image')(req, res, (error) => {
+    if (!error) return next();
+
+    const message = error.code === 'LIMIT_FILE_SIZE'
+      ? 'Product photo must be under 5 MB'
+      : error.message || 'Product photo upload failed';
+
+    return res.status(400).json({ message });
+  });
+};
+
+const storeProductImage = async (file) => {
+  const filename = getProductImageName(file);
+  const supabaseClient = getSupabaseClient();
+
+  if (supabaseClient) {
+    const { error } = await supabaseClient.storage
+      .from(productImagesBucket)
+      .upload(filename, file.buffer, {
+        contentType: file.mimetype,
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Supabase product image upload error:', error);
+      const uploadError = new Error('Failed to upload product photo to cloud storage');
+      uploadError.statusCode = 500;
+      throw uploadError;
+    }
+
+    const { data: { publicUrl } } = supabaseClient.storage
+      .from(productImagesBucket)
+      .getPublicUrl(filename);
+
+    return { url: publicUrl, filename, storage: 'supabase' };
+  }
+
+  ensureUploadDir();
+  fs.writeFileSync(path.join(uploadDir, filename), file.buffer);
+  return { url: `/uploads/products/${filename}`, filename, storage: 'local' };
+};
 
 module.exports = function (pool, options = {}) {
   const allowWrites = options.allowWrites === true;
@@ -106,6 +186,16 @@ module.exports = function (pool, options = {}) {
   if (!allowWrites) {
     return router;
   }
+
+  // POST upload product image (admin only)
+  router.post('/upload-image', handleProductImageUpload, async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Product photo is required' });
+    }
+
+    const storedImage = await storeProductImage(req.file);
+    return res.status(201).json(storedImage);
+  });
 
   // POST create product (admin only)
   router.post('/', async (req, res) => {

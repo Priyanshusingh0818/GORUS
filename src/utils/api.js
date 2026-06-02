@@ -188,6 +188,11 @@ export const adminAPI = {
       method: 'POST',
       body: JSON.stringify(productData),
     }),
+  uploadProductImage: (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    return uploadCall('/api/admin/products/upload-image', formData);
+  },
   updateProduct: (id, productData) =>
     apiCall(`/api/admin/products/${id}`, {
       method: 'PUT',

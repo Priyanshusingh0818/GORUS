@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, Users, ShoppingBag, Plus, Edit, Trash2, Check, X, RefreshCw, BarChart3, DollarSign, UserPlus, MapPin, Milk } from 'lucide-react';
+import { Package, Users, ShoppingBag, Plus, Edit, Trash2, Check, X, RefreshCw, BarChart3, DollarSign, UserPlus, MapPin, Milk, UploadCloud, Link as LinkIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../utils/api';
 import { formatCurrency } from '../utils/format';
@@ -16,6 +16,10 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [showProductModal, setShowProductModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const fileInputRef = useRef(null);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imageDropActive, setImageDropActive] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState('');
   const [productForm, setProductForm] = useState({
     name: '',
     description: '',
@@ -73,6 +77,47 @@ const AdminPanel = () => {
     }
   };
 
+  const handleProductImageFile = async (file) => {
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setImageUploadError('Please choose a product photo file.');
+      return;
+    }
+
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      setImageUploadError('Use JPG, PNG, or WebP for product photos.');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setImageUploadError('Product photo must be under 5 MB.');
+      return;
+    }
+
+    setImageUploading(true);
+    setImageUploadError('');
+    try {
+      const response = await adminAPI.uploadProductImage(file);
+      setProductForm((current) => ({ ...current, image: response.url }));
+    } catch (error) {
+      console.error('Error uploading product image:', error);
+      setImageUploadError(error.message || 'Image upload failed.');
+    } finally {
+      setImageUploading(false);
+      setImageDropActive(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleProductImageDrop = (event) => {
+    event.preventDefault();
+    setImageDropActive(false);
+    handleProductImageFile(event.dataTransfer.files?.[0]);
+  };
+
   const handleSaveProduct = async (e) => {
     e.preventDefault();
     try {
@@ -93,6 +138,7 @@ const AdminPanel = () => {
         tag: '',
         stock: 100
       });
+      setImageUploadError('');
       fetchData();
     } catch (error) {
       console.error('Error saving product:', error);
@@ -113,6 +159,7 @@ const AdminPanel = () => {
 
   const handleEditProduct = (product) => {
     setEditingProduct(product);
+    setImageUploadError('');
     setProductForm({
       name: product.name,
       description: product.description || '',
@@ -494,6 +541,7 @@ const AdminPanel = () => {
                   tag: '',
                   stock: 100
                 });
+                setImageUploadError('');
                 setShowProductModal(true);
               }}
               style={styles.addButton}
@@ -609,12 +657,88 @@ const AdminPanel = () => {
                   </div>
                 </div>
 
-                <label style={styles.label}>Image URL</label>
-                <input
-                  value={productForm.image}
-                  onChange={(e) => setProductForm({...productForm, image: e.target.value})}
-                  style={styles.input}
-                />
+                <div style={styles.imageField}>
+                  <label style={styles.label}>Product photo</label>
+                  <div
+                    style={{
+                      ...styles.imageDropZone,
+                      ...(imageDropActive ? styles.imageDropZoneActive : {}),
+                      ...(productForm.image ? styles.imageDropZoneWithImage : {})
+                    }}
+                    onDragOver={(event) => {
+                      event.preventDefault();
+                      setImageDropActive(true);
+                    }}
+                    onDragLeave={() => setImageDropActive(false)}
+                    onDrop={handleProductImageDrop}
+                  >
+                    {productForm.image ? (
+                      <div style={styles.imagePreviewWrap}>
+                        <img src={productForm.image} alt="Product preview" style={styles.imagePreview} />
+                        <div style={styles.imagePreviewActions}>
+                          <button
+                            type="button"
+                            className="btn-secondary"
+                            style={styles.imageActionButton}
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={imageUploading}
+                          >
+                            <UploadCloud size={16} />
+                            Replace photo
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-secondary"
+                            style={{ ...styles.imageActionButton, color: '#ef4444' }}
+                            onClick={() => setProductForm({ ...productForm, image: '' })}
+                            disabled={imageUploading}
+                          >
+                            <Trash2 size={16} />
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        style={styles.imageDropButton}
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={imageUploading}
+                      >
+                        <span style={styles.imageDropIcon}>
+                          {imageUploading ? <RefreshCw size={24} /> : <UploadCloud size={24} />}
+                        </span>
+                        <span style={styles.imageDropTitle}>
+                          {imageUploading ? 'Uploading photo...' : 'Drop product photo here'}
+                        </span>
+                        <span style={styles.imageDropText}>or click to choose JPG, PNG, or WebP up to 5 MB</span>
+                      </button>
+                    )}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      onChange={(event) => handleProductImageFile(event.target.files?.[0])}
+                      style={styles.fileInput}
+                    />
+                  </div>
+                  {imageUploadError && <p style={styles.imageError}>{imageUploadError}</p>}
+                  <div style={styles.urlFallback}>
+                    <label style={styles.urlFallbackLabel}>
+                      <LinkIcon size={15} />
+                      Image URL fallback
+                    </label>
+                    <input
+                      value={productForm.image}
+                      onChange={(e) => {
+                        setImageUploadError('');
+                        setProductForm({ ...productForm, image: e.target.value });
+                      }}
+                      placeholder="/uploads/products/photo.webp or https://..."
+                      style={styles.input}
+                    />
+                  </div>
+                </div>
 
                 <div style={styles.row}>
                   <div style={styles.col}>
@@ -741,6 +865,64 @@ const styles = {
   form: { display: 'flex', flexDirection: 'column', gap: 16 },
   label: { fontSize: 14, fontWeight: 600, color: 'hsl(var(--foreground))' },
   input: { padding: 12, borderRadius: 8, border: '2px solid hsl(var(--border))', fontSize: 14, backgroundColor: 'hsl(var(--background))', color: 'hsl(var(--foreground))' },
+  imageField: { display: 'flex', flexDirection: 'column', gap: 10 },
+  imageDropZone: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 210,
+    borderRadius: 12,
+    border: '2px dashed hsl(var(--border))',
+    backgroundColor: 'hsl(var(--muted) / 0.45)',
+    overflow: 'hidden',
+    transition: 'border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease'
+  },
+  imageDropZoneActive: {
+    borderColor: 'hsl(var(--primary))',
+    backgroundColor: 'hsl(var(--primary) / 0.08)',
+    boxShadow: '0 12px 34px hsl(var(--primary) / 0.12)'
+  },
+  imageDropZoneWithImage: {
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
+    borderStyle: 'solid',
+    backgroundColor: 'hsl(var(--background))'
+  },
+  imageDropButton: {
+    width: '100%',
+    minHeight: 210,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    border: 0,
+    background: 'transparent',
+    color: 'hsl(var(--foreground))',
+    cursor: 'pointer',
+    padding: 24
+  },
+  imageDropIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'hsl(var(--primary))',
+    backgroundColor: 'hsl(var(--primary) / 0.1)'
+  },
+  imageDropTitle: { fontSize: 16, fontWeight: 700 },
+  imageDropText: { fontSize: 13, color: 'hsl(var(--muted-foreground))', textAlign: 'center' },
+  fileInput: { display: 'none' },
+  imagePreviewWrap: { width: '100%', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 180px', gap: 14, padding: 12 },
+  imagePreview: { width: '100%', height: 210, objectFit: 'cover', borderRadius: 10, backgroundColor: 'hsl(var(--muted))' },
+  imagePreviewActions: { display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 10 },
+  imageActionButton: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 42 },
+  imageError: { margin: 0, color: 'hsl(var(--destructive))', fontSize: 13, fontWeight: 600 },
+  urlFallback: { display: 'flex', flexDirection: 'column', gap: 8 },
+  urlFallbackLabel: { display: 'flex', alignItems: 'center', gap: 6, color: 'hsl(var(--muted-foreground))', fontSize: 13, fontWeight: 600 },
   row: { display: 'flex', gap: 12 },
   col: { flex: 1 },
   checkboxLabel: { display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' },
