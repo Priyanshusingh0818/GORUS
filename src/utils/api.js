@@ -45,6 +45,9 @@ const apiCall = async (endpoint, options = {}) => {
     });
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'An error occurred' }));
+      const validationMessage = Array.isArray(error.errors)
+        ? error.errors.map((item) => item.message || item).filter(Boolean).join(', ')
+        : '';
       
       // Handle authentication errors - but NOT for login/signup endpoints
       // Login/signup 401 means invalid credentials, not expired session
@@ -56,7 +59,7 @@ const apiCall = async (endpoint, options = {}) => {
         throw new Error('SESSION_EXPIRED');
       }
       
-      throw new Error(error.message || 'Request failed');
+      throw new Error(validationMessage || error.message || 'Request failed');
     }
     return response.json();
   } catch (error) {

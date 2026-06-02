@@ -15,12 +15,17 @@ class AuthService {
   async signup(name, email, phone, password) {
     await this.pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);');
     const normalizedPhone = this.normalizePhone(phone);
-    const { rows: existingRows } = await this.pool.query(
-      'SELECT * FROM users WHERE LOWER(email) = LOWER($1) OR phone = $2',
-      [email, normalizedPhone]
-    );
+    const duplicateQuery = normalizedPhone
+      ? 'SELECT * FROM users WHERE LOWER(email) = LOWER($1) OR phone = $2'
+      : 'SELECT * FROM users WHERE LOWER(email) = LOWER($1)';
+    const duplicateValues = normalizedPhone ? [email, normalizedPhone] : [email];
+    const { rows: existingRows } = await this.pool.query(duplicateQuery, duplicateValues);
     if (existingRows.length > 0) {
-      const error = new Error('An account already exists with this email or phone number');
+      const error = new Error(
+        normalizedPhone
+          ? 'An account already exists with this email or phone number'
+          : 'An account already exists with this email'
+      );
       error.statusCode = 409;
       throw error;
     }
@@ -28,10 +33,10 @@ class AuthService {
     const password_hash = await bcrypt.hash(password, 12);
     const { rows } = await this.pool.query(
       'INSERT INTO users (name, email, phone, password_hash, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [name || null, email, normalizedPhone, password_hash, 0]
+      [name || null, email, normalizedPhone || null, password_hash, 0]
     );
     
-    const user = { id: rows[0].id, name: name || null, email, phone: normalizedPhone, is_admin: 0 };
+    const user = { id: rows[0].id, name: name || null, email, phone: normalizedPhone || null, is_admin: 0 };
     const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
     return { user: { id: user.id, name: user.name, email: user.email, phone: user.phone, is_admin: false }, token };
   }
